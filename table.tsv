@@ -1,0 +1,10 @@
+repository	project	package	source	action
+matchms/matchms	matchms	matchms	pypi	downloads
+matchms/matchms	matchms	matchms	bioconda	downloads
+matchms/matchms	matchms	matchms	GitHub	views
+matchms/matchms	matchms	matchms	GitHub	clones
+RECETOX/galaxytools	matchms	matchms_spectral_similarity	usegalaxy.eu	users
+RECETOX/galaxytools	matchms	matchms_spectral_similarity	usegalaxy.eu	runs
+RECETOX/galaxytools	matchms	matchms_spectral_similarity	usegalaxy.fr	users
+cbroeckl/RAMClustR	RAMClustR	RAMClustR	CRAN	downloads
+cbroeckl/RAMClustR	RAMClustR	r-ramclustr	bioconda	downloads
