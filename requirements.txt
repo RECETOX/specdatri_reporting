@@ -1,4 +1,6 @@
 pandas==2.2
-python-dotenv==1.0.1
-
+orjson==3.10.15
+requests==2.32.3
+python_dotenv==1.0.1
+# Used in development
 pre-commit==4.1.0
