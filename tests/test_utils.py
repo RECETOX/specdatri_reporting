@@ -92,7 +92,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(
             response.json(),
             {
-                "message": "Some kind of API error ccured while interacting with the given ERP"
+                "message": "Some kind of API error ccured while interacting with the given URL."
             },
         )
         MockSession.return_value.send.assert_not_called()
@@ -110,7 +110,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(
             response.json(),
             {
-                "message": "Some kind of API error ccured while interacting with the given ERP"
+                "message": "Some kind of API error ccured while interacting with the given URL."
             },
         )
         MockLogger.return_value.error.assert_called_once_with(
@@ -138,7 +138,6 @@ class TestUtils(unittest.TestCase):
         result = get_env_var("NON_EXISTENT_VAR", "default_value")
         self.assertEqual(result, "default_value")
         mock_getenv.assert_called_with("NON_EXISTENT_VAR", "default_value")
-
 
 
 if __name__ == "__main__":

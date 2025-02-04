@@ -98,7 +98,7 @@ def log_function(logger: logging.Logger):
 
 
 def get_failed_response(
-    error_message="Some kind of API error ccured while interacting with the given ERP",
+    error_message="Some kind of API error ccured while interacting with the given URL.",
 ) -> requests.Response:
     failed_response = requests.Response()
     failed_response.status_code = 500
@@ -123,7 +123,7 @@ def make_api_request(
     retries = Retry(
         total=10,
         backoff_factor=0.1,
-        status_forcelist=[403, 406, 408, 413, 429, 500, 502, 503, 504],
+        status_forcelist=[408, 429, 500, 502, 503, 504],
     )
     s.mount("https://", HTTPAdapter(max_retries=retries))
     s.mount("http://", HTTPAdapter(max_retries=retries))
@@ -144,3 +144,15 @@ def make_api_request(
     except Exception as e:
         get_logger().error("Connection error while fetching data {}".format(e))
         return get_failed_response()
+
+
+def setup_logger() -> logging.Logger:
+    """
+    Sets up and returns a logger instance based on the configuration.
+
+    Returns:
+        logging.Logger: Configured logger instance.
+    """
+    debug_mode = get_config_var("DEFAULT", "DEBUG", "False").lower() == "true"
+    log_level = logging.DEBUG if debug_mode else logging.INFO
+    return get_logger(level=log_level)
