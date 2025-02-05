@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import datetime
 import logging
 import orjson
@@ -159,10 +160,73 @@ def setup_logger() -> logging.Logger:
     return get_logger(level=log_level)
 
 
-def prep_filename(folder:str, source:str, action:str)->str:
+def sanitize_filename_component(component: str) -> str:
     """
-    Prepares the filename for the json file based on the source, action and folder.
+    Sanitizes a filename component by replacing spaces and special characters with underscores.
+
+    Args:
+        component (str): The filename component to sanitize.
+
+    Returns:
+        str: The sanitized filename component.
+    """
+    # Replace spaces and special characters with underscores
+    return re.sub(r'[^\w\-]', '_', component)
+
+def write_prep_filename_metadata(project: str, package: str, source: str, action: str, filename: str):
+    """
+    Writes metadata about the prepared filename to a metadata file.
+
+    Args:
+        project (str): The project name.
+        package (str): The package name.
+        source (str): The source of the data (e.g., "github").
+        action (str): The action performed (e.g., "clones" or "views").
+        filename (str): The prepared filename.
+    """
+    metadata = {
+        "project": project,
+        "package": package,
+        "source": source,
+        "action": action,
+        "filename": filename
+    }
+    base_filename = os.path.splitext(filename)[0]
+    metadata_filename = f"{base_filename}.metadata.json"
+    with open(metadata_filename, 'wb') as f:
+         f.write(
+            orjson.dumps(
+                metadata, option=orjson.OPT_INDENT_2
+            )
+        )  # Serialize the data and write it to the file
+
+
+def prep_filename(
+        folder:str,
+        project:str,
+        package:str,
+        source:str,
+        action:str,
+        extension:str='json'
+)->str:
+    """
+    Prepares a filename based on the given parameters.
+
+    Args:
+        folder (str): The folder where the file will be saved.
+        project (str): The project name.
+        package (str): The package name.
+        source (str): The source of the data (e.g., "github").
+        action (str): The action performed (e.g., "clones" or "views").
+
+    Returns:
+        str: The prepared filename.
     """
     now = datetime.now()
     date_part = now.strftime("%Y-%m-%d_%H-%M-%S")
-    return f"{folder}/{source}_{action}_{date_part}.json"
+    project = sanitize_filename_component(project)
+    package = sanitize_filename_component(package)
+    source = sanitize_filename_component(source)
+    action = sanitize_filename_component(action)
+    seperator = "__"
+    return f"{folder}/{project}{seperator}{package}{seperator}{source}{seperator}{action}{seperator}{date_part}.{extension}"
