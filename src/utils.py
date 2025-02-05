@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 import logging
 import orjson
 import requests
@@ -156,3 +157,12 @@ def setup_logger() -> logging.Logger:
     debug_mode = get_config_var("DEFAULT", "DEBUG", "False").lower() == "true"
     log_level = logging.DEBUG if debug_mode else logging.INFO
     return get_logger(level=log_level)
+
+
+def prep_filename(folder:str, source:str, action:str)->str:
+    """
+    Prepares the filename for the json file based on the source, action and folder.
+    """
+    now = datetime.now()
+    date_part = now.strftime("%Y-%m-%d_%H-%M-%S")
+    return f"{folder}/{source}_{action}_{date_part}.json"

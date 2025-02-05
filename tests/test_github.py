@@ -25,17 +25,17 @@ class TestGitHubAPI(unittest.TestCase):
 
     @patch("src.github.make_api_request")
     def test_get_clone_stats_failure(self, mock_make_api_request):
-        failure_response = {'status': 404, 'message': 'Not Found'}
+        failure_response = {"status": 404, "message": "Not Found"}
         mock_response = MagicMock()
         mock_response.status_code = 404
         mock_response.json.return_value = failure_response
         mock_make_api_request.return_value = mock_response
 
         result = get_clone_stats("owner", "repo", "fake_token")
-        self.assertEqual(result['status'], failure_response['status'])
-        self.assertEqual(result['message'], failure_response['message'])
+        self.assertEqual(result["status"], failure_response["status"])
+        self.assertEqual(result["message"], failure_response["message"])
 
-    @patch('src.github.make_api_request')
+    @patch("src.github.make_api_request")
     def test_get_repo_views_success(self, mock_make_api_request):
         mock_response = MagicMock()
         mock_response.status_code = 200
@@ -45,7 +45,7 @@ class TestGitHubAPI(unittest.TestCase):
         result = get_repo_views("owner", "repo", "fake_token")
         self.assertEqual(result, {"count": 20, "uniques": 10})
 
-    @patch('src.github.make_api_request')
+    @patch("src.github.make_api_request")
     def test_get_repo_views_failure(self, mock_make_api_request):
         mock_response = MagicMock()
         mock_response.status_code = 404
@@ -53,7 +53,7 @@ class TestGitHubAPI(unittest.TestCase):
         mock_make_api_request.return_value = mock_response
 
         result = get_repo_views("owner", "repo", "fake_token")
-        self.assertEqual(result['status'], mock_response.status_code)
+        self.assertEqual(result["status"], mock_response.status_code)
 
 
 if __name__ == "__main__":

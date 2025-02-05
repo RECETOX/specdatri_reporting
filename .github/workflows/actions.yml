@@ -23,4 +23,19 @@ jobs:
             pip install -r requirements.txt
 
         - name: execute py script # run main.py
+          env:
+            github_token: ${{ secrets.github_token }}
           run: python main.py
+
+        - name: commit files
+          run: |
+            git config --local user.email "recetox.specdatri@gmail.com"
+            git config --local user.name "specdatri"
+            git add -A
+            git diff-index --quiet HEAD || (git commit -a -m "updated files" --allow-empty)
+
+        - name: push changes
+          uses: ad-m/github-push-action@v0.8.0
+          with:
+            github_token: ${{ secrets.github_token }}
+            branch: main
