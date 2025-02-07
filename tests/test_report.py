@@ -1,7 +1,10 @@
 import unittest
-import orjson
 from unittest.mock import mock_open, patch
+
+import orjson
+
 from src.reports import write_json
+
 
 class TestReports(unittest.TestCase):
 
@@ -22,10 +25,11 @@ class TestReports(unittest.TestCase):
         mock_dumps.assert_called_once_with(data, option=orjson.OPT_INDENT_2)
 
         # Assert that the file was opened in binary write mode
-        mock_open.assert_called_once_with(filename, 'wb')
+        mock_open.assert_called_once_with(filename, "wb")
 
         # Assert that the data was written to the file
         mock_open().write.assert_called_once_with(b'{"key": "value"}')
+
 
 if __name__ == "__main__":
     unittest.main()

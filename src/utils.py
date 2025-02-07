@@ -1,15 +1,15 @@
+import configparser
+import logging
 import os
 import re
 from datetime import datetime
-import logging
+from functools import wraps
+
 import orjson
 import requests
+from dotenv import load_dotenv
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-import configparser
-from functools import wraps
-from dotenv import load_dotenv
-
 
 # Load .config file from the parent directory
 config = configparser.ConfigParser()
@@ -72,19 +72,32 @@ def get_logger(name: str = "spec-logger", level: int = logging.INFO):
     return logger
 
 
-def log_function(logger: logging.Logger):
+def log_function(logger: logging.Logger, obfuscate_keywords=None):
     """
     A decorator that logs the function name, arguments, return value, and exceptions.
+    Arguments and keyword arguments containing specified keywords are obfuscated to avoid logging sensitive information.
 
     Args:
         logger (logging.Logger): The logger instance to use for logging.
+        obfuscate_keywords (list): List of keywords to check for obfuscation. Defaults to ["token", "key"].
     """
+    if obfuscate_keywords is None:
+        obfuscate_keywords = ["token", "key"]
 
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
+            arg_names = func.__code__.co_varnames[:func.__code__.co_argcount]
+            obfuscated_args = [
+                "***" if any(keyword in name for keyword in obfuscate_keywords) else value
+                for name, value in zip(arg_names, args)
+            ]
+            obfuscated_kwargs = {
+                k: "***" if any(keyword in k for keyword in obfuscate_keywords) else v
+                for k, v in kwargs.items()
+            }
             logger.info(
-                f"Calling function '{func.__name__}' with arguments {args} and keyword arguments {kwargs}"
+                f"Calling function '{func.__name__}' with arguments {obfuscated_args} and keyword arguments {obfuscated_kwargs}"
             )
             try:
                 result = func(*args, **kwargs)
@@ -171,9 +184,12 @@ def sanitize_filename_component(component: str) -> str:
         str: The sanitized filename component.
     """
     # Replace spaces and special characters with underscores
-    return re.sub(r'[^\w\-]', '_', component)
+    return re.sub(r"[^\w\-]", "_", component)
 
-def write_prep_filename_metadata(project: str, package: str, source: str, action: str, filename: str):
+
+def write_prep_filename_metadata(
+    project: str, package: str, source: str, action: str, filename: str
+):
     """
     Writes metadata about the prepared filename to a metadata file.
 
@@ -189,26 +205,24 @@ def write_prep_filename_metadata(project: str, package: str, source: str, action
         "package": package,
         "source": source,
         "action": action,
-        "filename": filename
+        "filename": filename,
     }
     base_filename = os.path.splitext(filename)[0]
     metadata_filename = f"{base_filename}.metadata.json"
-    with open(metadata_filename, 'wb') as f:
-         f.write(
-            orjson.dumps(
-                metadata, option=orjson.OPT_INDENT_2
-            )
+    with open(metadata_filename, "wb") as f:
+        f.write(
+            orjson.dumps(metadata, option=orjson.OPT_INDENT_2)
         )  # Serialize the data and write it to the file
 
 
 def prep_filename(
-        folder:str,
-        project:str,
-        package:str,
-        source:str,
-        action:str,
-        extension:str='json'
-)->str:
+    folder: str,
+    project: str,
+    package: str,
+    source: str,
+    action: str,
+    extension: str = "json",
+) -> str:
     """
     Prepares a filename based on the given parameters.
 
@@ -230,3 +244,20 @@ def prep_filename(
     action = sanitize_filename_component(action)
     seperator = "__"
     return f"{folder}/{project}{seperator}{package}{seperator}{source}{seperator}{action}{seperator}{date_part}.{extension}"
+
+
+def get_failed_response_json(response: requests.Response) -> dict:
+    """
+    Extracts and formats the failure details from a given HTTP response.
+
+    Args:
+        response (requests.Response): The HTTP response object.
+
+    Returns:
+        dict: A dictionary containing the status code, failure message, and the full response text.
+    """
+    return {
+        "status": response.status_code,
+        "message": response.json().get("message", "Request failed"),
+        "response": response.text,
+    }

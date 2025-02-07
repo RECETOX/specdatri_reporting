@@ -1,14 +1,17 @@
-import unittest
-from unittest.mock import patch, MagicMock, mock_open
 import logging
+import unittest
+from unittest.mock import MagicMock, mock_open, patch
+
 import orjson
+
 from src.utils import (
     get_config_var,
+    get_env_var,
+    get_failed_response,
+    get_failed_response_json,
     get_logger,
     log_function,
-    get_failed_response,
     make_api_request,
-    get_env_var,
     prep_filename,
     sanitize_filename_component,
     write_prep_filename_metadata,
@@ -47,8 +50,9 @@ class TestUtils(unittest.TestCase):
 
         result = sample_function(2, 3)
         self.assertEqual(result, 5)
+
         mock_logger.info.assert_any_call(
-            "Calling function 'sample_function' with arguments (2, 3) and keyword arguments {}"
+            "Calling function 'sample_function' with arguments [2, 3] and keyword arguments {}"
         )
         mock_logger.info.assert_any_call("Function 'sample_function' returned 5")
 
@@ -143,18 +147,20 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(result, "default_value")
         mock_getenv.assert_called_with("NON_EXISTENT_VAR", "default_value")
 
-    @patch('src.utils.datetime')
+    @patch("src.utils.datetime")
     def test_prep_filename(self, mock_datetime):
         # Mock the current date
-        mock_datetime.now.return_value.strftime.return_value = '20230101'
+        mock_datetime.now.return_value.strftime.return_value = "20230101"
 
-        folder = 'tmp'
-        project = 'project_name'
-        package = 'package_name'
-        source = 'github'
-        action = 'clones'
+        folder = "tmp"
+        project = "project_name"
+        package = "package_name"
+        source = "github"
+        action = "clones"
 
-        expected_filename = 'tmp/project_name__package_name__github__clones__20230101.json'
+        expected_filename = (
+            "tmp/project_name__package_name__github__clones__20230101.json"
+        )
         result = prep_filename(folder, project, package, source, action)
 
         self.assertEqual(result, expected_filename)
@@ -191,18 +197,65 @@ class TestUtils(unittest.TestCase):
             "package": package,
             "source": source,
             "action": action,
-            "filename": filename
+            "filename": filename,
         }
 
         # Assert that the file was opened in binary write mode
-        metadata_filename = "tmp/project_name__package_name__github__clones__20230101.metadata.json"
-        mock_open.assert_called_once_with(metadata_filename, 'wb')
+        metadata_filename = (
+            "tmp/project_name__package_name__github__clones__20230101.metadata.json"
+        )
+        mock_open.assert_called_once_with(metadata_filename, "wb")
 
         # Assert that orjson.dumps was called with the correct metadata and options
-        mock_orjson_dumps.assert_called_once_with(expected_metadata, option=orjson.OPT_INDENT_2)
+        mock_orjson_dumps.assert_called_once_with(
+            expected_metadata, option=orjson.OPT_INDENT_2
+        )
 
         # Assert that the data was written to the file
         mock_open().write.assert_called_once_with(mock_orjson_dumps.return_value)
+
+    @patch("src.utils.requests.Response")
+    def test_get_failed_response_json(self, MockResponse):
+        # Mock the response object
+        mock_response = MockResponse()
+        mock_response.status_code = 500
+        mock_response.json.return_value = {"message": "Test error message"}
+        mock_response.text = '{"message": "Test error message"}'
+
+        # Call the function
+        result = get_failed_response_json(mock_response)
+
+        # Expected result
+        expected_result = {
+            "status": 500,
+            "message": "Test error message",
+            "response": '{"message": "Test error message"}',
+        }
+
+        # Assert the result
+        self.assertEqual(result, expected_result)
+        mock_response.json.assert_called_once()
+
+        # Test with no message in the response
+        mock_response.json.return_value = {}
+        mock_response.text = "{}"
+
+        # Call the function
+        result = get_failed_response_json(mock_response)
+
+        # Expected result
+        expected_result = {
+            "status": 500,
+            "message": "Request failed",
+            "response": "{}",
+        }
+
+        # Assert the result
+        self.assertEqual(result, expected_result)
+        mock_response.json.assert_called()
+
+        if __name__ == "__main__":
+            unittest.main()
 
 
 if __name__ == "__main__":
