@@ -1,8 +1,10 @@
 import pandas as pd
 from pandas import DataFrame
+from datetime import datetime, timedelta
 
 from src.github import process_github_repositories
 from src.pypi import process_pypi_repositories
+from src.conda import process_conda_repositories
 from src.utils import get_config_var, get_env_var, log_function, setup_logger
 
 logger = setup_logger()
@@ -34,6 +36,8 @@ def process_repositories(
     Returns:
         None
     """
+    last_month = (datetime.now().replace(day=1) - timedelta(days=1)).strftime("%Y-%m")
+    twelve_months_ealier = (datetime.now() - timedelta(days=365)).strftime("%Y-%m")
     for _, row in repositories_df.iterrows():
         source = row["source"].lower()
         repository = row["repository"]
@@ -46,8 +50,10 @@ def process_repositories(
                 owner, repo, github_token, action, project, package
             )
         elif source == "pypi":
-            process_pypi_repositories(
-                package, pepy_x_api_key, action, project
+            process_pypi_repositories(package, pepy_x_api_key, action, project)
+        elif source == "bioconda":
+            process_conda_repositories(
+                package, "bioconda", twelve_months_ealier, last_month, action, project
             )
         else:
             logger.error(f"Unknown source: {source}")

@@ -1,5 +1,5 @@
 import requests
-from src.reports import write_make_request_response
+from src.reports import write_stats_response
 
 from .utils import (
     log_function,
@@ -94,9 +94,9 @@ def process_github_repositories(
     """
     if action == "clones":
         clone_stats = get_clone_stats(owner, repo, github_token)
-        write_make_request_response(clone_stats, project, package, "github", "clones")
+        write_stats_response(clone_stats, project, package, "github", "clones")
     elif action == "views":
         view_stats = get_repo_views(owner, repo, github_token)
-        write_make_request_response(view_stats, project, package, "github", "views")
+        write_stats_response(view_stats, project, package, "github", "views")
     else:
         logger.error(f"Invalid action: {action}")

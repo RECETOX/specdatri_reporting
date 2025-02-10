@@ -4,7 +4,7 @@ from .utils import (
     make_api_request,
     setup_logger,
 )
-from .reports import write_make_request_response
+from .reports import write_stats_response
 
 logger = setup_logger()
 
@@ -13,7 +13,7 @@ logger = setup_logger()
 def get_pypi_downloads(
     package_name: str,
     pepy_x_api_key: str,
-)->requests.Response:
+) -> requests.Response:
     """
     Fetches the download statistics for a given PyPI package.
 
@@ -48,6 +48,6 @@ def process_pypi_repositories(
     """
     if action == "downloads":
         downloads = get_pypi_downloads(package, pepy_x_api_key)
-        write_make_request_response(downloads, project, package, "pypi", action)
+        write_stats_response(downloads, project, package, "pypi", action)
     else:
         logger.error(f"Unknown action: {action}")

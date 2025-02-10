@@ -8,7 +8,6 @@ from src.utils import (
     get_config_var,
     get_env_var,
     get_failed_response,
-    get_failed_response_json,
     get_logger,
     log_function,
     make_api_request,
@@ -213,46 +212,6 @@ class TestUtils(unittest.TestCase):
 
         # Assert that the data was written to the file
         mock_open().write.assert_called_once_with(mock_orjson_dumps.return_value)
-
-    @patch("src.utils.requests.Response")
-    def test_get_failed_response_json(self, MockResponse):
-        # Mock the response object
-        mock_response = MockResponse()
-        mock_response.status_code = 500
-        mock_response.json.return_value = {"message": "Test error message"}
-        mock_response.text = '{"message": "Test error message"}'
-
-        # Call the function
-        result = get_failed_response_json(mock_response)
-
-        # Expected result
-        expected_result = {
-            "status": 500,
-            "message": "Test error message",
-            "response": '{"message": "Test error message"}',
-        }
-
-        # Assert the result
-        self.assertEqual(result, expected_result)
-        mock_response.json.assert_called_once()
-
-        # Test with no message in the response
-        mock_response.json.return_value = {}
-        mock_response.text = "{}"
-
-        # Call the function
-        result = get_failed_response_json(mock_response)
-
-        # Expected result
-        expected_result = {
-            "status": 500,
-            "message": "Request failed",
-            "response": "{}",
-        }
-
-        # Assert the result
-        self.assertEqual(result, expected_result)
-        mock_response.json.assert_called()
 
         if __name__ == "__main__":
             unittest.main()

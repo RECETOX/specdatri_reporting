@@ -10,6 +10,7 @@ import requests
 from dotenv import load_dotenv
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+from typing import Any
 
 # Load .config file from the parent directory
 config = configparser.ConfigParser()
@@ -87,9 +88,13 @@ def log_function(logger: logging.Logger, obfuscate_keywords=None):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            arg_names = func.__code__.co_varnames[:func.__code__.co_argcount]
+            arg_names = func.__code__.co_varnames[: func.__code__.co_argcount]
             obfuscated_args = [
-                "***" if any(keyword in name for keyword in obfuscate_keywords) else value
+                (
+                    "***"
+                    if any(keyword in name for keyword in obfuscate_keywords)
+                    else value
+                )
                 for name, value in zip(arg_names, args)
             ]
             obfuscated_kwargs = {
@@ -246,18 +251,25 @@ def prep_filename(
     return f"{folder}/{project}{seperator}{package}{seperator}{source}{seperator}{action}{seperator}{date_part}.{extension}"
 
 
-def get_failed_response_json(response: requests.Response) -> dict:
+def get_failed_result_json(result: Any) -> dict:
     """
-    Extracts and formats the failure details from a given HTTP response.
+    Extracts and formats the failure details from a given result.
 
     Args:
-        response (requests.Response): The HTTP response object.
+        result (Results): A named tuple containing the actual result and its type.
 
     Returns:
         dict: A dictionary containing the status code, failure message, and the full response text.
     """
-    return {
-        "status": response.status_code,
-        "message": response.json().get("message", "Request failed"),
-        "response": response.text,
-    }
+    if type(result) is requests.Response:
+        return {
+            "status": result.status_code,
+            "message": result.json().get("message", "Request failed"),
+            "response": result.text,
+        }
+    else:
+        return {
+            "status": "error",
+            "message": "Unknown error type",
+            "response": str(result),
+        }
