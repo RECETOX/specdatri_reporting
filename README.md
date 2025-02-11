@@ -23,13 +23,15 @@ At your terminal, run (This simulates a GitHub action on your local device):
 
 1: Do not push local development changes from `tmp` folder and `reports` folder. In fact do not edit them at all !!!
 
-2: When testing with `act` do not use a token that has the permission to make push requests else your test data wil mess with "production" data
+2: When testing with `act` do not use a token that has the permission to make push requests else your test data will mess with "production" data
 
 3: When testing with `act` know that the push may fail due to the fact that you can't directly push to main
 
 4: Always,I repeat always devlop on another branch not main and never push directly to main.
 
 5: You need tokens to test the code locally, place said tokens in `example.env` and change the filename to `.env`
+
+6: When testing with act files will be created in the docker image but never written to your file system.
 
 ### Running tests:
 

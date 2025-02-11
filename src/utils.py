@@ -247,8 +247,8 @@ def prep_filename(
     package = sanitize_filename_component(package)
     source = sanitize_filename_component(source)
     action = sanitize_filename_component(action)
-    seperator = "__"
-    return f"{folder}/{project}{seperator}{package}{seperator}{source}{seperator}{action}{seperator}{date_part}.{extension}"
+    part_name = "__".join([date_part, project, package, source, action])
+    return f"{folder}/{part_name}.{extension}"
 
 
 def get_failed_result_json(result: Any) -> dict:
