@@ -25,7 +25,7 @@ At your terminal, run (This simulates a GitHub action on your local device):
 
 2: When testing with `act` do not use a token that has the permission to make push requests else your test data will mess with "production" data.
 
-3: When testing with `act` know that the push may fail due to the fact that you can't directly push to main
+3: When testing with `act` know that the push may fail due to the fact that you can't directly push to main.
 
 4: Always,I repeat always devlop on another branch not main and never push directly to main.
 
