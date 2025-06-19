@@ -19,7 +19,7 @@ jobs:
           pip install -r requirements.txt
       - name: execute py script
         env:
-          github_token: '${{ secrets.github_token }}'
+          github_token: '${{ secrets.RECEBOT_REPORTING_TOKEN }}'
           pepy_x_api_key: '${{ secrets.pepy_x_api_key }}'
         run: python main.py
       - name: commit files
