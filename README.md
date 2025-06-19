@@ -27,7 +27,7 @@ At your terminal, run (This simulates a GitHub action on your local device):
 
 3: When testing with `act` know that the push may fail due to the fact that you can't directly push to main.
 
-4: Always,I repeat always devlop on another branch not main and never push directly to main.
+4: Always, I repeat always devlop on another branch not main and never push directly to main.
 
 5: You need tokens to test the code locally, place said tokens in `example.env` and change the filename to `.env`
 
