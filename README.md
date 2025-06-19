@@ -23,7 +23,7 @@ At your terminal, run (This simulates a GitHub action on your local device):
 
 1: Do not push local development changes from `tmp` folder and `reports` folder. In fact do not edit them at all !!!
 
-2: When testing with `act` do not use a token that has the permission to make push requests else your test data wil mess with "production" data
+2: When testing with `act` do not use a token that has the permission to make push requests else your test data will mess with "production" data.
 
 3: When testing with `act` know that the push may fail due to the fact that you can't directly push to main
 
