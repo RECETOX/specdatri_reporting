@@ -7,7 +7,7 @@ The code base includes a collection of scripts and GitHub Actions designed to ga
 It is assumed you can clone and change directories into the development repo.
 Create a virtualenv or conda environment (whatever your poison).
 
-Once in the repos directory, activate your env then run the following command to install th needed python libraries.
+Once in the repos directory, activate your env then run the following command to install the needed python libraries.
 
 > pip install -r .\requirements\local.txt
 
