@@ -1,7 +1,15 @@
 import orjson
 import requests
+import pandas as pd
+from typing import Any
 
-from .utils import log_function, setup_logger, prep_filename, write_prep_filename_metadata, get_failed_response_json
+from .utils import (
+    log_function,
+    setup_logger,
+    prep_filename,
+    write_prep_filename_metadata,
+    get_failed_result_json,
+)
 
 logger = setup_logger()
 
@@ -22,8 +30,8 @@ def write_json(data, filename):
 
 
 @log_function(logger)
-def write_make_request_response(
-    response: requests.Response,
+def write_stats_response(
+    result: Any,
     project: str,
     package: str,
     source: str,
@@ -33,7 +41,7 @@ def write_make_request_response(
     Processes the response from a make_api_request call and writes the data to a file.
 
     Args:
-        response (requests.Response): The response from the API request.
+        response (tuple): The results from getting a stat.
         filename (str): The filename to write the data to.
         project (str): The project name.
         package (str): The package name.
@@ -41,15 +49,27 @@ def write_make_request_response(
         action (str): The action performed (e.g., "clones" or "views").
     """
     try:
-        data = response.json()
+        if type(result) is requests.Response:
+            data = result.json()
+        elif type(result) is pd.Series:
+            data = result.to_dict()
+            if isinstance(data, list):
+                data = [{str(k): v for k, v in item.items()} for item in data]
+            else:
+                data = {str(k): v for k, v in data.items()}
+        else:
+            logger.error(f"Unexpected result type: {result.response_type}")
+            failed_response = get_failed_result_json(result)
+            filename = prep_filename("failed", project, package, source, action)
+            write_json(data, filename)
+            write_prep_filename_metadata(project, package, source, action, filename)
+            return
         filename = prep_filename("tmp", project, package, source, action)
         write_json(data, filename)
         write_prep_filename_metadata(project, package, source, action, filename)
-    except Exception:
-        logger.error(
-            f"Failed to fetch {action} status_code: {response.status_code} {response.text}"
-        )
-        failed_response = get_failed_response_json(response)
-        filename = prep_filename("tmp", project, package, source, action)
+    except Exception as e:
+        logger.error(f"Failed to write {action} to file for {project} and {package}. {e}")
+        failed_response = get_failed_result_json(result)
+        filename = prep_filename("failed", project, package, source, action)
         write_json(failed_response, filename)
         write_prep_filename_metadata(project, package, source, action, filename)
