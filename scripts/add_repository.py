@@ -3,10 +3,12 @@
 Script to add a new package to the repository list.
 
 Usage:
-    python add_repository.py --repository OWNER/REPO --project PROJECT_NAME [--pypi] [--bioconda] [--cran] [--github]
+    python add_repository.py --project PROJECT_NAME [--repository OWNER/REPO] [--pypi] [--bioconda] [--cran] [--github] [--repository-list PATH]
 
 Example:
-    python add_repository.py --repository owner/repo --project myproject --pypi --github
+    python add_repository.py --project myproject --pypi --github
+    python add_repository.py --project myproject --repository owner/repo --pypi --github
+    python add_repository.py --project myproject --pypi --github --repository-list /path/to/repository_list.tsv
 """
 
 import argparse
@@ -103,6 +105,9 @@ def write_repository_list(entries: List[dict], repository_list_path: Path) -> No
 
 
 def main():
+    # Determine default repository list path
+    default_repo_list = Path(__file__).parent.parent / "repository_list.tsv"
+    
     parser = argparse.ArgumentParser(
         description='Add a new package to the repository list',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -111,8 +116,8 @@ def main():
     
     parser.add_argument(
         '--repository',
-        required=True,
-        help='Repository path in format OWNER/REPO'
+        default=None,
+        help='Repository path in format OWNER/REPO (default: RECETOX/<PROJECT>)'
     )
     parser.add_argument(
         '--project',
@@ -122,8 +127,8 @@ def main():
     parser.add_argument(
         '--repository-list',
         type=Path,
-        required=True,
-        help='Path to repository_list.tsv file'
+        default=default_repo_list,
+        help=f'Path to repository_list.tsv file (default: {default_repo_list})'
     )
     parser.add_argument(
         '--pypi',
@@ -147,6 +152,10 @@ def main():
     )
     
     args = parser.parse_args()
+    
+    # Use default repository if not provided
+    if args.repository is None:
+        args.repository = f"RECETOX/{args.project}"
     
     # Validate that at least one source is specified
     if not any([args.pypi, args.bioconda, args.cran, args.github]):
