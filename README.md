@@ -9,7 +9,7 @@ Create a virtualenv or conda environment (whatever your poison).
 
 Once in the repos directory, activate your env then run the following command to install the needed python libraries.
 
-> pip install -r .\requirements\local.txt
+> pip install -r ./requirements/local.txt
 
 ### Simulating Github Actions
 
