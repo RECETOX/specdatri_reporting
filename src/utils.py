@@ -191,7 +191,7 @@ def sanitize_filename_component(component: str) -> str:
     return re.sub(r"[^\w\-]", "_", component)
 
 
-@log_function(lambda: get_logger())
+@log_function(setup_logger())
 def write_json(data, filename):
     """
     Serializes the given data to JSON and writes it to the specified file.

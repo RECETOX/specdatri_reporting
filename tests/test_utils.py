@@ -11,9 +11,7 @@ from src.utils import (
     get_logger,
     log_function,
     make_api_request,
-    prep_filename,
     sanitize_filename_component,
-    write_prep_filename_metadata,
 )
 
 
@@ -145,24 +143,6 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(result, "default_value")
         mock_getenv.assert_called_with("NON_EXISTENT_VAR", "default_value")
 
-    @patch("src.utils.datetime")
-    def test_prep_filename(self, mock_datetime):
-        # Mock the current date
-        mock_datetime.now.return_value.strftime.return_value = "20230101"
-
-        folder = "tmp"
-        project = "project_name"
-        package = "package_name"
-        source = "github"
-        action = "clones"
-
-        expected_filename = (
-            "tmp/project_name__package_name__github__clones__20230101.json"
-        )
-        result = prep_filename(folder, project, package, source, action)
-
-        self.assertEqual(result, expected_filename)
-
     def test_sanitize_filename_component(self):
         # Test with spaces and special characters
         self.assertEqual(sanitize_filename_component("project name"), "project_name")
@@ -173,47 +153,6 @@ class TestUtils(unittest.TestCase):
         # Test with underscores and hyphens
         self.assertEqual(sanitize_filename_component("project_name"), "project_name")
         self.assertEqual(sanitize_filename_component("package-name"), "package-name")
-
-    @patch("builtins.open", new_callable=mock_open)
-    @patch("src.utils.orjson.dumps")
-    def test_write_prep_filename_metadata(self, mock_orjson_dumps, mock_open):
-        project = "project_name"
-        package = "package_name"
-        source = "github"
-        action = "clones"
-        filename = "tmp/project_name__package_name__github__clones__20230101.json"
-
-        # Mock the return value of orjson.dumps
-        mock_orjson_dumps.return_value = b'{"project":"project_name","package":"package_name","source":"github","action":"clones","filename":"tmp/project_name__package_name__github__clones__20230101.json"}'
-
-        # Call the function
-        write_prep_filename_metadata(project, package, source, action, filename)
-
-        # Expected metadata
-        expected_metadata = {
-            "project": project,
-            "package": package,
-            "source": source,
-            "action": action,
-            "filename": filename,
-        }
-
-        # Assert that the file was opened in binary write mode
-        metadata_filename = (
-            "tmp/project_name__package_name__github__clones__20230101.metadata.json"
-        )
-        mock_open.assert_called_once_with(metadata_filename, "wb")
-
-        # Assert that orjson.dumps was called with the correct metadata and options
-        mock_orjson_dumps.assert_called_once_with(
-            expected_metadata, option=orjson.OPT_INDENT_2
-        )
-
-        # Assert that the data was written to the file
-        mock_open().write.assert_called_once_with(mock_orjson_dumps.return_value)
-
-        if __name__ == "__main__":
-            unittest.main()
 
 
 if __name__ == "__main__":

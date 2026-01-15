@@ -3,12 +3,12 @@ from unittest.mock import mock_open, patch
 
 import orjson
 
-from src.reports import write_json
+from src.utils import write_json
 
 
 class TestReports(unittest.TestCase):
     @patch("builtins.open", new_callable=mock_open)
-    @patch("src.reports.orjson.dumps")
+    @patch("src.utils.orjson.dumps")
     def test_write_json(self, mock_dumps, mock_open):
         # Mock the return value of orjson.dumps
         mock_dumps.return_value = b'{"key": "value"}'
