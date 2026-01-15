@@ -18,7 +18,6 @@ from src.utils import (
 
 
 class TestUtils(unittest.TestCase):
-
     @patch("src.utils.config")
     def test_get_config_var(self, mock_config):
         mock_config.get.return_value = "test_value"

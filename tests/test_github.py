@@ -4,7 +4,6 @@ from src.github import get_clone_stats, get_repo_views
 
 
 class TestGitHubAPI(unittest.TestCase):
-
     @patch("src.github.make_api_request")
     def test_get_clone_stats_success(self, mock_make_api_request):
         success_response = {

@@ -13,9 +13,9 @@ from .github import GitHubDataSource
 from .pypi import PyPIDataSource
 
 __all__ = [
-    'DataSource',
-    'PyPIDataSource',
-    'GitHubDataSource',
-    'CRANDataSource',
-    'CondaDataSource',
+    "DataSource",
+    "PyPIDataSource",
+    "GitHubDataSource",
+    "CRANDataSource",
+    "CondaDataSource",
 ]

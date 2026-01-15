@@ -10,11 +10,11 @@ logger = setup_logger()
 
 class CondaDataSource(DataSource):
     """Data source for Conda/Bioconda package downloads."""
-    
+
     def __init__(self, project: str, package: str, data_source: str):
         """
         Initialize Conda data source.
-        
+
         Args:
             project (str): The project name
             package (str): The package name
@@ -22,18 +22,24 @@ class CondaDataSource(DataSource):
         """
         super().__init__(project, package, data_source)
         self.conda_data_source = data_source
-    
+
     @log_function(logger)
-    def fetch(self, action: str = None, start_month: str = None, end_month: str = None, **kwargs) -> pd.Series:
+    def fetch(
+        self,
+        action: str = None,
+        start_month: str = None,
+        end_month: str = None,
+        **kwargs,
+    ) -> pd.Series:
         """
         Fetch download statistics from Conda API.
-        
+
         Args:
             action (str): Unused (for interface compatibility)
             start_month (str): Start month in YYYY-MM format
             end_month (str): End month in YYYY-MM format
             **kwargs: Additional parameters (unused)
-            
+
         Returns:
             pd.Series: The download statistics
         """

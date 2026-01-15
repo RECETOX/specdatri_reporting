@@ -7,7 +7,6 @@ from src.reports import write_json
 
 
 class TestReports(unittest.TestCase):
-
     @patch("builtins.open", new_callable=mock_open)
     @patch("src.reports.orjson.dumps")
     def test_write_json(self, mock_dumps, mock_open):

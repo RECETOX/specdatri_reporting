@@ -13,9 +13,9 @@ from .github import GitHubReportGenerator
 from .pypi import PyPIReportGenerator
 
 __all__ = [
-    'ReportGenerator',
-    'BiocondaReportGenerator',
-    'CRANReportGenerator',
-    'PyPIReportGenerator',
-    'GitHubReportGenerator',
+    "ReportGenerator",
+    "BiocondaReportGenerator",
+    "CRANReportGenerator",
+    "PyPIReportGenerator",
+    "GitHubReportGenerator",
 ]

@@ -9,28 +9,28 @@ logger = setup_logger()
 
 class PyPIDataSource(DataSource):
     """Data source for PyPI package downloads."""
-    
+
     def __init__(self, project: str, package: str, pepy_x_api_key: str):
         """
         Initialize PyPI data source.
-        
+
         Args:
             project (str): The project name
             package (str): The package name (PyPI package name)
             pepy_x_api_key (str): The PePy API key
         """
-        super().__init__(project, package, 'pypi')
+        super().__init__(project, package, "pypi")
         self.pepy_x_api_key = pepy_x_api_key
-    
+
     @log_function(logger)
     def fetch(self, action: str = None, **kwargs) -> requests.Response:
         """
         Fetch download statistics from PyPI via PePy API.
-        
+
         Args:
             action (str): Unused (for interface compatibility)
             **kwargs: Additional parameters (unused)
-        
+
         Returns:
             requests.Response: The API response
         """

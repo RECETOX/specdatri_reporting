@@ -2,7 +2,6 @@ import configparser
 import logging
 import os
 import re
-from datetime import datetime
 from functools import wraps
 
 import orjson
@@ -192,63 +191,17 @@ def sanitize_filename_component(component: str) -> str:
     return re.sub(r"[^\w\-]", "_", component)
 
 
-def write_prep_filename_metadata(
-    project: str, package: str, source: str, action: str, filename: str
-):
+@log_function(lambda: get_logger())
+def write_json(data, filename):
     """
-    Writes metadata about the prepared filename to a metadata file.
+    Serializes the given data to JSON and writes it to the specified file.
 
     Args:
-        project (str): The project name.
-        package (str): The package name.
-        source (str): The source of the data (e.g., "github").
-        action (str): The action performed (e.g., "clones" or "views").
-        filename (str): The prepared filename.
+        data (Any): The data to serialize.
+        filename (str): The name of the file to write the JSON data to.
     """
-    metadata = {
-        "project": project,
-        "package": package,
-        "source": source,
-        "action": action,
-        "filename": filename,
-    }
-    base_filename = os.path.splitext(filename)[0]
-    metadata_filename = f"{base_filename}.metadata.json"
-    with open(metadata_filename, "wb") as f:
-        f.write(
-            orjson.dumps(metadata, option=orjson.OPT_INDENT_2)
-        )  # Serialize the data and write it to the file
-
-
-def prep_filename(
-    folder: str,
-    project: str,
-    package: str,
-    source: str,
-    action: str,
-    extension: str = "json",
-) -> str:
-    """
-    Prepares a filename based on the given parameters.
-
-    Args:
-        folder (str): The folder where the file will be saved.
-        project (str): The project name.
-        package (str): The package name.
-        source (str): The source of the data (e.g., "github").
-        action (str): The action performed (e.g., "clones" or "views").
-
-    Returns:
-        str: The prepared filename.
-    """
-    now = datetime.now()
-    date_part = now.strftime("%Y-%m-%d_%H-%M-%S")
-    project = sanitize_filename_component(project)
-    package = sanitize_filename_component(package)
-    source = sanitize_filename_component(source)
-    action = sanitize_filename_component(action)
-    part_name = "__".join([date_part, project, package, source, action])
-    return f"{folder}/{part_name}.{extension}"
+    with open(filename, "wb") as f:
+        f.write(orjson.dumps(data, option=orjson.OPT_INDENT_2))
 
 
 def get_failed_result_json(result: Any) -> dict:
