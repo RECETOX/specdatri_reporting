@@ -14,7 +14,7 @@ from src.data_sources import (
     CRANDataSource,
     CondaDataSource,
 )
-from src.utils import get_config_var, get_env_var, log_function, setup_logger
+from src.utils import get_env_var, log_function, setup_logger
 from src.reports import (
     BiocondaReportGenerator,
     CRANReportGenerator,
