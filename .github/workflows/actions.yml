@@ -17,11 +17,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: execute py script
+      - name: collect stats
         env:
           github_token: '${{ secrets.RECEBOT_REPORTING_TOKEN }}'
           pepy_x_api_key: '${{ secrets.pepy_x_api_key }}'
-        run: python main.py
+        run: ./specdatri collect-stats
+      - name: generate reports
+        run: ./specdatri generate-reports
       - name: commit files
         run: |
           git config --local user.email "action@github.com"
