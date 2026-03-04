@@ -107,8 +107,8 @@ class ReportGenerator(ABC):
             entity: self.aggregate_data(path) for entity, path in files.items()
         }
 
-        # Get all periods and filter
-        all_periods = {p for data in entity_data.values() for p in data.keys()}
+        # Get all periods and filter (include existing periods to prevent data loss)
+        all_periods = {p for data in entity_data.values() for p in data.keys()} | set(existing_data.keys())
         periods = self.filter_periods(all_periods, year)
 
         if not periods:
