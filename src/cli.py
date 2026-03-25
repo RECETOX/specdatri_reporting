@@ -21,6 +21,7 @@ from src.reports import (
     PyPIReportGenerator,
     GitHubReportGenerator,
 )
+from src.dashboard import generate_dashboard
 
 logger = setup_logger()
 
@@ -373,6 +374,45 @@ def generate_reports(year, tmp_dir, output_dir):
     click.echo("\n" + "=" * 60)
     click.echo(f"✓ All 5 reports generated successfully for {year}")
     click.echo(f"  Output directory: {output_path / str(year)}")
+
+
+# ============================================================================
+# GENERATE-DASHBOARD SUBCOMMAND
+# ============================================================================
+
+
+@cli.command(name="generate-dashboard")
+@click.option(
+    "--reports-dir",
+    type=click.Path(),
+    default="reports",
+    help="Root directory of TSV reports (default: ./reports)",
+)
+@click.option(
+    "--output",
+    type=click.Path(),
+    default="docs/index.html",
+    help="Output HTML file path (default: ./docs/index.html)",
+)
+def generate_dashboard_cmd(reports_dir, output):
+    """Generate an interactive HTML dashboard from the collected reports."""
+
+    reports_path = Path(reports_dir)
+    output_path = Path(output)
+
+    if not reports_path.exists():
+        click.echo(f"Error: reports directory not found: {reports_path}")
+        raise click.Exit(1)
+
+    click.echo(f"Generating dashboard from reports in {reports_path}...")
+    click.echo("=" * 60)
+
+    try:
+        generate_dashboard(reports_path, output_path)
+        click.echo(f"✓ Dashboard written to {output_path}")
+    except Exception as exc:
+        click.echo(f"Error generating dashboard: {exc}")
+        raise click.Exit(1)
 
 
 if __name__ == "__main__":

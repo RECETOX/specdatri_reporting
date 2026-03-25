@@ -24,6 +24,8 @@ jobs:
         run: ./specdatri collect-stats
       - name: generate reports
         run: ./specdatri generate-reports
+      - name: generate dashboard
+        run: ./specdatri generate-dashboard
       - name: commit files
         run: |
           git config --local user.email "action@github.com"
