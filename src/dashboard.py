@@ -1,10 +1,10 @@
 """Dashboard generator for download statistics visualization."""
 
-import json
 import logging
 from pathlib import Path
 from typing import Optional
 
+import altair as alt
 import pandas as pd
 
 logger = logging.getLogger(__name__)
@@ -98,38 +98,60 @@ def load_all_data(reports_dir: Path) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# HTML generation
+# Altair chart builders
 # ---------------------------------------------------------------------------
 
-# Plotly colour palette (distinct enough for ~15 traces)
-_COLORS = [
-    "#636EFA", "#EF553B", "#00CC96", "#AB63FA", "#FFA15A",
-    "#19D3F3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52",
-    "#1F77B4", "#FF7F0E", "#2CA02C", "#D62728", "#9467BD",
-]
+
+def _build_chart(df: pd.DataFrame, y_title: str) -> alt.Chart:
+    """Return an interactive Altair line chart for *df*.
+
+    Parameters
+    ----------
+    df:
+        Long-form DataFrame with columns ``period``, ``package``, ``count``.
+    y_title:
+        Label shown on the y-axis (e.g. ``"Downloads"`` or ``"Views"``).
+    """
+    return (
+        alt.Chart(df)
+        .mark_line(point=True)
+        .encode(
+            x=alt.X(
+                "period:O",
+                title="Period",
+                axis=alt.Axis(labelAngle=-45, labelOverlap=False),
+            ),
+            y=alt.Y("count:Q", title=y_title),
+            color=alt.Color("package:N", legend=alt.Legend(title="Package")),
+            tooltip=[
+                alt.Tooltip("period:O", title="Period"),
+                alt.Tooltip("package:N", title="Package"),
+                alt.Tooltip("count:Q", title=y_title, format=",d"),
+            ],
+        )
+        .properties(width="container", height=420)
+        .interactive()
+    )
 
 
-def _df_to_plotly_traces(df: pd.DataFrame, chart_id: str) -> list[dict]:
-    """Convert a long-form DataFrame to a list of Plotly trace objects."""
-    packages = sorted(df["package"].unique())
-    traces = []
-    for i, pkg in enumerate(packages):
-        sub = df[df["package"] == pkg].sort_values("period")
-        traces.append({
-            "type": "scatter",
-            "mode": "lines+markers",
-            "name": pkg,
-            "x": sub["period"].tolist(),
-            "y": sub["count"].tolist(),
-            "line": {"color": _COLORS[i % len(_COLORS)]},
-            "marker": {"size": 5},
-        })
-    return traces
+def _chart_spec(label: str, df: pd.DataFrame) -> str:
+    """Return the Vega-Lite JSON spec string for *label*."""
+    _y_titles = {
+        "GitHub Clones": "Clones",
+        "GitHub Views": "Views",
+    }
+    y_title = _y_titles.get(label, "Downloads")
+    chart = _build_chart(df, y_title)
+    return chart.to_json()
+
+
+# ---------------------------------------------------------------------------
+# HTML generation
+# ---------------------------------------------------------------------------
 
 
 def _summary_cards(data: dict) -> str:
     """Return Bootstrap card HTML for per-source totals."""
-    cards_html = []
     icons = {
         "PyPI Downloads": "📦",
         "Bioconda Downloads": "🐍",
@@ -137,6 +159,7 @@ def _summary_cards(data: dict) -> str:
         "GitHub Clones": "🔁",
         "GitHub Views": "👁️",
     }
+    cards_html = []
     for label, df in data.items():
         total = int(df["count"].sum())
         icon = icons.get(label, "📈")
@@ -165,40 +188,25 @@ def _tab_nav(labels: list[str]) -> str:
             f'<button class="nav-link {active}" id="tab-{slug}" '
             f'data-bs-toggle="tab" data-bs-target="#pane-{slug}" '
             f'type="button" role="tab" aria-selected="{selected}">'
-            f'{label}</button></li>'
+            f"{label}</button></li>"
         )
     return "\n".join(items)
 
 
 def _tab_panes(data: dict) -> str:
-    """Return Bootstrap tab pane HTML with embedded Plotly charts."""
+    """Return Bootstrap tab pane HTML with embedded Altair/Vega-Lite charts."""
     panes = []
     for i, (label, df) in enumerate(data.items()):
         active = "show active" if i == 0 else ""
         slug = label.lower().replace(" ", "-")
         chart_id = f"chart-{slug}"
-        traces = _df_to_plotly_traces(df, chart_id)
-        traces_json = json.dumps(traces)
-        layout = {
-            "xaxis": {"title": "Period", "tickangle": -45},
-            "yaxis": {"title": "Downloads"},
-            "legend": {"orientation": "v", "x": 1.01, "y": 1},
-            "margin": {"l": 60, "r": 200, "t": 40, "b": 100},
-            "hovermode": "x unified",
-            "plot_bgcolor": "#f8f9fa",
-            "paper_bgcolor": "#ffffff",
-        }
-        layout_json = json.dumps(layout)
+        spec = _chart_spec(label, df)
         panes.append(f"""
         <div class="tab-pane fade {active}" id="pane-{slug}" role="tabpanel">
-          <div id="{chart_id}" style="width:100%;height:480px;"></div>
+          <div id="{chart_id}"></div>
           <script>
-            Plotly.newPlot(
-              "{chart_id}",
-              {traces_json},
-              {layout_json},
-              {{responsive: true}}
-            );
+            vegaEmbed("#{chart_id}", {spec}, {{actions: false, renderer: "svg"}})
+              .catch(console.error);
           </script>
         </div>""")
     return "\n".join(panes)
@@ -285,13 +293,14 @@ def generate_dashboard(reports_dir: Path, output_file: Path) -> None:
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmB7sQEq87UEJ9w6N3EFUfg7/rM"
     crossorigin="anonymous"
   ></script>
-  <!-- Plotly.js (no official SRI hash provided by the CDN; pin version to reduce risk) -->
-  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"
-          charset="utf-8"
-          crossorigin="anonymous"></script>
+  <!-- Vega / Vega-Lite / Vega-Embed (used by Altair charts) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@6" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.1.0" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@7" crossorigin="anonymous"></script>
 </body>
 </html>
 """
 
     output_file.write_text(html, encoding="utf-8")
     logger.info("Dashboard written to %s", output_file)
+

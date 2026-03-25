@@ -96,62 +96,3182 @@
     <div class="tab-content">
       
         <div class="tab-pane fade show active" id="pane-pypi-downloads" role="tabpanel">
-          <div id="chart-pypi-downloads" style="width:100%;height:480px;"></div>
+          <div id="chart-pypi-downloads"></div>
           <script>
-            Plotly.newPlot(
-              "chart-pypi-downloads",
-              [{"type": "scatter", "mode": "lines+markers", "name": "MSMetaEnhancer", "x": ["2025-11", "2025-12", "2026-01", "2026-02"], "y": [212, 239, 228, 207], "line": {"color": "#636EFA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "RIAssigner", "x": ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [1186, 986, 1261, 1629, 925], "line": {"color": "#EF553B"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "aoptk", "x": ["2026-02"], "y": [1257], "line": {"color": "#00CC96"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "gc-meox-tms", "x": ["2025-11", "2025-12", "2026-01", "2026-02"], "y": [58, 66, 63, 74], "line": {"color": "#AB63FA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "matchms", "x": ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [33422, 52893, 20160, 21672, 22268], "line": {"color": "#FFA15A"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "ms2deepscore", "x": ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [6617, 6225, 5756, 7279, 6154], "line": {"color": "#19D3F3"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "rcx-tk", "x": ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [37, 48, 53, 49, 328], "line": {"color": "#FF6692"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "spec2vec", "x": ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [4661, 7410, 1315, 1639, 1601], "line": {"color": "#B6E880"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "wtv", "x": ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [84, 120, 145, 80, 101], "line": {"color": "#FF97FF"}, "marker": {"size": 5}}],
-              {"xaxis": {"title": "Period", "tickangle": -45}, "yaxis": {"title": "Downloads"}, "legend": {"orientation": "v", "x": 1.01, "y": 1}, "margin": {"l": 60, "r": 200, "t": 40, "b": 100}, "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "#ffffff"},
-              {responsive: true}
-            );
+            vegaEmbed("#chart-pypi-downloads", {
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
+  "config": {
+    "view": {
+      "continuousHeight": 300,
+      "continuousWidth": 300
+    }
+  },
+  "data": {
+    "name": "data-087bbb1261e83869e13b9d3471a4e3cc"
+  },
+  "datasets": {
+    "data-087bbb1261e83869e13b9d3471a4e3cc": [
+      {
+        "count": 1186,
+        "package": "RIAssigner",
+        "period": "2025-10"
+      },
+      {
+        "count": 33422,
+        "package": "matchms",
+        "period": "2025-10"
+      },
+      {
+        "count": 6617,
+        "package": "ms2deepscore",
+        "period": "2025-10"
+      },
+      {
+        "count": 37,
+        "package": "rcx-tk",
+        "period": "2025-10"
+      },
+      {
+        "count": 4661,
+        "package": "spec2vec",
+        "period": "2025-10"
+      },
+      {
+        "count": 84,
+        "package": "wtv",
+        "period": "2025-10"
+      },
+      {
+        "count": 120,
+        "package": "wtv",
+        "period": "2025-11"
+      },
+      {
+        "count": 7410,
+        "package": "spec2vec",
+        "period": "2025-11"
+      },
+      {
+        "count": 48,
+        "package": "rcx-tk",
+        "period": "2025-11"
+      },
+      {
+        "count": 6225,
+        "package": "ms2deepscore",
+        "period": "2025-11"
+      },
+      {
+        "count": 58,
+        "package": "gc-meox-tms",
+        "period": "2025-11"
+      },
+      {
+        "count": 986,
+        "package": "RIAssigner",
+        "period": "2025-11"
+      },
+      {
+        "count": 212,
+        "package": "MSMetaEnhancer",
+        "period": "2025-11"
+      },
+      {
+        "count": 52893,
+        "package": "matchms",
+        "period": "2025-11"
+      },
+      {
+        "count": 1315,
+        "package": "spec2vec",
+        "period": "2025-12"
+      },
+      {
+        "count": 145,
+        "package": "wtv",
+        "period": "2025-12"
+      },
+      {
+        "count": 5756,
+        "package": "ms2deepscore",
+        "period": "2025-12"
+      },
+      {
+        "count": 53,
+        "package": "rcx-tk",
+        "period": "2025-12"
+      },
+      {
+        "count": 66,
+        "package": "gc-meox-tms",
+        "period": "2025-12"
+      },
+      {
+        "count": 1261,
+        "package": "RIAssigner",
+        "period": "2025-12"
+      },
+      {
+        "count": 239,
+        "package": "MSMetaEnhancer",
+        "period": "2025-12"
+      },
+      {
+        "count": 20160,
+        "package": "matchms",
+        "period": "2025-12"
+      },
+      {
+        "count": 80,
+        "package": "wtv",
+        "period": "2026-01"
+      },
+      {
+        "count": 49,
+        "package": "rcx-tk",
+        "period": "2026-01"
+      },
+      {
+        "count": 7279,
+        "package": "ms2deepscore",
+        "period": "2026-01"
+      },
+      {
+        "count": 1639,
+        "package": "spec2vec",
+        "period": "2026-01"
+      },
+      {
+        "count": 63,
+        "package": "gc-meox-tms",
+        "period": "2026-01"
+      },
+      {
+        "count": 1629,
+        "package": "RIAssigner",
+        "period": "2026-01"
+      },
+      {
+        "count": 228,
+        "package": "MSMetaEnhancer",
+        "period": "2026-01"
+      },
+      {
+        "count": 21672,
+        "package": "matchms",
+        "period": "2026-01"
+      },
+      {
+        "count": 1601,
+        "package": "spec2vec",
+        "period": "2026-02"
+      },
+      {
+        "count": 207,
+        "package": "MSMetaEnhancer",
+        "period": "2026-02"
+      },
+      {
+        "count": 925,
+        "package": "RIAssigner",
+        "period": "2026-02"
+      },
+      {
+        "count": 1257,
+        "package": "aoptk",
+        "period": "2026-02"
+      },
+      {
+        "count": 74,
+        "package": "gc-meox-tms",
+        "period": "2026-02"
+      },
+      {
+        "count": 22268,
+        "package": "matchms",
+        "period": "2026-02"
+      },
+      {
+        "count": 6154,
+        "package": "ms2deepscore",
+        "period": "2026-02"
+      },
+      {
+        "count": 328,
+        "package": "rcx-tk",
+        "period": "2026-02"
+      },
+      {
+        "count": 101,
+        "package": "wtv",
+        "period": "2026-02"
+      }
+    ]
+  },
+  "encoding": {
+    "color": {
+      "field": "package",
+      "legend": {
+        "title": "Package"
+      },
+      "type": "nominal"
+    },
+    "tooltip": [
+      {
+        "field": "period",
+        "title": "Period",
+        "type": "ordinal"
+      },
+      {
+        "field": "package",
+        "title": "Package",
+        "type": "nominal"
+      },
+      {
+        "field": "count",
+        "format": ",d",
+        "title": "Downloads",
+        "type": "quantitative"
+      }
+    ],
+    "x": {
+      "axis": {
+        "labelAngle": -45,
+        "labelOverlap": false
+      },
+      "field": "period",
+      "title": "Period",
+      "type": "ordinal"
+    },
+    "y": {
+      "field": "count",
+      "title": "Downloads",
+      "type": "quantitative"
+    }
+  },
+  "height": 420,
+  "mark": {
+    "point": true,
+    "type": "line"
+  },
+  "params": [
+    {
+      "bind": "scales",
+      "name": "param_1e9efca18e7a2868",
+      "select": {
+        "encodings": [
+          "x",
+          "y"
+        ],
+        "type": "interval"
+      }
+    }
+  ],
+  "width": "container"
+}, {actions: false, renderer: "svg"})
+              .catch(console.error);
           </script>
         </div>
 
         <div class="tab-pane fade " id="pane-bioconda-downloads" role="tabpanel">
-          <div id="chart-bioconda-downloads" style="width:100%;height:480px;"></div>
+          <div id="chart-bioconda-downloads"></div>
           <script>
-            Plotly.newPlot(
-              "chart-bioconda-downloads",
-              [{"type": "scatter", "mode": "lines+markers", "name": "aoptk", "x": ["2026-01", "2026-02"], "y": [102, 102], "line": {"color": "#636EFA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "gc-meox-tms", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [3, 2, 10, 3, 7, 11, 8, 6, 6, 4, 3, 26, 12, 7, 20], "line": {"color": "#EF553B"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "matchms", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [891, 1011, 1089, 1155, 1159, 765, 591, 487, 494, 506, 509, 11095, 1644, 1905, 1602], "line": {"color": "#00CC96"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "ms2deepscore", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [392, 434, 473, 576, 698, 196, 142, 112, 84, 104, 61, 10033, 498, 552, 515], "line": {"color": "#AB63FA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "msmetaenhancer", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [20, 17, 66, 16, 49, 80, 59, 68, 38, 34, 20, 167, 79, 46, 113], "line": {"color": "#FFA15A"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "r-mfassignr", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [10, 5, 18, 12, 15, 15, 29, 16, 9, 11, 8, 11, 12, 5, 6], "line": {"color": "#19D3F3"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "r-ramclustr", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [16, 12, 50, 13, 40, 47, 66, 46, 28, 24, 15, 171, 71, 35, 94], "line": {"color": "#FF6692"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "r-recetox-aplcms", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [28, 20, 80, 20, 60, 70, 74, 110, 73, 59, 38, 444, 410, 386, 353], "line": {"color": "#B6E880"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "r-recetox-waveica", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [29, 6, 23, 5, 16, 19, 109, 39, 15, 20, 7, 5, 9, 13, 1], "line": {"color": "#FF97FF"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "r-recetox-xmsannotator", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [4, 5, 19, 4, 13, 15, 27, 15, 9, 8, 5, 58, 64, 66, 59], "line": {"color": "#FECB52"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "rcx-tk", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [3, 1, 5, 1, 3, 5, 19, 4, 2, 2, 3, 12, 7, 4, 28], "line": {"color": "#1F77B4"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "riassigner", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [11, 20, 41, 13, 45, 48, 40, 54, 47, 39, 28, 27, 13, 19, 6], "line": {"color": "#FF7F0E"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "spec2vec", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [18, 17, 16, 16, 22, 41, 22, 22, 22, 15, 21, 118, 87, 84, 74], "line": {"color": "#2CA02C"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "wtv", "x": ["2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [17, 28, 31, 5, 18, 2, 65, 62, 64, 56], "line": {"color": "#D62728"}, "marker": {"size": 5}}],
-              {"xaxis": {"title": "Period", "tickangle": -45}, "yaxis": {"title": "Downloads"}, "legend": {"orientation": "v", "x": 1.01, "y": 1}, "margin": {"l": 60, "r": 200, "t": 40, "b": 100}, "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "#ffffff"},
-              {responsive: true}
-            );
+            vegaEmbed("#chart-bioconda-downloads", {
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
+  "config": {
+    "view": {
+      "continuousHeight": 300,
+      "continuousWidth": 300
+    }
+  },
+  "data": {
+    "name": "data-e04119dfb851230318fe542a225bb9e0"
+  },
+  "datasets": {
+    "data-e04119dfb851230318fe542a225bb9e0": [
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2024-12"
+      },
+      {
+        "count": 18,
+        "package": "spec2vec",
+        "period": "2024-12"
+      },
+      {
+        "count": 11,
+        "package": "riassigner",
+        "period": "2024-12"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2024-12"
+      },
+      {
+        "count": 29,
+        "package": "r-recetox-waveica",
+        "period": "2024-12"
+      },
+      {
+        "count": 28,
+        "package": "r-recetox-aplcms",
+        "period": "2024-12"
+      },
+      {
+        "count": 4,
+        "package": "r-recetox-xmsannotator",
+        "period": "2024-12"
+      },
+      {
+        "count": 10,
+        "package": "r-mfassignr",
+        "period": "2024-12"
+      },
+      {
+        "count": 20,
+        "package": "msmetaenhancer",
+        "period": "2024-12"
+      },
+      {
+        "count": 392,
+        "package": "ms2deepscore",
+        "period": "2024-12"
+      },
+      {
+        "count": 891,
+        "package": "matchms",
+        "period": "2024-12"
+      },
+      {
+        "count": 16,
+        "package": "r-ramclustr",
+        "period": "2024-12"
+      },
+      {
+        "count": 6,
+        "package": "r-recetox-waveica",
+        "period": "2025-01"
+      },
+      {
+        "count": 17,
+        "package": "spec2vec",
+        "period": "2025-01"
+      },
+      {
+        "count": 20,
+        "package": "riassigner",
+        "period": "2025-01"
+      },
+      {
+        "count": 1,
+        "package": "rcx-tk",
+        "period": "2025-01"
+      },
+      {
+        "count": 20,
+        "package": "r-recetox-aplcms",
+        "period": "2025-01"
+      },
+      {
+        "count": 5,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-01"
+      },
+      {
+        "count": 5,
+        "package": "r-mfassignr",
+        "period": "2025-01"
+      },
+      {
+        "count": 17,
+        "package": "msmetaenhancer",
+        "period": "2025-01"
+      },
+      {
+        "count": 434,
+        "package": "ms2deepscore",
+        "period": "2025-01"
+      },
+      {
+        "count": 1011,
+        "package": "matchms",
+        "period": "2025-01"
+      },
+      {
+        "count": 2,
+        "package": "gc-meox-tms",
+        "period": "2025-01"
+      },
+      {
+        "count": 12,
+        "package": "r-ramclustr",
+        "period": "2025-01"
+      },
+      {
+        "count": 16,
+        "package": "spec2vec",
+        "period": "2025-02"
+      },
+      {
+        "count": 41,
+        "package": "riassigner",
+        "period": "2025-02"
+      },
+      {
+        "count": 5,
+        "package": "rcx-tk",
+        "period": "2025-02"
+      },
+      {
+        "count": 19,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-02"
+      },
+      {
+        "count": 23,
+        "package": "r-recetox-waveica",
+        "period": "2025-02"
+      },
+      {
+        "count": 80,
+        "package": "r-recetox-aplcms",
+        "period": "2025-02"
+      },
+      {
+        "count": 50,
+        "package": "r-ramclustr",
+        "period": "2025-02"
+      },
+      {
+        "count": 66,
+        "package": "msmetaenhancer",
+        "period": "2025-02"
+      },
+      {
+        "count": 473,
+        "package": "ms2deepscore",
+        "period": "2025-02"
+      },
+      {
+        "count": 1089,
+        "package": "matchms",
+        "period": "2025-02"
+      },
+      {
+        "count": 10,
+        "package": "gc-meox-tms",
+        "period": "2025-02"
+      },
+      {
+        "count": 18,
+        "package": "r-mfassignr",
+        "period": "2025-02"
+      },
+      {
+        "count": 5,
+        "package": "r-recetox-waveica",
+        "period": "2025-03"
+      },
+      {
+        "count": 16,
+        "package": "spec2vec",
+        "period": "2025-03"
+      },
+      {
+        "count": 13,
+        "package": "riassigner",
+        "period": "2025-03"
+      },
+      {
+        "count": 4,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-03"
+      },
+      {
+        "count": 20,
+        "package": "r-recetox-aplcms",
+        "period": "2025-03"
+      },
+      {
+        "count": 1,
+        "package": "rcx-tk",
+        "period": "2025-03"
+      },
+      {
+        "count": 12,
+        "package": "r-mfassignr",
+        "period": "2025-03"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2025-03"
+      },
+      {
+        "count": 1155,
+        "package": "matchms",
+        "period": "2025-03"
+      },
+      {
+        "count": 13,
+        "package": "r-ramclustr",
+        "period": "2025-03"
+      },
+      {
+        "count": 576,
+        "package": "ms2deepscore",
+        "period": "2025-03"
+      },
+      {
+        "count": 16,
+        "package": "msmetaenhancer",
+        "period": "2025-03"
+      },
+      {
+        "count": 22,
+        "package": "spec2vec",
+        "period": "2025-04"
+      },
+      {
+        "count": 45,
+        "package": "riassigner",
+        "period": "2025-04"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2025-04"
+      },
+      {
+        "count": 13,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-04"
+      },
+      {
+        "count": 60,
+        "package": "r-recetox-aplcms",
+        "period": "2025-04"
+      },
+      {
+        "count": 16,
+        "package": "r-recetox-waveica",
+        "period": "2025-04"
+      },
+      {
+        "count": 15,
+        "package": "r-mfassignr",
+        "period": "2025-04"
+      },
+      {
+        "count": 49,
+        "package": "msmetaenhancer",
+        "period": "2025-04"
+      },
+      {
+        "count": 698,
+        "package": "ms2deepscore",
+        "period": "2025-04"
+      },
+      {
+        "count": 1159,
+        "package": "matchms",
+        "period": "2025-04"
+      },
+      {
+        "count": 7,
+        "package": "gc-meox-tms",
+        "period": "2025-04"
+      },
+      {
+        "count": 40,
+        "package": "r-ramclustr",
+        "period": "2025-04"
+      },
+      {
+        "count": 17,
+        "package": "wtv",
+        "period": "2025-05"
+      },
+      {
+        "count": 41,
+        "package": "spec2vec",
+        "period": "2025-05"
+      },
+      {
+        "count": 48,
+        "package": "riassigner",
+        "period": "2025-05"
+      },
+      {
+        "count": 5,
+        "package": "rcx-tk",
+        "period": "2025-05"
+      },
+      {
+        "count": 15,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-05"
+      },
+      {
+        "count": 19,
+        "package": "r-recetox-waveica",
+        "period": "2025-05"
+      },
+      {
+        "count": 70,
+        "package": "r-recetox-aplcms",
+        "period": "2025-05"
+      },
+      {
+        "count": 15,
+        "package": "r-mfassignr",
+        "period": "2025-05"
+      },
+      {
+        "count": 80,
+        "package": "msmetaenhancer",
+        "period": "2025-05"
+      },
+      {
+        "count": 196,
+        "package": "ms2deepscore",
+        "period": "2025-05"
+      },
+      {
+        "count": 765,
+        "package": "matchms",
+        "period": "2025-05"
+      },
+      {
+        "count": 11,
+        "package": "gc-meox-tms",
+        "period": "2025-05"
+      },
+      {
+        "count": 47,
+        "package": "r-ramclustr",
+        "period": "2025-05"
+      },
+      {
+        "count": 28,
+        "package": "wtv",
+        "period": "2025-06"
+      },
+      {
+        "count": 22,
+        "package": "spec2vec",
+        "period": "2025-06"
+      },
+      {
+        "count": 40,
+        "package": "riassigner",
+        "period": "2025-06"
+      },
+      {
+        "count": 19,
+        "package": "rcx-tk",
+        "period": "2025-06"
+      },
+      {
+        "count": 27,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-06"
+      },
+      {
+        "count": 109,
+        "package": "r-recetox-waveica",
+        "period": "2025-06"
+      },
+      {
+        "count": 74,
+        "package": "r-recetox-aplcms",
+        "period": "2025-06"
+      },
+      {
+        "count": 29,
+        "package": "r-mfassignr",
+        "period": "2025-06"
+      },
+      {
+        "count": 59,
+        "package": "msmetaenhancer",
+        "period": "2025-06"
+      },
+      {
+        "count": 142,
+        "package": "ms2deepscore",
+        "period": "2025-06"
+      },
+      {
+        "count": 591,
+        "package": "matchms",
+        "period": "2025-06"
+      },
+      {
+        "count": 8,
+        "package": "gc-meox-tms",
+        "period": "2025-06"
+      },
+      {
+        "count": 66,
+        "package": "r-ramclustr",
+        "period": "2025-06"
+      },
+      {
+        "count": 39,
+        "package": "r-recetox-waveica",
+        "period": "2025-07"
+      },
+      {
+        "count": 31,
+        "package": "wtv",
+        "period": "2025-07"
+      },
+      {
+        "count": 22,
+        "package": "spec2vec",
+        "period": "2025-07"
+      },
+      {
+        "count": 54,
+        "package": "riassigner",
+        "period": "2025-07"
+      },
+      {
+        "count": 15,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-07"
+      },
+      {
+        "count": 110,
+        "package": "r-recetox-aplcms",
+        "period": "2025-07"
+      },
+      {
+        "count": 4,
+        "package": "rcx-tk",
+        "period": "2025-07"
+      },
+      {
+        "count": 16,
+        "package": "r-mfassignr",
+        "period": "2025-07"
+      },
+      {
+        "count": 6,
+        "package": "gc-meox-tms",
+        "period": "2025-07"
+      },
+      {
+        "count": 487,
+        "package": "matchms",
+        "period": "2025-07"
+      },
+      {
+        "count": 46,
+        "package": "r-ramclustr",
+        "period": "2025-07"
+      },
+      {
+        "count": 68,
+        "package": "msmetaenhancer",
+        "period": "2025-07"
+      },
+      {
+        "count": 112,
+        "package": "ms2deepscore",
+        "period": "2025-07"
+      },
+      {
+        "count": 9,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-08"
+      },
+      {
+        "count": 5,
+        "package": "wtv",
+        "period": "2025-08"
+      },
+      {
+        "count": 22,
+        "package": "spec2vec",
+        "period": "2025-08"
+      },
+      {
+        "count": 47,
+        "package": "riassigner",
+        "period": "2025-08"
+      },
+      {
+        "count": 2,
+        "package": "rcx-tk",
+        "period": "2025-08"
+      },
+      {
+        "count": 15,
+        "package": "r-recetox-waveica",
+        "period": "2025-08"
+      },
+      {
+        "count": 73,
+        "package": "r-recetox-aplcms",
+        "period": "2025-08"
+      },
+      {
+        "count": 28,
+        "package": "r-ramclustr",
+        "period": "2025-08"
+      },
+      {
+        "count": 9,
+        "package": "r-mfassignr",
+        "period": "2025-08"
+      },
+      {
+        "count": 38,
+        "package": "msmetaenhancer",
+        "period": "2025-08"
+      },
+      {
+        "count": 84,
+        "package": "ms2deepscore",
+        "period": "2025-08"
+      },
+      {
+        "count": 494,
+        "package": "matchms",
+        "period": "2025-08"
+      },
+      {
+        "count": 6,
+        "package": "gc-meox-tms",
+        "period": "2025-08"
+      },
+      {
+        "count": 15,
+        "package": "spec2vec",
+        "period": "2025-09"
+      },
+      {
+        "count": 39,
+        "package": "riassigner",
+        "period": "2025-09"
+      },
+      {
+        "count": 2,
+        "package": "rcx-tk",
+        "period": "2025-09"
+      },
+      {
+        "count": 8,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-09"
+      },
+      {
+        "count": 20,
+        "package": "r-recetox-waveica",
+        "period": "2025-09"
+      },
+      {
+        "count": 18,
+        "package": "wtv",
+        "period": "2025-09"
+      },
+      {
+        "count": 59,
+        "package": "r-recetox-aplcms",
+        "period": "2025-09"
+      },
+      {
+        "count": 11,
+        "package": "r-mfassignr",
+        "period": "2025-09"
+      },
+      {
+        "count": 34,
+        "package": "msmetaenhancer",
+        "period": "2025-09"
+      },
+      {
+        "count": 104,
+        "package": "ms2deepscore",
+        "period": "2025-09"
+      },
+      {
+        "count": 506,
+        "package": "matchms",
+        "period": "2025-09"
+      },
+      {
+        "count": 4,
+        "package": "gc-meox-tms",
+        "period": "2025-09"
+      },
+      {
+        "count": 24,
+        "package": "r-ramclustr",
+        "period": "2025-09"
+      },
+      {
+        "count": 2,
+        "package": "wtv",
+        "period": "2025-10"
+      },
+      {
+        "count": 21,
+        "package": "spec2vec",
+        "period": "2025-10"
+      },
+      {
+        "count": 28,
+        "package": "riassigner",
+        "period": "2025-10"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2025-10"
+      },
+      {
+        "count": 5,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-10"
+      },
+      {
+        "count": 7,
+        "package": "r-recetox-waveica",
+        "period": "2025-10"
+      },
+      {
+        "count": 38,
+        "package": "r-recetox-aplcms",
+        "period": "2025-10"
+      },
+      {
+        "count": 8,
+        "package": "r-mfassignr",
+        "period": "2025-10"
+      },
+      {
+        "count": 20,
+        "package": "msmetaenhancer",
+        "period": "2025-10"
+      },
+      {
+        "count": 61,
+        "package": "ms2deepscore",
+        "period": "2025-10"
+      },
+      {
+        "count": 509,
+        "package": "matchms",
+        "period": "2025-10"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2025-10"
+      },
+      {
+        "count": 15,
+        "package": "r-ramclustr",
+        "period": "2025-10"
+      },
+      {
+        "count": 65,
+        "package": "wtv",
+        "period": "2025-11"
+      },
+      {
+        "count": 118,
+        "package": "spec2vec",
+        "period": "2025-11"
+      },
+      {
+        "count": 27,
+        "package": "riassigner",
+        "period": "2025-11"
+      },
+      {
+        "count": 12,
+        "package": "rcx-tk",
+        "period": "2025-11"
+      },
+      {
+        "count": 58,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-11"
+      },
+      {
+        "count": 5,
+        "package": "r-recetox-waveica",
+        "period": "2025-11"
+      },
+      {
+        "count": 11,
+        "package": "r-mfassignr",
+        "period": "2025-11"
+      },
+      {
+        "count": 171,
+        "package": "r-ramclustr",
+        "period": "2025-11"
+      },
+      {
+        "count": 167,
+        "package": "msmetaenhancer",
+        "period": "2025-11"
+      },
+      {
+        "count": 10033,
+        "package": "ms2deepscore",
+        "period": "2025-11"
+      },
+      {
+        "count": 11095,
+        "package": "matchms",
+        "period": "2025-11"
+      },
+      {
+        "count": 26,
+        "package": "gc-meox-tms",
+        "period": "2025-11"
+      },
+      {
+        "count": 444,
+        "package": "r-recetox-aplcms",
+        "period": "2025-11"
+      },
+      {
+        "count": 62,
+        "package": "wtv",
+        "period": "2025-12"
+      },
+      {
+        "count": 87,
+        "package": "spec2vec",
+        "period": "2025-12"
+      },
+      {
+        "count": 13,
+        "package": "riassigner",
+        "period": "2025-12"
+      },
+      {
+        "count": 7,
+        "package": "rcx-tk",
+        "period": "2025-12"
+      },
+      {
+        "count": 64,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-12"
+      },
+      {
+        "count": 9,
+        "package": "r-recetox-waveica",
+        "period": "2025-12"
+      },
+      {
+        "count": 410,
+        "package": "r-recetox-aplcms",
+        "period": "2025-12"
+      },
+      {
+        "count": 71,
+        "package": "r-ramclustr",
+        "period": "2025-12"
+      },
+      {
+        "count": 12,
+        "package": "r-mfassignr",
+        "period": "2025-12"
+      },
+      {
+        "count": 79,
+        "package": "msmetaenhancer",
+        "period": "2025-12"
+      },
+      {
+        "count": 498,
+        "package": "ms2deepscore",
+        "period": "2025-12"
+      },
+      {
+        "count": 1644,
+        "package": "matchms",
+        "period": "2025-12"
+      },
+      {
+        "count": 12,
+        "package": "gc-meox-tms",
+        "period": "2025-12"
+      },
+      {
+        "count": 84,
+        "package": "spec2vec",
+        "period": "2026-01"
+      },
+      {
+        "count": 19,
+        "package": "riassigner",
+        "period": "2026-01"
+      },
+      {
+        "count": 4,
+        "package": "rcx-tk",
+        "period": "2026-01"
+      },
+      {
+        "count": 66,
+        "package": "r-recetox-xmsannotator",
+        "period": "2026-01"
+      },
+      {
+        "count": 64,
+        "package": "wtv",
+        "period": "2026-01"
+      },
+      {
+        "count": 13,
+        "package": "r-recetox-waveica",
+        "period": "2026-01"
+      },
+      {
+        "count": 386,
+        "package": "r-recetox-aplcms",
+        "period": "2026-01"
+      },
+      {
+        "count": 46,
+        "package": "msmetaenhancer",
+        "period": "2026-01"
+      },
+      {
+        "count": 5,
+        "package": "r-mfassignr",
+        "period": "2026-01"
+      },
+      {
+        "count": 552,
+        "package": "ms2deepscore",
+        "period": "2026-01"
+      },
+      {
+        "count": 1905,
+        "package": "matchms",
+        "period": "2026-01"
+      },
+      {
+        "count": 7,
+        "package": "gc-meox-tms",
+        "period": "2026-01"
+      },
+      {
+        "count": 102,
+        "package": "aoptk",
+        "period": "2026-01"
+      },
+      {
+        "count": 35,
+        "package": "r-ramclustr",
+        "period": "2026-01"
+      },
+      {
+        "count": 6,
+        "package": "riassigner",
+        "period": "2026-02"
+      },
+      {
+        "count": 28,
+        "package": "rcx-tk",
+        "period": "2026-02"
+      },
+      {
+        "count": 59,
+        "package": "r-recetox-xmsannotator",
+        "period": "2026-02"
+      },
+      {
+        "count": 1,
+        "package": "r-recetox-waveica",
+        "period": "2026-02"
+      },
+      {
+        "count": 353,
+        "package": "r-recetox-aplcms",
+        "period": "2026-02"
+      },
+      {
+        "count": 94,
+        "package": "r-ramclustr",
+        "period": "2026-02"
+      },
+      {
+        "count": 515,
+        "package": "ms2deepscore",
+        "period": "2026-02"
+      },
+      {
+        "count": 113,
+        "package": "msmetaenhancer",
+        "period": "2026-02"
+      },
+      {
+        "count": 1602,
+        "package": "matchms",
+        "period": "2026-02"
+      },
+      {
+        "count": 20,
+        "package": "gc-meox-tms",
+        "period": "2026-02"
+      },
+      {
+        "count": 102,
+        "package": "aoptk",
+        "period": "2026-02"
+      },
+      {
+        "count": 74,
+        "package": "spec2vec",
+        "period": "2026-02"
+      },
+      {
+        "count": 6,
+        "package": "r-mfassignr",
+        "period": "2026-02"
+      },
+      {
+        "count": 56,
+        "package": "wtv",
+        "period": "2026-02"
+      }
+    ]
+  },
+  "encoding": {
+    "color": {
+      "field": "package",
+      "legend": {
+        "title": "Package"
+      },
+      "type": "nominal"
+    },
+    "tooltip": [
+      {
+        "field": "period",
+        "title": "Period",
+        "type": "ordinal"
+      },
+      {
+        "field": "package",
+        "title": "Package",
+        "type": "nominal"
+      },
+      {
+        "field": "count",
+        "format": ",d",
+        "title": "Downloads",
+        "type": "quantitative"
+      }
+    ],
+    "x": {
+      "axis": {
+        "labelAngle": -45,
+        "labelOverlap": false
+      },
+      "field": "period",
+      "title": "Period",
+      "type": "ordinal"
+    },
+    "y": {
+      "field": "count",
+      "title": "Downloads",
+      "type": "quantitative"
+    }
+  },
+  "height": 420,
+  "mark": {
+    "point": true,
+    "type": "line"
+  },
+  "params": [
+    {
+      "bind": "scales",
+      "name": "param_1e9efca18e7a2868",
+      "select": {
+        "encodings": [
+          "x",
+          "y"
+        ],
+        "type": "interval"
+      }
+    }
+  ],
+  "width": "container"
+}, {actions: false, renderer: "svg"})
+              .catch(console.error);
           </script>
         </div>
 
         <div class="tab-pane fade " id="pane-cran-downloads" role="tabpanel">
-          <div id="chart-cran-downloads" style="width:100%;height:480px;"></div>
+          <div id="chart-cran-downloads"></div>
           <script>
-            Plotly.newPlot(
-              "chart-cran-downloads",
-              [{"type": "scatter", "mode": "lines+markers", "name": "RAMClustR", "x": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01"], "y": [330, 403, 254, 126, 96, 147, 104, 179, 98, 95, 86, 109, 44], "line": {"color": "#636EFA"}, "marker": {"size": 5}}],
-              {"xaxis": {"title": "Period", "tickangle": -45}, "yaxis": {"title": "Downloads"}, "legend": {"orientation": "v", "x": 1.01, "y": 1}, "margin": {"l": 60, "r": 200, "t": 40, "b": 100}, "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "#ffffff"},
-              {responsive: true}
-            );
+            vegaEmbed("#chart-cran-downloads", {
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
+  "config": {
+    "view": {
+      "continuousHeight": 300,
+      "continuousWidth": 300
+    }
+  },
+  "data": {
+    "name": "data-bf81e10345760b2c5038bd4f1290b35d"
+  },
+  "datasets": {
+    "data-bf81e10345760b2c5038bd4f1290b35d": [
+      {
+        "count": 330,
+        "package": "RAMClustR",
+        "period": "2025-01"
+      },
+      {
+        "count": 403,
+        "package": "RAMClustR",
+        "period": "2025-02"
+      },
+      {
+        "count": 254,
+        "package": "RAMClustR",
+        "period": "2025-03"
+      },
+      {
+        "count": 126,
+        "package": "RAMClustR",
+        "period": "2025-04"
+      },
+      {
+        "count": 96,
+        "package": "RAMClustR",
+        "period": "2025-05"
+      },
+      {
+        "count": 147,
+        "package": "RAMClustR",
+        "period": "2025-06"
+      },
+      {
+        "count": 104,
+        "package": "RAMClustR",
+        "period": "2025-07"
+      },
+      {
+        "count": 179,
+        "package": "RAMClustR",
+        "period": "2025-08"
+      },
+      {
+        "count": 98,
+        "package": "RAMClustR",
+        "period": "2025-09"
+      },
+      {
+        "count": 95,
+        "package": "RAMClustR",
+        "period": "2025-10"
+      },
+      {
+        "count": 86,
+        "package": "RAMClustR",
+        "period": "2025-11"
+      },
+      {
+        "count": 109,
+        "package": "RAMClustR",
+        "period": "2025-12"
+      },
+      {
+        "count": 44,
+        "package": "RAMClustR",
+        "period": "2026-01"
+      }
+    ]
+  },
+  "encoding": {
+    "color": {
+      "field": "package",
+      "legend": {
+        "title": "Package"
+      },
+      "type": "nominal"
+    },
+    "tooltip": [
+      {
+        "field": "period",
+        "title": "Period",
+        "type": "ordinal"
+      },
+      {
+        "field": "package",
+        "title": "Package",
+        "type": "nominal"
+      },
+      {
+        "field": "count",
+        "format": ",d",
+        "title": "Downloads",
+        "type": "quantitative"
+      }
+    ],
+    "x": {
+      "axis": {
+        "labelAngle": -45,
+        "labelOverlap": false
+      },
+      "field": "period",
+      "title": "Period",
+      "type": "ordinal"
+    },
+    "y": {
+      "field": "count",
+      "title": "Downloads",
+      "type": "quantitative"
+    }
+  },
+  "height": 420,
+  "mark": {
+    "point": true,
+    "type": "line"
+  },
+  "params": [
+    {
+      "bind": "scales",
+      "name": "param_1e9efca18e7a2868",
+      "select": {
+        "encodings": [
+          "x",
+          "y"
+        ],
+        "type": "interval"
+      }
+    }
+  ],
+  "width": "container"
+}, {actions: false, renderer: "svg"})
+              .catch(console.error);
           </script>
         </div>
 
         <div class="tab-pane fade " id="pane-github-clones" role="tabpanel">
-          <div id="chart-github-clones" style="width:100%;height:480px;"></div>
+          <div id="chart-github-clones"></div>
           <script>
-            Plotly.newPlot(
-              "chart-github-clones",
-              [{"type": "scatter", "mode": "lines+markers", "name": "MFAssignR", "x": ["2025-W51", "2026-W03", "2026-W04", "2026-W05", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [2, 2, 3, 4, 2, 1, 3, 1, 2, 10], "line": {"color": "#636EFA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "MSMetaEnhancer", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [42, 14, 5, 3, 5, 6, 3, 8, 7, 15, 15, 9, 48, 40], "line": {"color": "#EF553B"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "RIAssigner", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [15, 7, 7, 2, 1, 3, 12, 9, 6, 13, 15, 2, 112, 18], "line": {"color": "#00CC96"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "aoptk", "x": ["2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [1, 122, 172, 107, 36, 119, 56, 78, 14, 47, 78, 49], "line": {"color": "#AB63FA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "gc-meox-tms", "x": ["2025-W51", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [6, 1, 4, 1, 2, 1, 2, 3, 3, 3, 3, 1], "line": {"color": "#FFA15A"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "matchms", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [46, 191, 99, 214, 22, 51, 121, 55, 83, 101, 122, 15, 276, 370], "line": {"color": "#19D3F3"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "ms2deepscore", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [13, 5, 12, 5, 8, 18, 83, 28, 7, 20, 38, 13, 51, 25], "line": {"color": "#FF6692"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "rcx-tk", "x": ["2025-W51", "2025-W52", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [36, 6, 3, 1, 3, 6, 3, 3, 1, 51, 2, 11, 4], "line": {"color": "#B6E880"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-aplcms", "x": ["2025-W51", "2025-W52", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [24, 4, 18, 3, 5, 4, 5, 7, 9, 7, 2, 10], "line": {"color": "#FF97FF"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-msfinder", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [2, 2, 1, 1, 1, 3, 1, 1, 2, 4, 3, 1, 3], "line": {"color": "#FECB52"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-waveica", "x": ["2025-W51", "2025-W52", "2026-W03", "2026-W04", "2026-W05", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [1, 1, 1, 3, 2, 1, 3, 1, 1, 3], "line": {"color": "#1F77B4"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-xMSannotator", "x": ["2025-W52", "2026-W01", "2026-W03", "2026-W04", "2026-W05", "2026-W09", "2026-W10", "2026-W12"], "y": [2, 2, 2, 2, 3, 9, 1, 4], "line": {"color": "#FF7F0E"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "spec2vec", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [17, 6, 10, 4, 3, 9, 7, 12, 7, 10, 17, 2, 18, 8], "line": {"color": "#2CA02C"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "wtv", "x": ["2025-W51", "2025-W52", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [3, 1, 2, 1, 2, 1, 1, 4, 1, 1, 2, 3], "line": {"color": "#D62728"}, "marker": {"size": 5}}],
-              {"xaxis": {"title": "Period", "tickangle": -45}, "yaxis": {"title": "Downloads"}, "legend": {"orientation": "v", "x": 1.01, "y": 1}, "margin": {"l": 60, "r": 200, "t": 40, "b": 100}, "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "#ffffff"},
-              {responsive: true}
-            );
+            vegaEmbed("#chart-github-clones", {
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
+  "config": {
+    "view": {
+      "continuousHeight": 300,
+      "continuousWidth": 300
+    }
+  },
+  "data": {
+    "name": "data-dc77336e29b086749f9748780e40d721"
+  },
+  "datasets": {
+    "data-dc77336e29b086749f9748780e40d721": [
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2025-W51"
+      },
+      {
+        "count": 3,
+        "package": "wtv",
+        "period": "2025-W51"
+      },
+      {
+        "count": 17,
+        "package": "spec2vec",
+        "period": "2025-W51"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2025-W51"
+      },
+      {
+        "count": 24,
+        "package": "recetox-aplcms",
+        "period": "2025-W51"
+      },
+      {
+        "count": 36,
+        "package": "rcx-tk",
+        "period": "2025-W51"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2025-W51"
+      },
+      {
+        "count": 46,
+        "package": "matchms",
+        "period": "2025-W51"
+      },
+      {
+        "count": 6,
+        "package": "gc-meox-tms",
+        "period": "2025-W51"
+      },
+      {
+        "count": 15,
+        "package": "RIAssigner",
+        "period": "2025-W51"
+      },
+      {
+        "count": 42,
+        "package": "MSMetaEnhancer",
+        "period": "2025-W51"
+      },
+      {
+        "count": 13,
+        "package": "ms2deepscore",
+        "period": "2025-W51"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2025-W52"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2025-W52"
+      },
+      {
+        "count": 6,
+        "package": "spec2vec",
+        "period": "2025-W52"
+      },
+      {
+        "count": 2,
+        "package": "recetox-xMSannotator",
+        "period": "2025-W52"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2025-W52"
+      },
+      {
+        "count": 7,
+        "package": "RIAssigner",
+        "period": "2025-W52"
+      },
+      {
+        "count": 6,
+        "package": "rcx-tk",
+        "period": "2025-W52"
+      },
+      {
+        "count": 5,
+        "package": "ms2deepscore",
+        "period": "2025-W52"
+      },
+      {
+        "count": 191,
+        "package": "matchms",
+        "period": "2025-W52"
+      },
+      {
+        "count": 14,
+        "package": "MSMetaEnhancer",
+        "period": "2025-W52"
+      },
+      {
+        "count": 4,
+        "package": "recetox-aplcms",
+        "period": "2025-W52"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W01"
+      },
+      {
+        "count": 10,
+        "package": "spec2vec",
+        "period": "2026-W01"
+      },
+      {
+        "count": 2,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W01"
+      },
+      {
+        "count": 12,
+        "package": "ms2deepscore",
+        "period": "2026-W01"
+      },
+      {
+        "count": 5,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W01"
+      },
+      {
+        "count": 1,
+        "package": "aoptk",
+        "period": "2026-W01"
+      },
+      {
+        "count": 7,
+        "package": "RIAssigner",
+        "period": "2026-W01"
+      },
+      {
+        "count": 99,
+        "package": "matchms",
+        "period": "2026-W01"
+      },
+      {
+        "count": 2,
+        "package": "wtv",
+        "period": "2026-W02"
+      },
+      {
+        "count": 4,
+        "package": "spec2vec",
+        "period": "2026-W02"
+      },
+      {
+        "count": 18,
+        "package": "recetox-aplcms",
+        "period": "2026-W02"
+      },
+      {
+        "count": 5,
+        "package": "ms2deepscore",
+        "period": "2026-W02"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2026-W02"
+      },
+      {
+        "count": 1,
+        "package": "gc-meox-tms",
+        "period": "2026-W02"
+      },
+      {
+        "count": 122,
+        "package": "aoptk",
+        "period": "2026-W02"
+      },
+      {
+        "count": 2,
+        "package": "RIAssigner",
+        "period": "2026-W02"
+      },
+      {
+        "count": 3,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W02"
+      },
+      {
+        "count": 214,
+        "package": "matchms",
+        "period": "2026-W02"
+      },
+      {
+        "count": 3,
+        "package": "recetox-aplcms",
+        "period": "2026-W03"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W03"
+      },
+      {
+        "count": 3,
+        "package": "spec2vec",
+        "period": "2026-W03"
+      },
+      {
+        "count": 2,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W03"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2026-W03"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W03"
+      },
+      {
+        "count": 1,
+        "package": "rcx-tk",
+        "period": "2026-W03"
+      },
+      {
+        "count": 1,
+        "package": "RIAssigner",
+        "period": "2026-W03"
+      },
+      {
+        "count": 22,
+        "package": "matchms",
+        "period": "2026-W03"
+      },
+      {
+        "count": 4,
+        "package": "gc-meox-tms",
+        "period": "2026-W03"
+      },
+      {
+        "count": 172,
+        "package": "aoptk",
+        "period": "2026-W03"
+      },
+      {
+        "count": 8,
+        "package": "ms2deepscore",
+        "period": "2026-W03"
+      },
+      {
+        "count": 5,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W03"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2026-W03"
+      },
+      {
+        "count": 9,
+        "package": "spec2vec",
+        "period": "2026-W04"
+      },
+      {
+        "count": 2,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W04"
+      },
+      {
+        "count": 3,
+        "package": "recetox-waveica",
+        "period": "2026-W04"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W04"
+      },
+      {
+        "count": 5,
+        "package": "recetox-aplcms",
+        "period": "2026-W04"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2026-W04"
+      },
+      {
+        "count": 2,
+        "package": "wtv",
+        "period": "2026-W04"
+      },
+      {
+        "count": 51,
+        "package": "matchms",
+        "period": "2026-W04"
+      },
+      {
+        "count": 1,
+        "package": "gc-meox-tms",
+        "period": "2026-W04"
+      },
+      {
+        "count": 107,
+        "package": "aoptk",
+        "period": "2026-W04"
+      },
+      {
+        "count": 3,
+        "package": "RIAssigner",
+        "period": "2026-W04"
+      },
+      {
+        "count": 6,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W04"
+      },
+      {
+        "count": 3,
+        "package": "MFAssignR",
+        "period": "2026-W04"
+      },
+      {
+        "count": 18,
+        "package": "ms2deepscore",
+        "period": "2026-W04"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W05"
+      },
+      {
+        "count": 7,
+        "package": "spec2vec",
+        "period": "2026-W05"
+      },
+      {
+        "count": 3,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W05"
+      },
+      {
+        "count": 2,
+        "package": "recetox-waveica",
+        "period": "2026-W05"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W05"
+      },
+      {
+        "count": 4,
+        "package": "recetox-aplcms",
+        "period": "2026-W05"
+      },
+      {
+        "count": 6,
+        "package": "rcx-tk",
+        "period": "2026-W05"
+      },
+      {
+        "count": 121,
+        "package": "matchms",
+        "period": "2026-W05"
+      },
+      {
+        "count": 2,
+        "package": "gc-meox-tms",
+        "period": "2026-W05"
+      },
+      {
+        "count": 36,
+        "package": "aoptk",
+        "period": "2026-W05"
+      },
+      {
+        "count": 12,
+        "package": "RIAssigner",
+        "period": "2026-W05"
+      },
+      {
+        "count": 3,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W05"
+      },
+      {
+        "count": 4,
+        "package": "MFAssignR",
+        "period": "2026-W05"
+      },
+      {
+        "count": 83,
+        "package": "ms2deepscore",
+        "period": "2026-W05"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2026-W06"
+      },
+      {
+        "count": 12,
+        "package": "spec2vec",
+        "period": "2026-W06"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W06"
+      },
+      {
+        "count": 5,
+        "package": "recetox-aplcms",
+        "period": "2026-W06"
+      },
+      {
+        "count": 28,
+        "package": "ms2deepscore",
+        "period": "2026-W06"
+      },
+      {
+        "count": 119,
+        "package": "aoptk",
+        "period": "2026-W06"
+      },
+      {
+        "count": 1,
+        "package": "gc-meox-tms",
+        "period": "2026-W06"
+      },
+      {
+        "count": 55,
+        "package": "matchms",
+        "period": "2026-W06"
+      },
+      {
+        "count": 9,
+        "package": "RIAssigner",
+        "period": "2026-W06"
+      },
+      {
+        "count": 8,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W06"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W07"
+      },
+      {
+        "count": 7,
+        "package": "spec2vec",
+        "period": "2026-W07"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W07"
+      },
+      {
+        "count": 7,
+        "package": "recetox-aplcms",
+        "period": "2026-W07"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2026-W07"
+      },
+      {
+        "count": 7,
+        "package": "ms2deepscore",
+        "period": "2026-W07"
+      },
+      {
+        "count": 2,
+        "package": "gc-meox-tms",
+        "period": "2026-W07"
+      },
+      {
+        "count": 56,
+        "package": "aoptk",
+        "period": "2026-W07"
+      },
+      {
+        "count": 6,
+        "package": "RIAssigner",
+        "period": "2026-W07"
+      },
+      {
+        "count": 7,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W07"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2026-W07"
+      },
+      {
+        "count": 83,
+        "package": "matchms",
+        "period": "2026-W07"
+      },
+      {
+        "count": 1,
+        "package": "rcx-tk",
+        "period": "2026-W08"
+      },
+      {
+        "count": 4,
+        "package": "wtv",
+        "period": "2026-W08"
+      },
+      {
+        "count": 10,
+        "package": "spec2vec",
+        "period": "2026-W08"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2026-W08"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2026-W08"
+      },
+      {
+        "count": 20,
+        "package": "ms2deepscore",
+        "period": "2026-W08"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W08"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2026-W08"
+      },
+      {
+        "count": 78,
+        "package": "aoptk",
+        "period": "2026-W08"
+      },
+      {
+        "count": 13,
+        "package": "RIAssigner",
+        "period": "2026-W08"
+      },
+      {
+        "count": 15,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W08"
+      },
+      {
+        "count": 101,
+        "package": "matchms",
+        "period": "2026-W08"
+      },
+      {
+        "count": 9,
+        "package": "recetox-aplcms",
+        "period": "2026-W09"
+      },
+      {
+        "count": 17,
+        "package": "spec2vec",
+        "period": "2026-W09"
+      },
+      {
+        "count": 9,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W09"
+      },
+      {
+        "count": 3,
+        "package": "recetox-waveica",
+        "period": "2026-W09"
+      },
+      {
+        "count": 4,
+        "package": "recetox-msfinder",
+        "period": "2026-W09"
+      },
+      {
+        "count": 51,
+        "package": "rcx-tk",
+        "period": "2026-W09"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W09"
+      },
+      {
+        "count": 122,
+        "package": "matchms",
+        "period": "2026-W09"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2026-W09"
+      },
+      {
+        "count": 14,
+        "package": "aoptk",
+        "period": "2026-W09"
+      },
+      {
+        "count": 15,
+        "package": "RIAssigner",
+        "period": "2026-W09"
+      },
+      {
+        "count": 15,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W09"
+      },
+      {
+        "count": 3,
+        "package": "MFAssignR",
+        "period": "2026-W09"
+      },
+      {
+        "count": 38,
+        "package": "ms2deepscore",
+        "period": "2026-W09"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W10"
+      },
+      {
+        "count": 2,
+        "package": "spec2vec",
+        "period": "2026-W10"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W10"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2026-W10"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W10"
+      },
+      {
+        "count": 7,
+        "package": "recetox-aplcms",
+        "period": "2026-W10"
+      },
+      {
+        "count": 2,
+        "package": "rcx-tk",
+        "period": "2026-W10"
+      },
+      {
+        "count": 13,
+        "package": "ms2deepscore",
+        "period": "2026-W10"
+      },
+      {
+        "count": 15,
+        "package": "matchms",
+        "period": "2026-W10"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2026-W10"
+      },
+      {
+        "count": 47,
+        "package": "aoptk",
+        "period": "2026-W10"
+      },
+      {
+        "count": 2,
+        "package": "RIAssigner",
+        "period": "2026-W10"
+      },
+      {
+        "count": 9,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W10"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W10"
+      },
+      {
+        "count": 18,
+        "package": "spec2vec",
+        "period": "2026-W11"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2026-W11"
+      },
+      {
+        "count": 2,
+        "package": "wtv",
+        "period": "2026-W11"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W11"
+      },
+      {
+        "count": 2,
+        "package": "recetox-aplcms",
+        "period": "2026-W11"
+      },
+      {
+        "count": 11,
+        "package": "rcx-tk",
+        "period": "2026-W11"
+      },
+      {
+        "count": 112,
+        "package": "RIAssigner",
+        "period": "2026-W11"
+      },
+      {
+        "count": 276,
+        "package": "matchms",
+        "period": "2026-W11"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2026-W11"
+      },
+      {
+        "count": 78,
+        "package": "aoptk",
+        "period": "2026-W11"
+      },
+      {
+        "count": 48,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W11"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2026-W11"
+      },
+      {
+        "count": 51,
+        "package": "ms2deepscore",
+        "period": "2026-W11"
+      },
+      {
+        "count": 4,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W12"
+      },
+      {
+        "count": 3,
+        "package": "recetox-waveica",
+        "period": "2026-W12"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W12"
+      },
+      {
+        "count": 10,
+        "package": "recetox-aplcms",
+        "period": "2026-W12"
+      },
+      {
+        "count": 4,
+        "package": "rcx-tk",
+        "period": "2026-W12"
+      },
+      {
+        "count": 25,
+        "package": "ms2deepscore",
+        "period": "2026-W12"
+      },
+      {
+        "count": 49,
+        "package": "aoptk",
+        "period": "2026-W12"
+      },
+      {
+        "count": 1,
+        "package": "gc-meox-tms",
+        "period": "2026-W12"
+      },
+      {
+        "count": 18,
+        "package": "RIAssigner",
+        "period": "2026-W12"
+      },
+      {
+        "count": 40,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W12"
+      },
+      {
+        "count": 10,
+        "package": "MFAssignR",
+        "period": "2026-W12"
+      },
+      {
+        "count": 8,
+        "package": "spec2vec",
+        "period": "2026-W12"
+      },
+      {
+        "count": 370,
+        "package": "matchms",
+        "period": "2026-W12"
+      },
+      {
+        "count": 3,
+        "package": "wtv",
+        "period": "2026-W12"
+      }
+    ]
+  },
+  "encoding": {
+    "color": {
+      "field": "package",
+      "legend": {
+        "title": "Package"
+      },
+      "type": "nominal"
+    },
+    "tooltip": [
+      {
+        "field": "period",
+        "title": "Period",
+        "type": "ordinal"
+      },
+      {
+        "field": "package",
+        "title": "Package",
+        "type": "nominal"
+      },
+      {
+        "field": "count",
+        "format": ",d",
+        "title": "Clones",
+        "type": "quantitative"
+      }
+    ],
+    "x": {
+      "axis": {
+        "labelAngle": -45,
+        "labelOverlap": false
+      },
+      "field": "period",
+      "title": "Period",
+      "type": "ordinal"
+    },
+    "y": {
+      "field": "count",
+      "title": "Clones",
+      "type": "quantitative"
+    }
+  },
+  "height": 420,
+  "mark": {
+    "point": true,
+    "type": "line"
+  },
+  "params": [
+    {
+      "bind": "scales",
+      "name": "param_1e9efca18e7a2868",
+      "select": {
+        "encodings": [
+          "x",
+          "y"
+        ],
+        "type": "interval"
+      }
+    }
+  ],
+  "width": "container"
+}, {actions: false, renderer: "svg"})
+              .catch(console.error);
           </script>
         </div>
 
         <div class="tab-pane fade " id="pane-github-views" role="tabpanel">
-          <div id="chart-github-views" style="width:100%;height:480px;"></div>
+          <div id="chart-github-views"></div>
           <script>
-            Plotly.newPlot(
-              "chart-github-views",
-              [{"type": "scatter", "mode": "lines+markers", "name": "MFAssignR", "x": ["2025-W51", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W12"], "y": [3, 3, 1, 1, 1, 1, 3, 2, 2, 1], "line": {"color": "#636EFA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "MSMetaEnhancer", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [4, 8, 2, 5, 1, 9, 6, 4, 3, 2, 6, 3, 9, 4], "line": {"color": "#EF553B"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "RIAssigner", "x": ["2025-W51", "2025-W52", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [2, 3, 1, 8, 4, 5, 1, 3, 2, 2, 1, 4, 4], "line": {"color": "#00CC96"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "aoptk", "x": ["2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [2, 12, 12, 13, 8, 8, 8, 8, 5, 1, 11, 7], "line": {"color": "#AB63FA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "gc-meox-tms", "x": ["2026-W03"], "y": [1], "line": {"color": "#FFA15A"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "matchms", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [80, 68, 31, 56, 12, 89, 91, 74, 94, 53, 101, 21, 121, 108], "line": {"color": "#19D3F3"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "ms2deepscore", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [28, 22, 9, 20, 15, 63, 37, 38, 35, 36, 42, 5, 50, 90], "line": {"color": "#FF6692"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "rcx-tk", "x": ["2025-W51", "2026-W04", "2026-W09"], "y": [3, 1, 2], "line": {"color": "#B6E880"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-aplcms", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [9, 2, 1, 9, 2, 8, 4, 5, 9, 5, 1, 9, 4], "line": {"color": "#FF97FF"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-msfinder", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [2, 1, 2, 3, 3, 6, 2, 3, 1, 2, 5, 3, 3, 6], "line": {"color": "#FECB52"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-waveica", "x": ["2026-W06"], "y": [2], "line": {"color": "#1F77B4"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-xMSannotator", "x": ["2025-W51", "2025-W52", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W07", "2026-W08", "2026-W09", "2026-W11"], "y": [3, 1, 1, 1, 1, 3, 1, 3, 2, 1], "line": {"color": "#FF7F0E"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "spec2vec", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [18, 11, 5, 18, 7, 20, 18, 16, 14, 16, 28, 4, 29, 25], "line": {"color": "#2CA02C"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "wtv", "x": ["2026-W03", "2026-W04", "2026-W10", "2026-W11"], "y": [18, 1, 1, 1], "line": {"color": "#D62728"}, "marker": {"size": 5}}],
-              {"xaxis": {"title": "Period", "tickangle": -45}, "yaxis": {"title": "Downloads"}, "legend": {"orientation": "v", "x": 1.01, "y": 1}, "margin": {"l": 60, "r": 200, "t": 40, "b": 100}, "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "#ffffff"},
-              {responsive: true}
-            );
+            vegaEmbed("#chart-github-views", {
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
+  "config": {
+    "view": {
+      "continuousHeight": 300,
+      "continuousWidth": 300
+    }
+  },
+  "data": {
+    "name": "data-9a79fde345cbbcfe786b4fcd115d0e33"
+  },
+  "datasets": {
+    "data-9a79fde345cbbcfe786b4fcd115d0e33": [
+      {
+        "count": 3,
+        "package": "MFAssignR",
+        "period": "2025-W51"
+      },
+      {
+        "count": 4,
+        "package": "MSMetaEnhancer",
+        "period": "2025-W51"
+      },
+      {
+        "count": 2,
+        "package": "RIAssigner",
+        "period": "2025-W51"
+      },
+      {
+        "count": 80,
+        "package": "matchms",
+        "period": "2025-W51"
+      },
+      {
+        "count": 28,
+        "package": "ms2deepscore",
+        "period": "2025-W51"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2025-W51"
+      },
+      {
+        "count": 9,
+        "package": "recetox-aplcms",
+        "period": "2025-W51"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2025-W51"
+      },
+      {
+        "count": 3,
+        "package": "recetox-xMSannotator",
+        "period": "2025-W51"
+      },
+      {
+        "count": 18,
+        "package": "spec2vec",
+        "period": "2025-W51"
+      },
+      {
+        "count": 11,
+        "package": "spec2vec",
+        "period": "2025-W52"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2025-W52"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2025-W52"
+      },
+      {
+        "count": 2,
+        "package": "recetox-aplcms",
+        "period": "2025-W52"
+      },
+      {
+        "count": 68,
+        "package": "matchms",
+        "period": "2025-W52"
+      },
+      {
+        "count": 3,
+        "package": "RIAssigner",
+        "period": "2025-W52"
+      },
+      {
+        "count": 8,
+        "package": "MSMetaEnhancer",
+        "period": "2025-W52"
+      },
+      {
+        "count": 22,
+        "package": "ms2deepscore",
+        "period": "2025-W52"
+      },
+      {
+        "count": 2,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W01"
+      },
+      {
+        "count": 2,
+        "package": "aoptk",
+        "period": "2026-W01"
+      },
+      {
+        "count": 31,
+        "package": "matchms",
+        "period": "2026-W01"
+      },
+      {
+        "count": 9,
+        "package": "ms2deepscore",
+        "period": "2026-W01"
+      },
+      {
+        "count": 1,
+        "package": "recetox-aplcms",
+        "period": "2026-W01"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2026-W01"
+      },
+      {
+        "count": 5,
+        "package": "spec2vec",
+        "period": "2026-W01"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W02"
+      },
+      {
+        "count": 18,
+        "package": "spec2vec",
+        "period": "2026-W02"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W02"
+      },
+      {
+        "count": 20,
+        "package": "ms2deepscore",
+        "period": "2026-W02"
+      },
+      {
+        "count": 9,
+        "package": "recetox-aplcms",
+        "period": "2026-W02"
+      },
+      {
+        "count": 12,
+        "package": "aoptk",
+        "period": "2026-W02"
+      },
+      {
+        "count": 56,
+        "package": "matchms",
+        "period": "2026-W02"
+      },
+      {
+        "count": 1,
+        "package": "RIAssigner",
+        "period": "2026-W02"
+      },
+      {
+        "count": 5,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W02"
+      },
+      {
+        "count": 3,
+        "package": "MFAssignR",
+        "period": "2026-W02"
+      },
+      {
+        "count": 7,
+        "package": "spec2vec",
+        "period": "2026-W03"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W03"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W03"
+      },
+      {
+        "count": 2,
+        "package": "recetox-aplcms",
+        "period": "2026-W03"
+      },
+      {
+        "count": 15,
+        "package": "ms2deepscore",
+        "period": "2026-W03"
+      },
+      {
+        "count": 18,
+        "package": "wtv",
+        "period": "2026-W03"
+      },
+      {
+        "count": 1,
+        "package": "gc-meox-tms",
+        "period": "2026-W03"
+      },
+      {
+        "count": 12,
+        "package": "aoptk",
+        "period": "2026-W03"
+      },
+      {
+        "count": 8,
+        "package": "RIAssigner",
+        "period": "2026-W03"
+      },
+      {
+        "count": 1,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W03"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W03"
+      },
+      {
+        "count": 12,
+        "package": "matchms",
+        "period": "2026-W03"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W04"
+      },
+      {
+        "count": 20,
+        "package": "spec2vec",
+        "period": "2026-W04"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W04"
+      },
+      {
+        "count": 6,
+        "package": "recetox-msfinder",
+        "period": "2026-W04"
+      },
+      {
+        "count": 8,
+        "package": "recetox-aplcms",
+        "period": "2026-W04"
+      },
+      {
+        "count": 1,
+        "package": "rcx-tk",
+        "period": "2026-W04"
+      },
+      {
+        "count": 89,
+        "package": "matchms",
+        "period": "2026-W04"
+      },
+      {
+        "count": 13,
+        "package": "aoptk",
+        "period": "2026-W04"
+      },
+      {
+        "count": 4,
+        "package": "RIAssigner",
+        "period": "2026-W04"
+      },
+      {
+        "count": 9,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W04"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W04"
+      },
+      {
+        "count": 63,
+        "package": "ms2deepscore",
+        "period": "2026-W04"
+      },
+      {
+        "count": 4,
+        "package": "recetox-aplcms",
+        "period": "2026-W05"
+      },
+      {
+        "count": 3,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W05"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2026-W05"
+      },
+      {
+        "count": 37,
+        "package": "ms2deepscore",
+        "period": "2026-W05"
+      },
+      {
+        "count": 18,
+        "package": "spec2vec",
+        "period": "2026-W05"
+      },
+      {
+        "count": 8,
+        "package": "aoptk",
+        "period": "2026-W05"
+      },
+      {
+        "count": 5,
+        "package": "RIAssigner",
+        "period": "2026-W05"
+      },
+      {
+        "count": 6,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W05"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W05"
+      },
+      {
+        "count": 91,
+        "package": "matchms",
+        "period": "2026-W05"
+      },
+      {
+        "count": 16,
+        "package": "spec2vec",
+        "period": "2026-W06"
+      },
+      {
+        "count": 2,
+        "package": "recetox-waveica",
+        "period": "2026-W06"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W06"
+      },
+      {
+        "count": 5,
+        "package": "recetox-aplcms",
+        "period": "2026-W06"
+      },
+      {
+        "count": 38,
+        "package": "ms2deepscore",
+        "period": "2026-W06"
+      },
+      {
+        "count": 74,
+        "package": "matchms",
+        "period": "2026-W06"
+      },
+      {
+        "count": 8,
+        "package": "aoptk",
+        "period": "2026-W06"
+      },
+      {
+        "count": 1,
+        "package": "RIAssigner",
+        "period": "2026-W06"
+      },
+      {
+        "count": 4,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W06"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W06"
+      },
+      {
+        "count": 14,
+        "package": "spec2vec",
+        "period": "2026-W07"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W07"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W07"
+      },
+      {
+        "count": 9,
+        "package": "recetox-aplcms",
+        "period": "2026-W07"
+      },
+      {
+        "count": 35,
+        "package": "ms2deepscore",
+        "period": "2026-W07"
+      },
+      {
+        "count": 94,
+        "package": "matchms",
+        "period": "2026-W07"
+      },
+      {
+        "count": 8,
+        "package": "aoptk",
+        "period": "2026-W07"
+      },
+      {
+        "count": 3,
+        "package": "RIAssigner",
+        "period": "2026-W07"
+      },
+      {
+        "count": 3,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W07"
+      },
+      {
+        "count": 3,
+        "package": "MFAssignR",
+        "period": "2026-W07"
+      },
+      {
+        "count": 16,
+        "package": "spec2vec",
+        "period": "2026-W08"
+      },
+      {
+        "count": 3,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W08"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2026-W08"
+      },
+      {
+        "count": 36,
+        "package": "ms2deepscore",
+        "period": "2026-W08"
+      },
+      {
+        "count": 53,
+        "package": "matchms",
+        "period": "2026-W08"
+      },
+      {
+        "count": 8,
+        "package": "aoptk",
+        "period": "2026-W08"
+      },
+      {
+        "count": 2,
+        "package": "RIAssigner",
+        "period": "2026-W08"
+      },
+      {
+        "count": 2,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W08"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2026-W08"
+      },
+      {
+        "count": 2,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W09"
+      },
+      {
+        "count": 5,
+        "package": "recetox-msfinder",
+        "period": "2026-W09"
+      },
+      {
+        "count": 28,
+        "package": "spec2vec",
+        "period": "2026-W09"
+      },
+      {
+        "count": 5,
+        "package": "recetox-aplcms",
+        "period": "2026-W09"
+      },
+      {
+        "count": 2,
+        "package": "rcx-tk",
+        "period": "2026-W09"
+      },
+      {
+        "count": 2,
+        "package": "RIAssigner",
+        "period": "2026-W09"
+      },
+      {
+        "count": 101,
+        "package": "matchms",
+        "period": "2026-W09"
+      },
+      {
+        "count": 5,
+        "package": "aoptk",
+        "period": "2026-W09"
+      },
+      {
+        "count": 6,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W09"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2026-W09"
+      },
+      {
+        "count": 42,
+        "package": "ms2deepscore",
+        "period": "2026-W09"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W10"
+      },
+      {
+        "count": 4,
+        "package": "spec2vec",
+        "period": "2026-W10"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W10"
+      },
+      {
+        "count": 1,
+        "package": "recetox-aplcms",
+        "period": "2026-W10"
+      },
+      {
+        "count": 5,
+        "package": "ms2deepscore",
+        "period": "2026-W10"
+      },
+      {
+        "count": 21,
+        "package": "matchms",
+        "period": "2026-W10"
+      },
+      {
+        "count": 1,
+        "package": "aoptk",
+        "period": "2026-W10"
+      },
+      {
+        "count": 1,
+        "package": "RIAssigner",
+        "period": "2026-W10"
+      },
+      {
+        "count": 3,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W10"
+      },
+      {
+        "count": 29,
+        "package": "spec2vec",
+        "period": "2026-W11"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W11"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W11"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W11"
+      },
+      {
+        "count": 9,
+        "package": "recetox-aplcms",
+        "period": "2026-W11"
+      },
+      {
+        "count": 11,
+        "package": "aoptk",
+        "period": "2026-W11"
+      },
+      {
+        "count": 121,
+        "package": "matchms",
+        "period": "2026-W11"
+      },
+      {
+        "count": 4,
+        "package": "RIAssigner",
+        "period": "2026-W11"
+      },
+      {
+        "count": 9,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W11"
+      },
+      {
+        "count": 50,
+        "package": "ms2deepscore",
+        "period": "2026-W11"
+      },
+      {
+        "count": 6,
+        "package": "recetox-msfinder",
+        "period": "2026-W12"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W12"
+      },
+      {
+        "count": 4,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W12"
+      },
+      {
+        "count": 4,
+        "package": "RIAssigner",
+        "period": "2026-W12"
+      },
+      {
+        "count": 7,
+        "package": "aoptk",
+        "period": "2026-W12"
+      },
+      {
+        "count": 108,
+        "package": "matchms",
+        "period": "2026-W12"
+      },
+      {
+        "count": 90,
+        "package": "ms2deepscore",
+        "period": "2026-W12"
+      },
+      {
+        "count": 4,
+        "package": "recetox-aplcms",
+        "period": "2026-W12"
+      },
+      {
+        "count": 25,
+        "package": "spec2vec",
+        "period": "2026-W12"
+      }
+    ]
+  },
+  "encoding": {
+    "color": {
+      "field": "package",
+      "legend": {
+        "title": "Package"
+      },
+      "type": "nominal"
+    },
+    "tooltip": [
+      {
+        "field": "period",
+        "title": "Period",
+        "type": "ordinal"
+      },
+      {
+        "field": "package",
+        "title": "Package",
+        "type": "nominal"
+      },
+      {
+        "field": "count",
+        "format": ",d",
+        "title": "Views",
+        "type": "quantitative"
+      }
+    ],
+    "x": {
+      "axis": {
+        "labelAngle": -45,
+        "labelOverlap": false
+      },
+      "field": "period",
+      "title": "Period",
+      "type": "ordinal"
+    },
+    "y": {
+      "field": "count",
+      "title": "Views",
+      "type": "quantitative"
+    }
+  },
+  "height": 420,
+  "mark": {
+    "point": true,
+    "type": "line"
+  },
+  "params": [
+    {
+      "bind": "scales",
+      "name": "param_1e9efca18e7a2868",
+      "select": {
+        "encodings": [
+          "x",
+          "y"
+        ],
+        "type": "interval"
+      }
+    }
+  ],
+  "width": "container"
+}, {actions: false, renderer: "svg"})
+              .catch(console.error);
           </script>
         </div>
     </div>
@@ -168,9 +3288,9 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmB7sQEq87UEJ9w6N3EFUfg7/rM"
     crossorigin="anonymous"
   ></script>
-  <!-- Plotly.js (no official SRI hash provided by the CDN; pin version to reduce risk) -->
-  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"
-          charset="utf-8"
-          crossorigin="anonymous"></script>
+  <!-- Vega / Vega-Lite / Vega-Embed (used by Altair charts) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@6" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.1.0" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@7" crossorigin="anonymous"></script>
 </body>
 </html>
