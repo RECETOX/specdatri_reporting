@@ -3,3 +3,4 @@ orjson==3.10.15
 requests==2.32.3
 python_dotenv==1.0.1
 condastats==0.2.1
+altair==6.0.0
