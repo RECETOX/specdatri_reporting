@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RECETOX – Download Statistics Dashboard</title>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+  <style>
+    body { background: #f0f2f5; }
+    .navbar { background: #0d6efd; }
+    .tab-content { background: #fff; border: 1px solid #dee2e6;
+                    border-top: none; padding: 1.25rem; border-radius: 0 0 .375rem .375rem; }
+    .nav-tabs .nav-link.active { font-weight: 600; }
+    .summary-cards { margin-bottom: 1.5rem; }
+    footer { font-size: .8rem; color: #6c757d; text-align: center; margin: 2rem 0 1rem; }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-dark mb-4">
+    <div class="container">
+      <span class="navbar-brand fw-bold">
+        📊 RECETOX – Download Statistics Dashboard
+      </span>
+    </div>
+  </nav>
+
+  <div class="container-fluid px-4">
+
+    <!-- Summary cards -->
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 g-3 summary-cards">
+      
+        <div class="col">
+          <div class="card h-100 text-center shadow-sm">
+            <div class="card-body">
+              <div style="font-size:2rem">📦</div>
+              <h6 class="card-subtitle mb-1 text-muted">PyPI Downloads</h6>
+              <p class="card-text fs-4 fw-bold">208,508</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100 text-center shadow-sm">
+            <div class="card-body">
+              <div style="font-size:2rem">🐍</div>
+              <h6 class="card-subtitle mb-1 text-muted">Bioconda Downloads</h6>
+              <p class="card-text fs-4 fw-bold">46,292</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100 text-center shadow-sm">
+            <div class="card-body">
+              <div style="font-size:2rem">📊</div>
+              <h6 class="card-subtitle mb-1 text-muted">CRAN Downloads</h6>
+              <p class="card-text fs-4 fw-bold">2,071</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100 text-center shadow-sm">
+            <div class="card-body">
+              <div style="font-size:2rem">🔁</div>
+              <h6 class="card-subtitle mb-1 text-muted">GitHub Clones</h6>
+              <p class="card-text fs-4 fw-bold">3,920</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100 text-center shadow-sm">
+            <div class="card-body">
+              <div style="font-size:2rem">👁️</div>
+              <h6 class="card-subtitle mb-1 text-muted">GitHub Views</h6>
+              <p class="card-text fs-4 fw-bold">2,094</p>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item" role="presentation"><button class="nav-link active" id="tab-pypi-downloads" data-bs-toggle="tab" data-bs-target="#pane-pypi-downloads" type="button" role="tab" aria-selected="true">PyPI Downloads</button></li>
+<li class="nav-item" role="presentation"><button class="nav-link " id="tab-bioconda-downloads" data-bs-toggle="tab" data-bs-target="#pane-bioconda-downloads" type="button" role="tab" aria-selected="false">Bioconda Downloads</button></li>
+<li class="nav-item" role="presentation"><button class="nav-link " id="tab-cran-downloads" data-bs-toggle="tab" data-bs-target="#pane-cran-downloads" type="button" role="tab" aria-selected="false">CRAN Downloads</button></li>
+<li class="nav-item" role="presentation"><button class="nav-link " id="tab-github-clones" data-bs-toggle="tab" data-bs-target="#pane-github-clones" type="button" role="tab" aria-selected="false">GitHub Clones</button></li>
+<li class="nav-item" role="presentation"><button class="nav-link " id="tab-github-views" data-bs-toggle="tab" data-bs-target="#pane-github-views" type="button" role="tab" aria-selected="false">GitHub Views</button></li>
+    </ul>
+    <div class="tab-content">
+      
+        <div class="tab-pane fade show active" id="pane-pypi-downloads" role="tabpanel">
+          <div id="chart-pypi-downloads" style="width:100%;height:480px;"></div>
+          <script>
+            Plotly.newPlot(
+              "chart-pypi-downloads",
+              [{"type": "scatter", "mode": "lines+markers", "name": "MSMetaEnhancer", "x": ["2025-11", "2025-12", "2026-01", "2026-02"], "y": [212, 239, 228, 207], "line": {"color": "#636EFA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "RIAssigner", "x": ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [1186, 986, 1261, 1629, 925], "line": {"color": "#EF553B"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "aoptk", "x": ["2026-02"], "y": [1257], "line": {"color": "#00CC96"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "gc-meox-tms", "x": ["2025-11", "2025-12", "2026-01", "2026-02"], "y": [58, 66, 63, 74], "line": {"color": "#AB63FA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "matchms", "x": ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [33422, 52893, 20160, 21672, 22268], "line": {"color": "#FFA15A"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "ms2deepscore", "x": ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [6617, 6225, 5756, 7279, 6154], "line": {"color": "#19D3F3"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "rcx-tk", "x": ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [37, 48, 53, 49, 328], "line": {"color": "#FF6692"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "spec2vec", "x": ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [4661, 7410, 1315, 1639, 1601], "line": {"color": "#B6E880"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "wtv", "x": ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [84, 120, 145, 80, 101], "line": {"color": "#FF97FF"}, "marker": {"size": 5}}],
+              {"xaxis": {"title": "Period", "tickangle": -45}, "yaxis": {"title": "Downloads"}, "legend": {"orientation": "v", "x": 1.01, "y": 1}, "margin": {"l": 60, "r": 200, "t": 40, "b": 100}, "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "#ffffff"},
+              {responsive: true}
+            );
+          </script>
+        </div>
+
+        <div class="tab-pane fade " id="pane-bioconda-downloads" role="tabpanel">
+          <div id="chart-bioconda-downloads" style="width:100%;height:480px;"></div>
+          <script>
+            Plotly.newPlot(
+              "chart-bioconda-downloads",
+              [{"type": "scatter", "mode": "lines+markers", "name": "aoptk", "x": ["2026-01", "2026-02"], "y": [102, 102], "line": {"color": "#636EFA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "gc-meox-tms", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [3, 2, 10, 3, 7, 11, 8, 6, 6, 4, 3, 26, 12, 7, 20], "line": {"color": "#EF553B"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "matchms", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [891, 1011, 1089, 1155, 1159, 765, 591, 487, 494, 506, 509, 11095, 1644, 1905, 1602], "line": {"color": "#00CC96"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "ms2deepscore", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [392, 434, 473, 576, 698, 196, 142, 112, 84, 104, 61, 10033, 498, 552, 515], "line": {"color": "#AB63FA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "msmetaenhancer", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [20, 17, 66, 16, 49, 80, 59, 68, 38, 34, 20, 167, 79, 46, 113], "line": {"color": "#FFA15A"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "r-mfassignr", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [10, 5, 18, 12, 15, 15, 29, 16, 9, 11, 8, 11, 12, 5, 6], "line": {"color": "#19D3F3"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "r-ramclustr", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [16, 12, 50, 13, 40, 47, 66, 46, 28, 24, 15, 171, 71, 35, 94], "line": {"color": "#FF6692"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "r-recetox-aplcms", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [28, 20, 80, 20, 60, 70, 74, 110, 73, 59, 38, 444, 410, 386, 353], "line": {"color": "#B6E880"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "r-recetox-waveica", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [29, 6, 23, 5, 16, 19, 109, 39, 15, 20, 7, 5, 9, 13, 1], "line": {"color": "#FF97FF"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "r-recetox-xmsannotator", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [4, 5, 19, 4, 13, 15, 27, 15, 9, 8, 5, 58, 64, 66, 59], "line": {"color": "#FECB52"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "rcx-tk", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [3, 1, 5, 1, 3, 5, 19, 4, 2, 2, 3, 12, 7, 4, 28], "line": {"color": "#1F77B4"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "riassigner", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [11, 20, 41, 13, 45, 48, 40, 54, 47, 39, 28, 27, 13, 19, 6], "line": {"color": "#FF7F0E"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "spec2vec", "x": ["2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [18, 17, 16, 16, 22, 41, 22, 22, 22, 15, 21, 118, 87, 84, 74], "line": {"color": "#2CA02C"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "wtv", "x": ["2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02"], "y": [17, 28, 31, 5, 18, 2, 65, 62, 64, 56], "line": {"color": "#D62728"}, "marker": {"size": 5}}],
+              {"xaxis": {"title": "Period", "tickangle": -45}, "yaxis": {"title": "Downloads"}, "legend": {"orientation": "v", "x": 1.01, "y": 1}, "margin": {"l": 60, "r": 200, "t": 40, "b": 100}, "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "#ffffff"},
+              {responsive: true}
+            );
+          </script>
+        </div>
+
+        <div class="tab-pane fade " id="pane-cran-downloads" role="tabpanel">
+          <div id="chart-cran-downloads" style="width:100%;height:480px;"></div>
+          <script>
+            Plotly.newPlot(
+              "chart-cran-downloads",
+              [{"type": "scatter", "mode": "lines+markers", "name": "RAMClustR", "x": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01"], "y": [330, 403, 254, 126, 96, 147, 104, 179, 98, 95, 86, 109, 44], "line": {"color": "#636EFA"}, "marker": {"size": 5}}],
+              {"xaxis": {"title": "Period", "tickangle": -45}, "yaxis": {"title": "Downloads"}, "legend": {"orientation": "v", "x": 1.01, "y": 1}, "margin": {"l": 60, "r": 200, "t": 40, "b": 100}, "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "#ffffff"},
+              {responsive: true}
+            );
+          </script>
+        </div>
+
+        <div class="tab-pane fade " id="pane-github-clones" role="tabpanel">
+          <div id="chart-github-clones" style="width:100%;height:480px;"></div>
+          <script>
+            Plotly.newPlot(
+              "chart-github-clones",
+              [{"type": "scatter", "mode": "lines+markers", "name": "MFAssignR", "x": ["2025-W51", "2026-W03", "2026-W04", "2026-W05", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [2, 2, 3, 4, 2, 1, 3, 1, 2, 10], "line": {"color": "#636EFA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "MSMetaEnhancer", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [42, 14, 5, 3, 5, 6, 3, 8, 7, 15, 15, 9, 48, 40], "line": {"color": "#EF553B"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "RIAssigner", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [15, 7, 7, 2, 1, 3, 12, 9, 6, 13, 15, 2, 112, 18], "line": {"color": "#00CC96"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "aoptk", "x": ["2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [1, 122, 172, 107, 36, 119, 56, 78, 14, 47, 78, 49], "line": {"color": "#AB63FA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "gc-meox-tms", "x": ["2025-W51", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [6, 1, 4, 1, 2, 1, 2, 3, 3, 3, 3, 1], "line": {"color": "#FFA15A"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "matchms", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [46, 191, 99, 214, 22, 51, 121, 55, 83, 101, 122, 15, 276, 370], "line": {"color": "#19D3F3"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "ms2deepscore", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [13, 5, 12, 5, 8, 18, 83, 28, 7, 20, 38, 13, 51, 25], "line": {"color": "#FF6692"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "rcx-tk", "x": ["2025-W51", "2025-W52", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [36, 6, 3, 1, 3, 6, 3, 3, 1, 51, 2, 11, 4], "line": {"color": "#B6E880"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-aplcms", "x": ["2025-W51", "2025-W52", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [24, 4, 18, 3, 5, 4, 5, 7, 9, 7, 2, 10], "line": {"color": "#FF97FF"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-msfinder", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [2, 2, 1, 1, 1, 3, 1, 1, 2, 4, 3, 1, 3], "line": {"color": "#FECB52"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-waveica", "x": ["2025-W51", "2025-W52", "2026-W03", "2026-W04", "2026-W05", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [1, 1, 1, 3, 2, 1, 3, 1, 1, 3], "line": {"color": "#1F77B4"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-xMSannotator", "x": ["2025-W52", "2026-W01", "2026-W03", "2026-W04", "2026-W05", "2026-W09", "2026-W10", "2026-W12"], "y": [2, 2, 2, 2, 3, 9, 1, 4], "line": {"color": "#FF7F0E"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "spec2vec", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [17, 6, 10, 4, 3, 9, 7, 12, 7, 10, 17, 2, 18, 8], "line": {"color": "#2CA02C"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "wtv", "x": ["2025-W51", "2025-W52", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [3, 1, 2, 1, 2, 1, 1, 4, 1, 1, 2, 3], "line": {"color": "#D62728"}, "marker": {"size": 5}}],
+              {"xaxis": {"title": "Period", "tickangle": -45}, "yaxis": {"title": "Downloads"}, "legend": {"orientation": "v", "x": 1.01, "y": 1}, "margin": {"l": 60, "r": 200, "t": 40, "b": 100}, "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "#ffffff"},
+              {responsive: true}
+            );
+          </script>
+        </div>
+
+        <div class="tab-pane fade " id="pane-github-views" role="tabpanel">
+          <div id="chart-github-views" style="width:100%;height:480px;"></div>
+          <script>
+            Plotly.newPlot(
+              "chart-github-views",
+              [{"type": "scatter", "mode": "lines+markers", "name": "MFAssignR", "x": ["2025-W51", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W12"], "y": [3, 3, 1, 1, 1, 1, 3, 2, 2, 1], "line": {"color": "#636EFA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "MSMetaEnhancer", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [4, 8, 2, 5, 1, 9, 6, 4, 3, 2, 6, 3, 9, 4], "line": {"color": "#EF553B"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "RIAssigner", "x": ["2025-W51", "2025-W52", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [2, 3, 1, 8, 4, 5, 1, 3, 2, 2, 1, 4, 4], "line": {"color": "#00CC96"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "aoptk", "x": ["2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [2, 12, 12, 13, 8, 8, 8, 8, 5, 1, 11, 7], "line": {"color": "#AB63FA"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "gc-meox-tms", "x": ["2026-W03"], "y": [1], "line": {"color": "#FFA15A"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "matchms", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [80, 68, 31, 56, 12, 89, 91, 74, 94, 53, 101, 21, 121, 108], "line": {"color": "#19D3F3"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "ms2deepscore", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [28, 22, 9, 20, 15, 63, 37, 38, 35, 36, 42, 5, 50, 90], "line": {"color": "#FF6692"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "rcx-tk", "x": ["2025-W51", "2026-W04", "2026-W09"], "y": [3, 1, 2], "line": {"color": "#B6E880"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-aplcms", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [9, 2, 1, 9, 2, 8, 4, 5, 9, 5, 1, 9, 4], "line": {"color": "#FF97FF"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-msfinder", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [2, 1, 2, 3, 3, 6, 2, 3, 1, 2, 5, 3, 3, 6], "line": {"color": "#FECB52"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-waveica", "x": ["2026-W06"], "y": [2], "line": {"color": "#1F77B4"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "recetox-xMSannotator", "x": ["2025-W51", "2025-W52", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W07", "2026-W08", "2026-W09", "2026-W11"], "y": [3, 1, 1, 1, 1, 3, 1, 3, 2, 1], "line": {"color": "#FF7F0E"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "spec2vec", "x": ["2025-W51", "2025-W52", "2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12"], "y": [18, 11, 5, 18, 7, 20, 18, 16, 14, 16, 28, 4, 29, 25], "line": {"color": "#2CA02C"}, "marker": {"size": 5}}, {"type": "scatter", "mode": "lines+markers", "name": "wtv", "x": ["2026-W03", "2026-W04", "2026-W10", "2026-W11"], "y": [18, 1, 1, 1], "line": {"color": "#D62728"}, "marker": {"size": 5}}],
+              {"xaxis": {"title": "Period", "tickangle": -45}, "yaxis": {"title": "Downloads"}, "legend": {"orientation": "v", "x": 1.01, "y": 1}, "margin": {"l": 60, "r": 200, "t": 40, "b": 100}, "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "#ffffff"},
+              {responsive: true}
+            );
+          </script>
+        </div>
+    </div>
+
+  </div>
+
+  <footer>
+    Generated by <strong>specdatri</strong> · data sourced from PyPI, Bioconda, CRAN, and GitHub
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmB7sQEq87UEJ9w6N3EFUfg7/rM"
+    crossorigin="anonymous"
+  ></script>
+  <!-- Plotly.js (no official SRI hash provided by the CDN; pin version to reduce risk) -->
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"
+          charset="utf-8"
+          crossorigin="anonymous"></script>
+</body>
+</html>
