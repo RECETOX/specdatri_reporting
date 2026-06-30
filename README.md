@@ -6,7 +6,7 @@
 
 ### What it does
 
-- Fetches download and traffic data from PyPI, CRAN, Bioconda, and GitHub on a weekly schedule.
+- Fetches download and traffic data from PyPI, CRAN, Bioconda, GitHub, and Galaxy on a weekly schedule.
 - Aggregates raw data into human-readable TSV reports grouped by month (for package downloads) or by week (for GitHub traffic).
 - Commits the updated reports back to the repository automatically via GitHub Actions.
 
@@ -19,6 +19,7 @@
 | [Bioconda](https://bioconda.github.io/) | Package downloads | Monthly |
 | [GitHub](https://github.com/) | Repository views | Weekly |
 | [GitHub](https://github.com/) | Repository clones | Weekly |
+| [Galaxy](https://galaxyproject.org/) | Tool runs/users (multi-instance) | Monthly |
 
 Generated reports are stored as TSV files under `reports/<YEAR>/` and are versioned in the repository.
 
@@ -87,6 +88,9 @@ The `specdatri` entry point exposes three subcommands.
 
 # Add an R package tracked on CRAN only
 ./specdatri add-repo --project MyRPackage --cran
+
+# Add a Galaxy tool (tracks all configured Galaxy instances)
+./specdatri add-repo --project bioconductor_scp --galaxy
 ```
 
 Options:
@@ -100,6 +104,7 @@ Options:
 | `--bioconda` | Track Bioconda downloads | off |
 | `--cran` | Track CRAN downloads | off |
 | `--github` | Track GitHub views and clones | off |
+| `--galaxy` | Track Galaxy tool usage | off |
 
 #### 2. Collect statistics (`collect-stats`)
 
@@ -127,13 +132,15 @@ Output: JSON files in `tmp/runs/<YYYY-MM-DD>/` named using the pattern
 ./specdatri generate-reports --year 2025 --tmp-dir data/tmp --output-dir data/reports
 ```
 
-Output: five TSV files per year in `reports/<YEAR>/`:
+Output: seven TSV files per year in `reports/<YEAR>/`:
 
 - `pypi_downloads.tsv`
 - `bioconda_downloads.tsv`
 - `cran_downloads.tsv`
 - `github_views.tsv`
 - `github_clones.tsv`
+- `galaxy_runs.tsv`
+- `galaxy_users.tsv`
 
 ### Full manual workflow example
 
@@ -208,8 +215,22 @@ The `repository_list.tsv` file is a tab-separated table with the columns:
 | `repository` | GitHub repository path (`OWNER/REPO`) |
 | `project` | Human-readable project identifier |
 | `package` | Package name on the distribution platform |
-| `source` | One of: `pypi`, `bioconda`, `CRAN`, `GitHub` |
-| `action` | One of: `downloads`, `views`, `clones` |
+| `source` | One of: `pypi`, `bioconda`, `CRAN`, `GitHub`, `Galaxy` |
+| `action` | One of: `downloads`, `views`, `clones`, `runs`, `users` |
+
+### Galaxy Instance Configuration
+
+Galaxy statistics are collected from multiple Galaxy instances configured in `galaxy_instances.tsv`:
+
+```tsv
+instance_name	key_pattern	enabled
+usegalaxy.eu	_(usegalaxy.eu)	true
+usegalaxy.org	_(usegalaxy.org)	true
+usegalaxy.org.au	_(usegalaxy.org.au)	true
+usegalaxy.fr	_(usegalaxy.fr)	true
+```
+
+Set `enabled` to `false` to temporarily disable an instance without deleting it. The data source automatically aggregates statistics across all enabled instances when collecting data for a tracked tool.
 
 ### Integrating a new data source
 
@@ -283,7 +304,7 @@ In your repository's **Settings → Secrets and variables → Actions**, add:
 
 | Secret | Description |
 |--------|-------------|
-| `RECEBOT_REPORTING_TOKEN` | A GitHub personal access token (PAT) with `repo` scope. Used to read traffic data from the GitHub API and push report commits. Consider using a dedicated bot account. |
+| `RECEBOT_REPORTING_TOKEN` | A GitHub personal access token (PAT) with `repo` scope. Used to read traffic data from the GitHub API and push report commits. Consider using a dedicated bot account. Required for Galaxy statistics collection. |
 | `pepy_x_api_key` | Your PePy API key for PyPI download statistics. |
 
 > The `github_token` secret used by the push step is the built-in `secrets.github_token` provided by GitHub Actions and does not need to be configured manually.

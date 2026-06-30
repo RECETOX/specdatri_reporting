@@ -1,15 +1,17 @@
 import configparser
+import csv
 import logging
 import os
 import re
 from functools import wraps
+from pathlib import Path
+from typing import Any, List, Dict
 
 import orjson
 import requests
 from dotenv import load_dotenv
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-from typing import Any
 
 # Load .config file from the parent directory
 config = configparser.ConfigParser()
@@ -226,3 +228,56 @@ def get_failed_result_json(result: Any) -> dict:
             "message": "Unknown error type",
             "response": str(result),
         }
+
+
+def read_galaxy_instances(config_path: Path) -> List[Dict[str, Any]]:
+    """
+    Reads Galaxy instance configuration from a TSV file.
+
+    Args:
+        config_path: Path to the galaxy_instances.tsv file.
+
+    Returns:
+        List of dicts with keys: 'instance_name', 'key_pattern', 'enabled'.
+        Only returns enabled instances. Falls back to defaults if file not found.
+    """
+    # Create a local logger for this function
+    _logger = setup_logger()
+
+    default_instances = [
+        {"instance_name": "usegalaxy.eu", "key_pattern": "_(usegalaxy.eu)", "enabled": True},
+        {"instance_name": "usegalaxy.org", "key_pattern": "_(usegalaxy.org)", "enabled": True},
+        {"instance_name": "usegalaxy.org.au", "key_pattern": "_(usegalaxy.org.au)", "enabled": True},
+        {"instance_name": "usegalaxy.fr", "key_pattern": "_(usegalaxy.fr)", "enabled": True},
+    ]
+
+    if not config_path.exists():
+        _logger.debug(f"Galaxy config file not found at {config_path}, using defaults")
+        return default_instances
+
+    instances = []
+    try:
+        with open(config_path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f, delimiter="\t")
+            for row in reader:
+                # Validate required columns
+                if "instance_name" not in row or "key_pattern" not in row or "enabled" not in row:
+                    _logger.warning(f"Skipping invalid row in galaxy config: {row}")
+                    continue
+                instances.append({
+                    "instance_name": row["instance_name"].strip(),
+                    "key_pattern": row["key_pattern"].strip(),
+                    "enabled": row["enabled"].strip().lower() == "true",
+                })
+    except Exception as e:
+        _logger.error(f"Failed to read galaxy instances config: {e}")
+        return default_instances
+
+    # Filter to only enabled instances
+    enabled_instances = [inst for inst in instances if inst.get("enabled", False)]
+
+    if not enabled_instances:
+        _logger.warning("No enabled Galaxy instances found in config, using defaults")
+        return default_instances
+
+    return enabled_instances

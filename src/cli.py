@@ -13,6 +13,7 @@ from src.data_sources import (
     GitHubDataSource,
     CRANDataSource,
     CondaDataSource,
+    GalaxyDataSource,
 )
 from src.utils import get_env_var, log_function, setup_logger
 from src.reports import (
@@ -20,6 +21,7 @@ from src.reports import (
     CRANReportGenerator,
     PyPIReportGenerator,
     GitHubReportGenerator,
+    GalaxyReportGenerator,
 )
 from src.dashboard import generate_dashboard
 
@@ -57,6 +59,7 @@ def generate_new_entries(
     has_bioconda: bool,
     has_cran: bool,
     has_github: bool,
+    has_galaxy: bool,
 ) -> List[dict]:
     """Generate new entries based on the provided flags"""
     entries = []
@@ -115,6 +118,27 @@ def generate_new_entries(
             }
         )
 
+    if has_galaxy:
+        # Galaxy tracks runs and users across all configured instances
+        entries.append(
+            {
+                "repository": repository,
+                "project": project,
+                "package": project,
+                "source": "Galaxy",
+                "action": "runs",
+            }
+        )
+        entries.append(
+            {
+                "repository": repository,
+                "project": project,
+                "package": project,
+                "source": "Galaxy",
+                "action": "users",
+            }
+        )
+
     return entries
 
 
@@ -145,12 +169,13 @@ def write_repository_list(entries: List[dict], repository_list_path: Path) -> No
 @click.option("--bioconda", is_flag=True, help="Add Bioconda downloads entry")
 @click.option("--cran", is_flag=True, help="Add CRAN downloads entry")
 @click.option("--github", is_flag=True, help="Add GitHub views and clones entries")
-def add_repo(repository, project, repository_list, pypi, bioconda, cran, github):
+@click.option("--galaxy", is_flag=True, help="Add Galaxy tool usage entries")
+def add_repo(repository, project, repository_list, pypi, bioconda, cran, github, galaxy):
     """Add a new package to the repository list."""
 
-    if not any([pypi, bioconda, cran, github]):
+    if not any([pypi, bioconda, cran, github, galaxy]):
         click.echo(
-            "Error: At least one source flag must be specified (--pypi, --bioconda, --cran, or --github)"
+            "Error: At least one source flag must be specified (--pypi, --bioconda, --cran, --github, or --galaxy)"
         )
         raise click.Exit(1)
 
@@ -167,6 +192,7 @@ def add_repo(repository, project, repository_list, pypi, bioconda, cran, github)
         has_bioconda=bioconda,
         has_cran=cran,
         has_github=github,
+        has_galaxy=galaxy,
     )
 
     all_entries = existing_entries + new_entries
@@ -187,10 +213,15 @@ def process_repositories(
     repositories_df: pd.DataFrame,
     github_token: str,
     pepy_x_api_key: str,
+    galaxy_config_path: Path = None,
 ):
     """Process repositories by fetching download statistics from various sources."""
     last_month = datetime.now().replace(day=1) - timedelta(days=1)
     twelve_months_earlier = datetime.now() - timedelta(days=365)
+
+    # Default Galaxy config path
+    if galaxy_config_path is None:
+        galaxy_config_path = Path("galaxy_instances.tsv")
 
     for _, row in repositories_df.iterrows():
         source = row["source"].lower()
@@ -223,6 +254,11 @@ def process_repositories(
                     start_date=twelve_months_earlier.strftime("%Y-%m-%d"),
                     end_date=last_month.strftime("%Y-%m-%d"),
                 )
+            elif source == "galaxy":
+                data_source = GalaxyDataSource(
+                    project, package, galaxy_config_path, github_token
+                )
+                data_source.process(action)
             else:
                 logger.error(f"Unknown source: {source}")
         except Exception as e:
@@ -267,7 +303,13 @@ def organize_run_reports(run_timestamp: str, tmp_dir: Path) -> None:
     default="tmp",
     help="Directory to store collected JSON files (default: ./tmp)",
 )
-def collect_stats(repository_list, tmp_dir):
+@click.option(
+    "--galaxy-config",
+    type=click.Path(),
+    default="galaxy_instances.tsv",
+    help="Path to galaxy_instances.tsv (default: ./galaxy_instances.tsv)",
+)
+def collect_stats(repository_list, tmp_dir, galaxy_config):
     """Collect download statistics from all configured sources."""
 
     tmp_dir_path = Path(tmp_dir)
@@ -290,7 +332,7 @@ def collect_stats(repository_list, tmp_dir):
     click.echo(f"\nCollecting statistics for {len(repositories_df)} entries...")
     click.echo("=" * 60)
 
-    process_repositories(repositories_df, github_token, pepy_x_api_key)
+    process_repositories(repositories_df, github_token, pepy_x_api_key, Path(galaxy_config))
 
     run_timestamp = datetime.now().strftime("%Y-%m-%d")
     organize_run_reports(run_timestamp, tmp_dir_path)
@@ -369,6 +411,20 @@ def generate_reports(year, tmp_dir, output_dir):
     click.echo("-" * 60)
     output_file = output_path / str(year) / "github_views.tsv"
     generator = GitHubReportGenerator(tmp_path, output_file, year, "views")
+    generator.create_report(year=year)
+
+    # Galaxy Runs
+    click.echo("\n6. Galaxy Runs Report")
+    click.echo("-" * 60)
+    output_file = output_path / str(year) / "galaxy_runs.tsv"
+    generator = GalaxyReportGenerator(tmp_path, output_file)
+    generator.create_report(year=year)
+
+    # Galaxy Users
+    click.echo("\n7. Galaxy Users Report")
+    click.echo("-" * 60)
+    output_file = output_path / str(year) / "galaxy_users.tsv"
+    generator = GalaxyReportGenerator(tmp_path, output_file)
     generator.create_report(year=year)
 
     click.echo("\n" + "=" * 60)
