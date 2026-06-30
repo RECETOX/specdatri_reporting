@@ -18,57 +18,20 @@ The existing framework consists of:
 
 Galaxy data is available at: `https://github.com/research-software-ecosystem/content/tree/master/imports/galaxy/`
 
-**Repository scale**: ~1,674 Galaxy tool packages available.
-
----
-
-## Validated Data Structure
-
-After inspecting multiple Galaxy JSON files (`bioconductor_scp.galaxy.json`, `aoptk.galaxy.json`, `abricate.galaxy.json`, `multiqc.galaxy.json`, `10x_bamtofastq.galaxy.json`, `adapter_removal.galaxy.json`), the following patterns are confirmed:
-
-### Consistent Field Naming Pattern
-
-All files use the **same** naming convention for runs and users:
-
+Example file structure (bioconductor_scp.galaxy.json):
+```json
+{
+  "Suite_ID": "bioconductor_scp",
+  "bio.tool_name": "scp",
+  "Suite_runs_(usegalaxy.org.au)": 88,
+  "Suite_users_(usegalaxy.org.au)": 12,
+  "Suite_runs_(usegalaxy.eu)": 156,
+  "Suite_users_(usegalaxy.eu)": 34,
+  "EDAM_operations": ["Visualisation"],
+  "EDAM_topics": ["Proteomics"],
+  ...
+}
 ```
-Suite_runs_(<instance>)           # e.g., Suite_runs_(usegalaxy.eu)
-Suite_users_(<instance>)          # e.g., Suite_users_(usegalaxy.org.au)
-Suite_runs_(last_5_years)_(<instance>)  # e.g., Suite_runs_(last_5_years)_(usegalaxy.fr)
-Suite_users_(last_5_years)_(<instance>)
-Suite_runs_on_main_servers        # Aggregate across all main servers
-Suite_users_on_main_servers
-Suite_runs_(last_5_years)_on_main_servers
-Suite_users_(last_5_years)_on_main_servers
-```
-
-### Common Galaxy Instances Found
-
-| Instance | Key Pattern |
-|----------|-------------|
-| usegalaxy.eu | `(usegalaxy.eu)` |
-| usegalaxy.org | `(usegalaxy.org)` |
-| usegalaxy.org.au | `(usegalaxy.org.au)` |
-| usegalaxy.fr | `(usegalaxy.fr)` |
-
-### Additional Metadata Fields
-
-- `Suite_ID`: Unique identifier (e.g., "abricate", "multiqc")
-- `Suite_conda_package`: Conda package name
-- `Suite_owner`: Tool suite owner (e.g., "iuc", "bgruening")
-- `Suite_first_commit_date`: ISO date string
-- `Suite_version`: Version number
-- `bio.tool_name`: Human-readable tool name
-- `bio.tool_description`: Tool description
-- `EDAM_operations`: List of EDAM operation terms
-- `EDAM_topics`: List of EDAM topic terms
-- `Number_of_tools_on_<server>`: Tool count on specific server (NOT run/user stats)
-
-### Important Notes
-
-1. **Instance names in keys use lowercase** with underscores (e.g., `usegalaxy.eu`, NOT `UseGalaxy.eu`)
-2. **Parentheses are part of the key name** (e.g., `(usegalaxy.eu)`)
-3. **Some tools may have zero counts** for certain instances (still present in JSON)
-4. **`Number_of_tools_on_*` fields are NOT run/user statistics** - they indicate how many tools from the suite exist on that server
 
 ---
 
@@ -85,17 +48,16 @@ Suite_users_(last_5_years)_on_main_servers
 
 2. **`galaxy_instances.tsv`** (NEW) - Lists Galaxy instances to aggregate across
    ```
-   instance_name	key_pattern	enabled
-   usegalaxy.eu	(usegalaxy.eu	true
-   usegalaxy.org	(usegalaxy.org)	true
-   usegalaxy.org.au	(usegalaxy.org.au)	true
-   usegalaxy.fr	(usegalaxy.fr)	true
+   instance_name	base_url	enabled
+   usegalaxy.eu	usegalaxy.eu	true
+   usegalaxy.org.au	usegalaxy.org.au	true
+   usegalaxy.org	usegalaxy.org	true
    ```
 
 The data source will:
 - Read all enabled instances from `galaxy_instances.tsv`
 - Fetch the single Galaxy JSON file for each tracked tool
-- Extract stats using the key pattern `<metric>_<key_pattern>` (e.g., `Suite_runs_(usegalaxy.eu)`)
+- Extract stats for all configured instances from that JSON
 - Write a combined JSON file containing all instance data
 
 ---
@@ -110,16 +72,17 @@ The data source will:
 
 **Content**:
 ```tsv
-instance_name	key_pattern	enabled
-usegalaxy.eu	(usegalaxy.eu	true
-usegalaxy.org	(usegalaxy.org)	true
-usegalaxy.org.au	(usegalaxy.org.au)	true
-usegalaxy.fr	(usegalaxy.fr)	true
+instance_name	base_url	enabled
+usegalaxy.eu	usegalaxy.eu	true
+usegalaxy.org.au	usegalaxy.org.au	true
+usegalaxy.org	usegalaxy.org	true
+usegalaxy.de	usegalaxy.de	true
+bioprofiling.usegalaxy.it	bioprofiling.usegalaxy.it	true
 ```
 
 **Testing approach**:
 - Test file parsing with valid TSV
-- Test handling of missing file (default to bundled defaults)
+- Test handling of missing file (default to empty list or bundled defaults)
 - Test filtering by `enabled` column
 
 ### 1.2 Add Config File Utility Functions
@@ -129,7 +92,7 @@ usegalaxy.fr	(usegalaxy.fr)	true
 **Tasks**:
 - Add `read_galaxy_instances(config_path: Path) -> List[dict]` function
 - Similar pattern to existing `read_existing_entries()` in cli.py but for galaxy instances
-- Return list of dicts with keys: `instance_name`, `key_pattern`, `enabled`
+- Return list of dicts with keys: `instance_name`, `base_url`, `enabled`
 
 **Testing approach**:
 - Unit tests for parsing logic
@@ -150,23 +113,19 @@ usegalaxy.fr	(usegalaxy.fr)	true
 - Implements `fetch(action, **kwargs)` method:
   - Reads enabled Galaxy instances from config file
   - Downloads single JSON from `https://raw.githubusercontent.com/research-software-ecosystem/content/master/imports/galaxy/{package}.galaxy.json`
-  - For each enabled instance, extracts stats using key pattern:
-    - Runs: `f"Suite_runs_{key_pattern}"` → e.g., `Suite_runs_(usegalaxy.eu)`
-    - Users: `f"Suite_users_{key_pattern}"` → e.g., `Suite_users_(usegalaxy.org.au)`
+  - Extracts run/user statistics for ALL configured instances from the JSON
   - Returns dict mapping instance_name → stats (e.g., `{"usegalaxy.eu": {"runs": 156, "users": 34}, ...}`)
   - Falls back to bundled default instances if config file missing
 - Uses existing `make_api_request()` utility
 - Handles missing files gracefully (404 → empty result for all instances)
-- Handles missing keys gracefully (instance not in JSON → 0 or None)
 
 **Key design**: One fetch call returns data for all instances, minimizing API calls.
 
 **Testing approach**:
 - Unit test with mocked HTTP responses
-- Test key pattern construction and extraction
+- Test parsing of various JSON structures (different instance naming conventions)
 - Test handling of missing config file
 - Test handling of missing/invalid Galaxy JSON files
-- Test handling of instances with zero counts
 - Mock the GitHub raw content endpoint
 
 ### 2.2 Register Galaxy Data Source
@@ -199,7 +158,9 @@ usegalaxy.fr	(usegalaxy.fr)	true
 - Load JSON containing all instance data
 - For each instance, extract runs/users counts
 - Group by time period (monthly)
-- Output TSV format options (see Open Questions below)
+- Output TSV with columns: `month`, `project`, `instance`, `runs`/`users`
+
+**Alternative approach**: Generate separate TSV files per metric type (runs vs users) with instances as columns, similar to GitHub reports.
 
 **Testing approach**:
 - Test file pattern matching
@@ -297,7 +258,7 @@ usegalaxy.fr	(usegalaxy.fr)	true
    output_file = output_path / str(year) / "galaxy_runs.tsv"
    generator = GalaxyReportGenerator(tmp_path, output_file)
    generator.create_report(year=year)
-
+   
    # Optionally generate users report separately
    output_file = output_path / str(year) / "galaxy_users.tsv"
    generator = GalaxyReportGenerator(tmp_path, output_file)
@@ -325,15 +286,15 @@ usegalaxy.fr	(usegalaxy.fr)	true
 2. **Configuration section** - Document `galaxy_instances.tsv`:
    ```markdown
    ### Galaxy Instance Configuration
-
+   
    Galaxy statistics are collected from multiple Galaxy instances configured in `galaxy_instances.tsv`:
-
+   
    ```tsv
-   instance_name	key_pattern	enabled
-   usegalaxy.eu	(usegalaxy.eu	true
+   instance_name	base_url	enabled
+   usegalaxy.eu	usegalaxy.eu	true
    usegalaxy.org.au	usegalaxy.org.au	true
    ```
-
+   
    Set `enabled` to `false` to temporarily disable an instance without deleting it.
    ```
 
@@ -352,7 +313,7 @@ usegalaxy.fr	(usegalaxy.fr)	true
 **Content**:
 - Architecture overview
 - How to add new data sources
-- Specific notes for Galaxy data source (multi-instance configuration, key pattern matching)
+- Specific notes for Galaxy data source (multi-instance configuration)
 
 ### 5.3 Create Report Generator Documentation
 
@@ -389,13 +350,11 @@ usegalaxy.fr	(usegalaxy.fr)	true
 
 2. `TestGalaxyDataSourceFetch`:
    - Test successful JSON download with multiple instances
-   - Test key pattern construction: `Suite_runs_(<instance>)`
    - Test extraction of runs for all instances
    - Test extraction of users for all instances
    - Test handling of missing Galaxy JSON file
    - Test handling of malformed JSON
    - Test handling of missing config file (fallback to defaults)
-   - Test handling of instances with zero counts
 
 3. `TestGalaxyDataSourceProcess`:
    - Test orchestration of fetch → write_stats_response
@@ -499,12 +458,10 @@ Before merging:
 1. **Default instances**: Should we bundle a default set of Galaxy instances, or require explicit config file?
 
 2. **Report format**: Per-instance columns in TSV (wide format) or one row per instance (long format)?
-   - Wide: `month | project | usegalaxy.eu | usegalaxy.org | ...`
-   - Long: `month | project | instance | runs`
 
 3. **Config file location**: Project root (`galaxy_instances.tsv`) or under a config directory (`config/galaxy_instances.tsv`)?
 
-4. **Instance naming in config**: Store just the instance name (`usegalaxy.eu`) or the full key suffix (`(usegalaxy.eu)`)?
+4. **Instance naming**: How to handle instance names with special characters in filenames/columns (e.g., `bioprofiling.usegalaxy.it`)?
 
 ---
 
@@ -521,27 +478,22 @@ For unit tests, mock at these boundaries:
 
 ### Sample Multi-Instance Test Data
 
-Based on validated data structure:
-
 ```python
 SAMPLE_GALAXY_JSON = {
-    "Suite_ID": "abricate",
-    "bio.tool_name": "ABRicate",
-    "Suite_runs_(usegalaxy.org.au)": 600408,
-    "Suite_users_(usegalaxy.org.au)": 2216,
-    "Suite_runs_(usegalaxy.eu)": 821957,
-    "Suite_users_(usegalaxy.eu)": 4679,
-    "Suite_runs_(usegalaxy.org)": 405363,
-    "Suite_users_(usegalaxy.org)": 3468,
-    "Suite_runs_(usegalaxy.fr)": 19178,
-    "Suite_users_(usegalaxy.fr)": 85,
+    "Suite_ID": "bioconductor_scp",
+    "bio.tool_name": "scp",
+    "Suite_runs_(usegalaxy.org.au)": 88,
+    "Suite_users_(usegalaxy.org.au)": 12,
+    "Suite_runs_(usegalaxy.eu)": 156,
+    "Suite_users_(usegalaxy.eu)": 34,
+    "Suite_runs_(usegalaxy.org)": 245,
+    "Suite_users_(usegalaxy.org)": 67,
 }
 
 EXPECTED_FETCH_RESULT = {
-    "usegalaxy.org.au": {"runs": 600408, "users": 2216},
-    "usegalaxy.eu": {"runs": 821957, "users": 4679},
-    "usegalaxy.org": {"runs": 405363, "users": 3468},
-    "usegalaxy.fr": {"runs": 19178, "users": 85},
+    "usegalaxy.org.au": {"runs": 88, "users": 12},
+    "usegalaxy.eu": {"runs": 156, "users": 34},
+    "usegalaxy.org": {"runs": 245, "users": 67},
 }
 ```
 
@@ -553,7 +505,4 @@ EXPECTED_FETCH_RESULT = {
 - Existing report: [src/reports/github.py](src/reports/github.py)
 - Base classes: [src/data_sources/base.py](src/data_sources/base.py), [src/reports/base.py](src/reports/base.py)
 - Existing config pattern: `repository_list.tsv` usage in [src/cli.py](src/cli.py)
-- Galaxy example data:
-  - https://github.com/research-software-ecosystem/content/blob/master/imports/galaxy/bioconductor_scp.galaxy.json
-  - https://github.com/research-software-ecosystem/content/blob/master/imports/galaxy/abricate.galaxy.json
-  - https://github.com/research-software-ecosystem/content/blob/master/imports/galaxy/multiqc.galaxy.json
+- Galaxy example data: https://github.com/research-software-ecosystem/content/blob/master/imports/galaxy/bioconductor_scp.galaxy.json
