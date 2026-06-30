@@ -230,6 +230,7 @@ def get_failed_result_json(result: Any) -> dict:
         }
 
 
+@log_function(setup_logger())
 def read_galaxy_instances(config_path: Path) -> List[Dict[str, Any]]:
     """
     Reads Galaxy instance configuration from a TSV file.
