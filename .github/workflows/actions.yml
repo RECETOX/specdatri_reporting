@@ -5,7 +5,7 @@ on:
     - cron: 0 0 * * 1 # At 00:00 on Monday
 jobs:
   build:
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-22.04
     steps:
       - name: checkout repo content
         uses: actions/checkout@v6
