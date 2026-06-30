@@ -2,7 +2,7 @@
 Unified reporting framework for download statistics.
 
 This package provides an object-oriented framework for generating TSV reports
-from different data sources (Bioconda, PyPI, GitHub) with consistent handling
+from different data sources (Bioconda, PyPI, GitHub, Galaxy) with consistent handling
 of data aggregation, completeness checking, and report generation.
 """
 
@@ -11,6 +11,7 @@ from .bioconda import BiocondaReportGenerator
 from .cran import CRANReportGenerator
 from .github import GitHubReportGenerator
 from .pypi import PyPIReportGenerator
+from .galaxy import GalaxyReportGenerator
 
 __all__ = [
     "ReportGenerator",
@@ -18,4 +19,5 @@ __all__ = [
     "CRANReportGenerator",
     "PyPIReportGenerator",
     "GitHubReportGenerator",
+    "GalaxyReportGenerator",
 ]

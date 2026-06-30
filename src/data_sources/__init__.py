@@ -2,7 +2,7 @@
 Data sources package for fetching download statistics from various sources.
 
 This package provides an object-oriented framework for fetching download statistics
-from different data sources (PyPI, GitHub, CRAN, Bioconda) with consistent handling
+from different data sources (PyPI, GitHub, CRAN, Bioconda, Galaxy) with consistent handling
 of API calls and response writing.
 """
 
@@ -11,6 +11,7 @@ from .conda import CondaDataSource
 from .cran import CRANDataSource
 from .github import GitHubDataSource
 from .pypi import PyPIDataSource
+from .galaxy import GalaxyDataSource
 
 __all__ = [
     "DataSource",
@@ -18,4 +19,5 @@ __all__ = [
     "GitHubDataSource",
     "CRANDataSource",
     "CondaDataSource",
+    "GalaxyDataSource",
 ]
