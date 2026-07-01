@@ -797,15 +797,15 @@
     }
   ],
   "width": "container"
-}, {actions: true})
+}, { actions: true })
                 .catch(console.error);
             </script>
             <hr/>
             <h6>Bar Chart: Total by Package</h6>
             <div id="barchart-pypi-downloads"></div>
             <script>
-              (async () => {
-                const spec = {
+              (function() {
+                var spec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
   "config": {
     "view": {
@@ -888,7 +888,7 @@
   },
   "width": "container"
 };
-                await vegaEmbed('#barchart-pypi-downloads', spec, {actions: false});
+                vegaEmbed('#barchart-pypi-downloads', spec, { actions: false });
               })();
             </script>
           </div>
@@ -2152,15 +2152,15 @@
     }
   ],
   "width": "container"
-}, {actions: true})
+}, { actions: true })
                 .catch(console.error);
             </script>
             <hr/>
             <h6>Bar Chart: Total by Package</h6>
             <div id="barchart-bioconda-downloads"></div>
             <script>
-              (async () => {
-                const spec = {
+              (function() {
+                var spec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
   "config": {
     "view": {
@@ -2263,7 +2263,7 @@
   },
   "width": "container"
 };
-                await vegaEmbed('#barchart-bioconda-downloads', spec, {actions: false});
+                vegaEmbed('#barchart-bioconda-downloads', spec, { actions: false });
               })();
             </script>
           </div>
@@ -2442,15 +2442,15 @@
     }
   ],
   "width": "container"
-}, {actions: true})
+}, { actions: true })
                 .catch(console.error);
             </script>
             <hr/>
             <h6>Bar Chart: Total by Package</h6>
             <div id="barchart-cran-downloads"></div>
             <script>
-              (async () => {
-                const spec = {
+              (function() {
+                var spec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
   "config": {
     "view": {
@@ -2501,7 +2501,7 @@
   },
   "width": "container"
 };
-                await vegaEmbed('#barchart-cran-downloads', spec, {actions: false});
+                vegaEmbed('#barchart-cran-downloads', spec, { actions: false });
               })();
             </script>
           </div>
@@ -3590,15 +3590,15 @@
     }
   ],
   "width": "container"
-}, {actions: true})
+}, { actions: true })
                 .catch(console.error);
             </script>
             <hr/>
             <h6>Bar Chart: Total by Package</h6>
             <div id="barchart-github-clones"></div>
             <script>
-              (async () => {
-                const spec = {
+              (function() {
+                var spec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
   "config": {
     "view": {
@@ -3701,7 +3701,7 @@
   },
   "width": "container"
 };
-                await vegaEmbed('#barchart-github-clones', spec, {actions: false});
+                vegaEmbed('#barchart-github-clones', spec, { actions: false });
               })();
             </script>
           </div>
@@ -4590,15 +4590,15 @@
     }
   ],
   "width": "container"
-}, {actions: true})
+}, { actions: true })
                 .catch(console.error);
             </script>
             <hr/>
             <h6>Bar Chart: Total by Package</h6>
             <div id="barchart-github-views"></div>
             <script>
-              (async () => {
-                const spec = {
+              (function() {
+                var spec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
   "config": {
     "view": {
@@ -4701,7 +4701,7 @@
   },
   "width": "container"
 };
-                await vegaEmbed('#barchart-github-views', spec, {actions: false});
+                vegaEmbed('#barchart-github-views', spec, { actions: false });
               })();
             </script>
           </div>
@@ -4865,15 +4865,15 @@
     }
   ],
   "width": "container"
-}, {actions: true})
+}, { actions: true })
                 .catch(console.error);
             </script>
             <hr/>
             <h6>Bar Chart: Total by Package</h6>
             <div id="barchart-galaxy-runs"></div>
             <script>
-              (async () => {
-                const spec = {
+              (function() {
+                var spec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
   "config": {
     "view": {
@@ -4976,7 +4976,7 @@
   },
   "width": "container"
 };
-                await vegaEmbed('#barchart-galaxy-runs', spec, {actions: false});
+                vegaEmbed('#barchart-galaxy-runs', spec, { actions: false });
               })();
             </script>
           </div>
@@ -5140,15 +5140,15 @@
     }
   ],
   "width": "container"
-}, {actions: true})
+}, { actions: true })
                 .catch(console.error);
             </script>
             <hr/>
             <h6>Bar Chart: Total by Package</h6>
             <div id="barchart-galaxy-users"></div>
             <script>
-              (async () => {
-                const spec = {
+              (function() {
+                var spec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
   "config": {
     "view": {
@@ -5251,7 +5251,7 @@
   },
   "width": "container"
 };
-                await vegaEmbed('#barchart-galaxy-users', spec, {actions: false});
+                vegaEmbed('#barchart-galaxy-users', spec, { actions: false });
               })();
             </script>
           </div>
@@ -6317,7 +6317,7 @@
   <footer>
     <div class="container">
       <p>Generated by <strong>specdatri</strong> · data sourced from PyPI, Bioconda, CRAN, GitHub, and Galaxy</p>
-      <p class="mb-0">Last updated: 2026-07-01 13:07 UTC</p>
+      <p class="mb-0">Last updated: 2026-07-01 14:04 UTC</p>
     </div>
   </footer>
 
@@ -6334,43 +6334,4359 @@
 
   <!-- Dashboard interactivity scripts -->
   <script>
-    // Overall chart embedding
-    (async () => {{
-      const overallSpec = {overall_chart_spec_json};
-      if (overallSpec && Object.keys(overallSpec).length > 0) {{
-        await vegaEmbed('#overall-chart', overallSpec, {{actions: true}});
-      }}
-    }})();
 
-    // Package filter functionality
-    document.querySelectorAll('.package-filter').forEach(cb => {{
-      cb.addEventListener('change', () => {{
-        const checked = Array.from(document.querySelectorAll('.package-filter:checked'))
-                          .map(cb => cb.value);
-        console.log('Selected packages:', checked);
-        // In a future enhancement, this could filter charts dynamically
-      }});
-    }});
+    // Overall chart embedding
+    (async function() {
+      const overallSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json",
+  "config": {
+    "view": {
+      "continuousHeight": 300,
+      "continuousWidth": 300
+    }
+  },
+  "data": {
+    "name": "data-829b3c97dbf9c57dda4c980b68ae4ecb"
+  },
+  "datasets": {
+    "data-829b3c97dbf9c57dda4c980b68ae4ecb": [
+      {
+        "count": 1186,
+        "package": "RIAssigner",
+        "period": "2025-10",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 33422,
+        "package": "matchms",
+        "period": "2025-10",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 6617,
+        "package": "ms2deepscore",
+        "period": "2025-10",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 37,
+        "package": "rcx-tk",
+        "period": "2025-10",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 4661,
+        "package": "spec2vec",
+        "period": "2025-10",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 84,
+        "package": "wtv",
+        "period": "2025-10",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 120,
+        "package": "wtv",
+        "period": "2025-11",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 7410,
+        "package": "spec2vec",
+        "period": "2025-11",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 48,
+        "package": "rcx-tk",
+        "period": "2025-11",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 6225,
+        "package": "ms2deepscore",
+        "period": "2025-11",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 58,
+        "package": "gc-meox-tms",
+        "period": "2025-11",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 986,
+        "package": "RIAssigner",
+        "period": "2025-11",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 212,
+        "package": "MSMetaEnhancer",
+        "period": "2025-11",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 52893,
+        "package": "matchms",
+        "period": "2025-11",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 53,
+        "package": "rcx-tk",
+        "period": "2025-12",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 145,
+        "package": "wtv",
+        "period": "2025-12",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 1315,
+        "package": "spec2vec",
+        "period": "2025-12",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 5756,
+        "package": "ms2deepscore",
+        "period": "2025-12",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 66,
+        "package": "gc-meox-tms",
+        "period": "2025-12",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 1261,
+        "package": "RIAssigner",
+        "period": "2025-12",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 239,
+        "package": "MSMetaEnhancer",
+        "period": "2025-12",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 20160,
+        "package": "matchms",
+        "period": "2025-12",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 228,
+        "package": "MSMetaEnhancer",
+        "period": "2026-01",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 1629,
+        "package": "RIAssigner",
+        "period": "2026-01",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 63,
+        "package": "gc-meox-tms",
+        "period": "2026-01",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 21672,
+        "package": "matchms",
+        "period": "2026-01",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 7279,
+        "package": "ms2deepscore",
+        "period": "2026-01",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 49,
+        "package": "rcx-tk",
+        "period": "2026-01",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 1639,
+        "package": "spec2vec",
+        "period": "2026-01",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 80,
+        "package": "wtv",
+        "period": "2026-01",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 328,
+        "package": "rcx-tk",
+        "period": "2026-02",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 101,
+        "package": "wtv",
+        "period": "2026-02",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 1601,
+        "package": "spec2vec",
+        "period": "2026-02",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 6154,
+        "package": "ms2deepscore",
+        "period": "2026-02",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 1257,
+        "package": "aoptk",
+        "period": "2026-02",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 74,
+        "package": "gc-meox-tms",
+        "period": "2026-02",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 925,
+        "package": "RIAssigner",
+        "period": "2026-02",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 207,
+        "package": "MSMetaEnhancer",
+        "period": "2026-02",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 22268,
+        "package": "matchms",
+        "period": "2026-02",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 91,
+        "package": "wtv",
+        "period": "2026-03",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 3626,
+        "package": "spec2vec",
+        "period": "2026-03",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 156,
+        "package": "rcx-tk",
+        "period": "2026-03",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 11487,
+        "package": "ms2deepscore",
+        "period": "2026-03",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 31750,
+        "package": "matchms",
+        "period": "2026-03",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 745,
+        "package": "aoptk",
+        "period": "2026-03",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 2055,
+        "package": "RIAssigner",
+        "period": "2026-03",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 562,
+        "package": "MSMetaEnhancer",
+        "period": "2026-03",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 64,
+        "package": "gc-meox-tms",
+        "period": "2026-03",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 137,
+        "package": "wtv",
+        "period": "2026-04",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 1739,
+        "package": "spec2vec",
+        "period": "2026-04",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 681,
+        "package": "rcx-tk",
+        "period": "2026-04",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 7255,
+        "package": "ms2deepscore",
+        "period": "2026-04",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 1574,
+        "package": "aoptk",
+        "period": "2026-04",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 73,
+        "package": "gc-meox-tms",
+        "period": "2026-04",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 1788,
+        "package": "RIAssigner",
+        "period": "2026-04",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 403,
+        "package": "MSMetaEnhancer",
+        "period": "2026-04",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 38351,
+        "package": "matchms",
+        "period": "2026-04",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 2348,
+        "package": "spec2vec",
+        "period": "2026-05",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 585,
+        "package": "MSMetaEnhancer",
+        "period": "2026-05",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 1317,
+        "package": "RIAssigner",
+        "period": "2026-05",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 2691,
+        "package": "aoptk",
+        "period": "2026-05",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 85,
+        "package": "gc-meox-tms",
+        "period": "2026-05",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 53034,
+        "package": "matchms",
+        "period": "2026-05",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 5359,
+        "package": "ms2deepscore",
+        "period": "2026-05",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 1042,
+        "package": "rcx-tk",
+        "period": "2026-05",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 147,
+        "package": "wtv",
+        "period": "2026-05",
+        "source": "PyPI Downloads"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2024-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 18,
+        "package": "spec2vec",
+        "period": "2024-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 11,
+        "package": "riassigner",
+        "period": "2024-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2024-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 29,
+        "package": "r-recetox-waveica",
+        "period": "2024-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 28,
+        "package": "r-recetox-aplcms",
+        "period": "2024-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 4,
+        "package": "r-recetox-xmsannotator",
+        "period": "2024-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 10,
+        "package": "r-mfassignr",
+        "period": "2024-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 20,
+        "package": "msmetaenhancer",
+        "period": "2024-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 392,
+        "package": "ms2deepscore",
+        "period": "2024-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 891,
+        "package": "matchms",
+        "period": "2024-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 16,
+        "package": "r-ramclustr",
+        "period": "2024-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 6,
+        "package": "r-recetox-waveica",
+        "period": "2025-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 17,
+        "package": "spec2vec",
+        "period": "2025-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 20,
+        "package": "riassigner",
+        "period": "2025-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 1,
+        "package": "rcx-tk",
+        "period": "2025-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 5,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 20,
+        "package": "r-recetox-aplcms",
+        "period": "2025-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 434,
+        "package": "ms2deepscore",
+        "period": "2025-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 5,
+        "package": "r-mfassignr",
+        "period": "2025-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 17,
+        "package": "msmetaenhancer",
+        "period": "2025-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 1011,
+        "package": "matchms",
+        "period": "2025-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 2,
+        "package": "gc-meox-tms",
+        "period": "2025-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 12,
+        "package": "r-ramclustr",
+        "period": "2025-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 23,
+        "package": "r-recetox-waveica",
+        "period": "2025-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 16,
+        "package": "spec2vec",
+        "period": "2025-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 41,
+        "package": "riassigner",
+        "period": "2025-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 5,
+        "package": "rcx-tk",
+        "period": "2025-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 19,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 80,
+        "package": "r-recetox-aplcms",
+        "period": "2025-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 473,
+        "package": "ms2deepscore",
+        "period": "2025-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 18,
+        "package": "r-mfassignr",
+        "period": "2025-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 66,
+        "package": "msmetaenhancer",
+        "period": "2025-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 1089,
+        "package": "matchms",
+        "period": "2025-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 10,
+        "package": "gc-meox-tms",
+        "period": "2025-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 50,
+        "package": "r-ramclustr",
+        "period": "2025-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 16,
+        "package": "spec2vec",
+        "period": "2025-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 13,
+        "package": "riassigner",
+        "period": "2025-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 1,
+        "package": "rcx-tk",
+        "period": "2025-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 4,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 5,
+        "package": "r-recetox-waveica",
+        "period": "2025-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 20,
+        "package": "r-recetox-aplcms",
+        "period": "2025-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 13,
+        "package": "r-ramclustr",
+        "period": "2025-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 16,
+        "package": "msmetaenhancer",
+        "period": "2025-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 576,
+        "package": "ms2deepscore",
+        "period": "2025-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 1155,
+        "package": "matchms",
+        "period": "2025-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2025-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 12,
+        "package": "r-mfassignr",
+        "period": "2025-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 16,
+        "package": "r-recetox-waveica",
+        "period": "2025-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 22,
+        "package": "spec2vec",
+        "period": "2025-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2025-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 13,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 60,
+        "package": "r-recetox-aplcms",
+        "period": "2025-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 45,
+        "package": "riassigner",
+        "period": "2025-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 15,
+        "package": "r-mfassignr",
+        "period": "2025-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 49,
+        "package": "msmetaenhancer",
+        "period": "2025-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 698,
+        "package": "ms2deepscore",
+        "period": "2025-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 1159,
+        "package": "matchms",
+        "period": "2025-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 40,
+        "package": "r-ramclustr",
+        "period": "2025-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 7,
+        "package": "gc-meox-tms",
+        "period": "2025-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 17,
+        "package": "wtv",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 41,
+        "package": "spec2vec",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 48,
+        "package": "riassigner",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 5,
+        "package": "rcx-tk",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 15,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 19,
+        "package": "r-recetox-waveica",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 70,
+        "package": "r-recetox-aplcms",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 47,
+        "package": "r-ramclustr",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 15,
+        "package": "r-mfassignr",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 80,
+        "package": "msmetaenhancer",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 196,
+        "package": "ms2deepscore",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 765,
+        "package": "matchms",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 11,
+        "package": "gc-meox-tms",
+        "period": "2025-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 22,
+        "package": "spec2vec",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 40,
+        "package": "riassigner",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 19,
+        "package": "rcx-tk",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 27,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 109,
+        "package": "r-recetox-waveica",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 74,
+        "package": "r-recetox-aplcms",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 28,
+        "package": "wtv",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 29,
+        "package": "r-mfassignr",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 59,
+        "package": "msmetaenhancer",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 142,
+        "package": "ms2deepscore",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 591,
+        "package": "matchms",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 8,
+        "package": "gc-meox-tms",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 66,
+        "package": "r-ramclustr",
+        "period": "2025-06",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 22,
+        "package": "spec2vec",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 54,
+        "package": "riassigner",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 4,
+        "package": "rcx-tk",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 15,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 39,
+        "package": "r-recetox-waveica",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 110,
+        "package": "r-recetox-aplcms",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 31,
+        "package": "wtv",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 16,
+        "package": "r-mfassignr",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 68,
+        "package": "msmetaenhancer",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 112,
+        "package": "ms2deepscore",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 487,
+        "package": "matchms",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 6,
+        "package": "gc-meox-tms",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 46,
+        "package": "r-ramclustr",
+        "period": "2025-07",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 5,
+        "package": "wtv",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 22,
+        "package": "spec2vec",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 47,
+        "package": "riassigner",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 2,
+        "package": "rcx-tk",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 9,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 15,
+        "package": "r-recetox-waveica",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 73,
+        "package": "r-recetox-aplcms",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 9,
+        "package": "r-mfassignr",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 38,
+        "package": "msmetaenhancer",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 84,
+        "package": "ms2deepscore",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 494,
+        "package": "matchms",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 6,
+        "package": "gc-meox-tms",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 28,
+        "package": "r-ramclustr",
+        "period": "2025-08",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 8,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 18,
+        "package": "wtv",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 15,
+        "package": "spec2vec",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 39,
+        "package": "riassigner",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 2,
+        "package": "rcx-tk",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 20,
+        "package": "r-recetox-waveica",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 11,
+        "package": "r-mfassignr",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 24,
+        "package": "r-ramclustr",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 59,
+        "package": "r-recetox-aplcms",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 34,
+        "package": "msmetaenhancer",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 104,
+        "package": "ms2deepscore",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 506,
+        "package": "matchms",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 4,
+        "package": "gc-meox-tms",
+        "period": "2025-09",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 2,
+        "package": "wtv",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 21,
+        "package": "spec2vec",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 28,
+        "package": "riassigner",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 5,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 7,
+        "package": "r-recetox-waveica",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 38,
+        "package": "r-recetox-aplcms",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 15,
+        "package": "r-ramclustr",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 8,
+        "package": "r-mfassignr",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 20,
+        "package": "msmetaenhancer",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 61,
+        "package": "ms2deepscore",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 509,
+        "package": "matchms",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2025-10",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 65,
+        "package": "wtv",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 118,
+        "package": "spec2vec",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 27,
+        "package": "riassigner",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 12,
+        "package": "rcx-tk",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 58,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 5,
+        "package": "r-recetox-waveica",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 444,
+        "package": "r-recetox-aplcms",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 171,
+        "package": "r-ramclustr",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 11,
+        "package": "r-mfassignr",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 167,
+        "package": "msmetaenhancer",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 10033,
+        "package": "ms2deepscore",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 11095,
+        "package": "matchms",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 26,
+        "package": "gc-meox-tms",
+        "period": "2025-11",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 62,
+        "package": "wtv",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 87,
+        "package": "spec2vec",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 13,
+        "package": "riassigner",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 7,
+        "package": "rcx-tk",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 64,
+        "package": "r-recetox-xmsannotator",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 9,
+        "package": "r-recetox-waveica",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 410,
+        "package": "r-recetox-aplcms",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 71,
+        "package": "r-ramclustr",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 12,
+        "package": "r-mfassignr",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 79,
+        "package": "msmetaenhancer",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 498,
+        "package": "ms2deepscore",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 1644,
+        "package": "matchms",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 12,
+        "package": "gc-meox-tms",
+        "period": "2025-12",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 64,
+        "package": "wtv",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 19,
+        "package": "riassigner",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 4,
+        "package": "rcx-tk",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 66,
+        "package": "r-recetox-xmsannotator",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 13,
+        "package": "r-recetox-waveica",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 386,
+        "package": "r-recetox-aplcms",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 84,
+        "package": "spec2vec",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 5,
+        "package": "r-mfassignr",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 46,
+        "package": "msmetaenhancer",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 552,
+        "package": "ms2deepscore",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 1905,
+        "package": "matchms",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 7,
+        "package": "gc-meox-tms",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 102,
+        "package": "aoptk",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 35,
+        "package": "r-ramclustr",
+        "period": "2026-01",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 56,
+        "package": "wtv",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 74,
+        "package": "spec2vec",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 6,
+        "package": "riassigner",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 28,
+        "package": "rcx-tk",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 59,
+        "package": "r-recetox-xmsannotator",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 1,
+        "package": "r-recetox-waveica",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 353,
+        "package": "r-recetox-aplcms",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 94,
+        "package": "r-ramclustr",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 6,
+        "package": "r-mfassignr",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 113,
+        "package": "msmetaenhancer",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 515,
+        "package": "ms2deepscore",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 1602,
+        "package": "matchms",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 20,
+        "package": "gc-meox-tms",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 102,
+        "package": "aoptk",
+        "period": "2026-02",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 45,
+        "package": "spec2vec",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 111,
+        "package": "riassigner",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 13,
+        "package": "wtv",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 20,
+        "package": "r-recetox-xmsannotator",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 33,
+        "package": "r-recetox-waveica",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 108,
+        "package": "r-recetox-aplcms",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 14,
+        "package": "rcx-tk",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 20,
+        "package": "r-mfassignr",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 130,
+        "package": "msmetaenhancer",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 180,
+        "package": "ms2deepscore",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 757,
+        "package": "matchms",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 10,
+        "package": "gc-meox-tms",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 59,
+        "package": "aoptk",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 60,
+        "package": "r-ramclustr",
+        "period": "2026-03",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 14,
+        "package": "wtv",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 43,
+        "package": "spec2vec",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 100,
+        "package": "riassigner",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 26,
+        "package": "r-recetox-xmsannotator",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 40,
+        "package": "r-recetox-waveica",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 148,
+        "package": "r-recetox-aplcms",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 49,
+        "package": "rcx-tk",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 28,
+        "package": "r-mfassignr",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 123,
+        "package": "msmetaenhancer",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 237,
+        "package": "ms2deepscore",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 869,
+        "package": "matchms",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 14,
+        "package": "gc-meox-tms",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 73,
+        "package": "aoptk",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 80,
+        "package": "r-ramclustr",
+        "period": "2026-04",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 94,
+        "package": "riassigner",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 70,
+        "package": "rcx-tk",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 23,
+        "package": "r-recetox-xmsannotator",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 33,
+        "package": "r-recetox-waveica",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 131,
+        "package": "r-recetox-aplcms",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 63,
+        "package": "r-ramclustr",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 224,
+        "package": "ms2deepscore",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 142,
+        "package": "msmetaenhancer",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 771,
+        "package": "matchms",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 12,
+        "package": "gc-meox-tms",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 142,
+        "package": "aoptk",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 39,
+        "package": "spec2vec",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 22,
+        "package": "r-mfassignr",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 11,
+        "package": "wtv",
+        "period": "2026-05",
+        "source": "Bioconda Downloads"
+      },
+      {
+        "count": 330,
+        "package": "RAMClustR",
+        "period": "2025-01",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 403,
+        "package": "RAMClustR",
+        "period": "2025-02",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 254,
+        "package": "RAMClustR",
+        "period": "2025-03",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 126,
+        "package": "RAMClustR",
+        "period": "2025-04",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 96,
+        "package": "RAMClustR",
+        "period": "2025-05",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 147,
+        "package": "RAMClustR",
+        "period": "2025-06",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 104,
+        "package": "RAMClustR",
+        "period": "2025-07",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 179,
+        "package": "RAMClustR",
+        "period": "2025-08",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 98,
+        "package": "RAMClustR",
+        "period": "2025-09",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 95,
+        "package": "RAMClustR",
+        "period": "2025-10",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 86,
+        "package": "RAMClustR",
+        "period": "2025-11",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 109,
+        "package": "RAMClustR",
+        "period": "2025-12",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 44,
+        "package": "RAMClustR",
+        "period": "2026-01",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 121,
+        "package": "RAMClustR",
+        "period": "2026-02",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 100,
+        "package": "RAMClustR",
+        "period": "2026-03",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 57,
+        "package": "RAMClustR",
+        "period": "2026-04",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 57,
+        "package": "RAMClustR",
+        "period": "2026-05",
+        "source": "CRAN Downloads"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2025-W51",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "wtv",
+        "period": "2025-W51",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 17,
+        "package": "spec2vec",
+        "period": "2025-W51",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2025-W51",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 24,
+        "package": "recetox-aplcms",
+        "period": "2025-W51",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 36,
+        "package": "rcx-tk",
+        "period": "2025-W51",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2025-W51",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 46,
+        "package": "matchms",
+        "period": "2025-W51",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 6,
+        "package": "gc-meox-tms",
+        "period": "2025-W51",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 15,
+        "package": "RIAssigner",
+        "period": "2025-W51",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 42,
+        "package": "MSMetaEnhancer",
+        "period": "2025-W51",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 13,
+        "package": "ms2deepscore",
+        "period": "2025-W51",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2025-W52",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2025-W52",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 6,
+        "package": "spec2vec",
+        "period": "2025-W52",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "recetox-xMSannotator",
+        "period": "2025-W52",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2025-W52",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 7,
+        "package": "RIAssigner",
+        "period": "2025-W52",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 6,
+        "package": "rcx-tk",
+        "period": "2025-W52",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 5,
+        "package": "ms2deepscore",
+        "period": "2025-W52",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 191,
+        "package": "matchms",
+        "period": "2025-W52",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 14,
+        "package": "MSMetaEnhancer",
+        "period": "2025-W52",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "recetox-aplcms",
+        "period": "2025-W52",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W01",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 10,
+        "package": "spec2vec",
+        "period": "2026-W01",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W01",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 12,
+        "package": "ms2deepscore",
+        "period": "2026-W01",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 5,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W01",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "aoptk",
+        "period": "2026-W01",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 7,
+        "package": "RIAssigner",
+        "period": "2026-W01",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 99,
+        "package": "matchms",
+        "period": "2026-W01",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "wtv",
+        "period": "2026-W02",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "spec2vec",
+        "period": "2026-W02",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 18,
+        "package": "recetox-aplcms",
+        "period": "2026-W02",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 5,
+        "package": "ms2deepscore",
+        "period": "2026-W02",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2026-W02",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "gc-meox-tms",
+        "period": "2026-W02",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 122,
+        "package": "aoptk",
+        "period": "2026-W02",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "RIAssigner",
+        "period": "2026-W02",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W02",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 214,
+        "package": "matchms",
+        "period": "2026-W02",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "spec2vec",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "recetox-aplcms",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "rcx-tk",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 22,
+        "package": "matchms",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "gc-meox-tms",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 172,
+        "package": "aoptk",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "RIAssigner",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 5,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 8,
+        "package": "ms2deepscore",
+        "period": "2026-W03",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 18,
+        "package": "ms2deepscore",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "wtv",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 9,
+        "package": "spec2vec",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "recetox-waveica",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 5,
+        "package": "recetox-aplcms",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "gc-meox-tms",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 51,
+        "package": "matchms",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 107,
+        "package": "aoptk",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "RIAssigner",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 6,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "MFAssignR",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2026-W04",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "recetox-waveica",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 36,
+        "package": "aoptk",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 7,
+        "package": "spec2vec",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "recetox-aplcms",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 83,
+        "package": "ms2deepscore",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 121,
+        "package": "matchms",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "gc-meox-tms",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 12,
+        "package": "RIAssigner",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "MFAssignR",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 6,
+        "package": "rcx-tk",
+        "period": "2026-W05",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W06",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 5,
+        "package": "recetox-aplcms",
+        "period": "2026-W06",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2026-W06",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 28,
+        "package": "ms2deepscore",
+        "period": "2026-W06",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 119,
+        "package": "aoptk",
+        "period": "2026-W06",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "gc-meox-tms",
+        "period": "2026-W06",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 9,
+        "package": "RIAssigner",
+        "period": "2026-W06",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 8,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W06",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 12,
+        "package": "spec2vec",
+        "period": "2026-W06",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 55,
+        "package": "matchms",
+        "period": "2026-W06",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W07",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 7,
+        "package": "recetox-aplcms",
+        "period": "2026-W07",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W07",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 7,
+        "package": "spec2vec",
+        "period": "2026-W07",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2026-W07",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 7,
+        "package": "ms2deepscore",
+        "period": "2026-W07",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 83,
+        "package": "matchms",
+        "period": "2026-W07",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "gc-meox-tms",
+        "period": "2026-W07",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 56,
+        "package": "aoptk",
+        "period": "2026-W07",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 6,
+        "package": "RIAssigner",
+        "period": "2026-W07",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 7,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W07",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2026-W07",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "wtv",
+        "period": "2026-W08",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 10,
+        "package": "spec2vec",
+        "period": "2026-W08",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2026-W08",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2026-W08",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "rcx-tk",
+        "period": "2026-W08",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 20,
+        "package": "ms2deepscore",
+        "period": "2026-W08",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2026-W08",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 78,
+        "package": "aoptk",
+        "period": "2026-W08",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 13,
+        "package": "RIAssigner",
+        "period": "2026-W08",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 15,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W08",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W08",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 101,
+        "package": "matchms",
+        "period": "2026-W08",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 9,
+        "package": "recetox-aplcms",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 17,
+        "package": "spec2vec",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 9,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "recetox-waveica",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "recetox-msfinder",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 51,
+        "package": "rcx-tk",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "MFAssignR",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 122,
+        "package": "matchms",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 14,
+        "package": "aoptk",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 15,
+        "package": "RIAssigner",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 15,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 38,
+        "package": "ms2deepscore",
+        "period": "2026-W09",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 7,
+        "package": "recetox-aplcms",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "spec2vec",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "rcx-tk",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 15,
+        "package": "matchms",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 47,
+        "package": "aoptk",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "RIAssigner",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 9,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 13,
+        "package": "ms2deepscore",
+        "period": "2026-W10",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "wtv",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 18,
+        "package": "spec2vec",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "recetox-aplcms",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 11,
+        "package": "rcx-tk",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 78,
+        "package": "aoptk",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 276,
+        "package": "matchms",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 112,
+        "package": "RIAssigner",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 48,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 51,
+        "package": "ms2deepscore",
+        "period": "2026-W11",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 8,
+        "package": "spec2vec",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "recetox-waveica",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 10,
+        "package": "recetox-aplcms",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "rcx-tk",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "wtv",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 370,
+        "package": "matchms",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "gc-meox-tms",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 49,
+        "package": "aoptk",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 18,
+        "package": "RIAssigner",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 40,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 10,
+        "package": "MFAssignR",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 25,
+        "package": "ms2deepscore",
+        "period": "2026-W12",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 13,
+        "package": "spec2vec",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "recetox-waveica",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "recetox-msfinder",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 8,
+        "package": "recetox-aplcms",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "rcx-tk",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 239,
+        "package": "matchms",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 125,
+        "package": "aoptk",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 35,
+        "package": "RIAssigner",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 10,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 80,
+        "package": "ms2deepscore",
+        "period": "2026-W13",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 8,
+        "package": "recetox-aplcms",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "rcx-tk",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 26,
+        "package": "spec2vec",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 221,
+        "package": "matchms",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "gc-meox-tms",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 111,
+        "package": "aoptk",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 24,
+        "package": "RIAssigner",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 25,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 47,
+        "package": "ms2deepscore",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 4,
+        "package": "wtv",
+        "period": "2026-W14",
+        "source": "GitHub Clones"
+      },
+      {
+        "count": 3,
+        "package": "MFAssignR",
+        "period": "2025-W51",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 4,
+        "package": "MSMetaEnhancer",
+        "period": "2025-W51",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "RIAssigner",
+        "period": "2025-W51",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 80,
+        "package": "matchms",
+        "period": "2025-W51",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 28,
+        "package": "ms2deepscore",
+        "period": "2025-W51",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "rcx-tk",
+        "period": "2025-W51",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 9,
+        "package": "recetox-aplcms",
+        "period": "2025-W51",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2025-W51",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "recetox-xMSannotator",
+        "period": "2025-W51",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 18,
+        "package": "spec2vec",
+        "period": "2025-W51",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 11,
+        "package": "spec2vec",
+        "period": "2025-W52",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2025-W52",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2025-W52",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "recetox-aplcms",
+        "period": "2025-W52",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 8,
+        "package": "MSMetaEnhancer",
+        "period": "2025-W52",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 68,
+        "package": "matchms",
+        "period": "2025-W52",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "RIAssigner",
+        "period": "2025-W52",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 22,
+        "package": "ms2deepscore",
+        "period": "2025-W52",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2026-W01",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 5,
+        "package": "spec2vec",
+        "period": "2026-W01",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "recetox-aplcms",
+        "period": "2026-W01",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "aoptk",
+        "period": "2026-W01",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 31,
+        "package": "matchms",
+        "period": "2026-W01",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W01",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 9,
+        "package": "ms2deepscore",
+        "period": "2026-W01",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 18,
+        "package": "spec2vec",
+        "period": "2026-W02",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W02",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W02",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 9,
+        "package": "recetox-aplcms",
+        "period": "2026-W02",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 20,
+        "package": "ms2deepscore",
+        "period": "2026-W02",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 12,
+        "package": "aoptk",
+        "period": "2026-W02",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "RIAssigner",
+        "period": "2026-W02",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 5,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W02",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "MFAssignR",
+        "period": "2026-W02",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 56,
+        "package": "matchms",
+        "period": "2026-W02",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W03",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 18,
+        "package": "wtv",
+        "period": "2026-W03",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 7,
+        "package": "spec2vec",
+        "period": "2026-W03",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W03",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "recetox-aplcms",
+        "period": "2026-W03",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 15,
+        "package": "ms2deepscore",
+        "period": "2026-W03",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "gc-meox-tms",
+        "period": "2026-W03",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 12,
+        "package": "aoptk",
+        "period": "2026-W03",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 8,
+        "package": "RIAssigner",
+        "period": "2026-W03",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W03",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W03",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 12,
+        "package": "matchms",
+        "period": "2026-W03",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 63,
+        "package": "ms2deepscore",
+        "period": "2026-W04",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 20,
+        "package": "spec2vec",
+        "period": "2026-W04",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W04",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 6,
+        "package": "recetox-msfinder",
+        "period": "2026-W04",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 8,
+        "package": "recetox-aplcms",
+        "period": "2026-W04",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "rcx-tk",
+        "period": "2026-W04",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 13,
+        "package": "aoptk",
+        "period": "2026-W04",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W04",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 4,
+        "package": "RIAssigner",
+        "period": "2026-W04",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 9,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W04",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W04",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 89,
+        "package": "matchms",
+        "period": "2026-W04",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2026-W05",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 8,
+        "package": "aoptk",
+        "period": "2026-W05",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 18,
+        "package": "spec2vec",
+        "period": "2026-W05",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W05",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 4,
+        "package": "recetox-aplcms",
+        "period": "2026-W05",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 6,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W05",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 91,
+        "package": "matchms",
+        "period": "2026-W05",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 5,
+        "package": "RIAssigner",
+        "period": "2026-W05",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W05",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 37,
+        "package": "ms2deepscore",
+        "period": "2026-W05",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 16,
+        "package": "spec2vec",
+        "period": "2026-W06",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W06",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 4,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W06",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "RIAssigner",
+        "period": "2026-W06",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 8,
+        "package": "aoptk",
+        "period": "2026-W06",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 74,
+        "package": "matchms",
+        "period": "2026-W06",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 38,
+        "package": "ms2deepscore",
+        "period": "2026-W06",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 5,
+        "package": "recetox-aplcms",
+        "period": "2026-W06",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W06",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "recetox-waveica",
+        "period": "2026-W06",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "recetox-msfinder",
+        "period": "2026-W07",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 9,
+        "package": "recetox-aplcms",
+        "period": "2026-W07",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 14,
+        "package": "spec2vec",
+        "period": "2026-W07",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W07",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 35,
+        "package": "ms2deepscore",
+        "period": "2026-W07",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "MFAssignR",
+        "period": "2026-W07",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 8,
+        "package": "aoptk",
+        "period": "2026-W07",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W07",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 94,
+        "package": "matchms",
+        "period": "2026-W07",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "RIAssigner",
+        "period": "2026-W07",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2026-W08",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W08",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "RIAssigner",
+        "period": "2026-W08",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 8,
+        "package": "aoptk",
+        "period": "2026-W08",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 36,
+        "package": "ms2deepscore",
+        "period": "2026-W08",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "recetox-msfinder",
+        "period": "2026-W08",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W08",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 16,
+        "package": "spec2vec",
+        "period": "2026-W08",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 53,
+        "package": "matchms",
+        "period": "2026-W08",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 28,
+        "package": "spec2vec",
+        "period": "2026-W09",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "rcx-tk",
+        "period": "2026-W09",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W09",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 5,
+        "package": "recetox-msfinder",
+        "period": "2026-W09",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 5,
+        "package": "recetox-aplcms",
+        "period": "2026-W09",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 42,
+        "package": "ms2deepscore",
+        "period": "2026-W09",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 5,
+        "package": "aoptk",
+        "period": "2026-W09",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "RIAssigner",
+        "period": "2026-W09",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 6,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W09",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2026-W09",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 101,
+        "package": "matchms",
+        "period": "2026-W09",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W10",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 4,
+        "package": "spec2vec",
+        "period": "2026-W10",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W10",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "recetox-aplcms",
+        "period": "2026-W10",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 5,
+        "package": "ms2deepscore",
+        "period": "2026-W10",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "aoptk",
+        "period": "2026-W10",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "RIAssigner",
+        "period": "2026-W10",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W10",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 21,
+        "package": "matchms",
+        "period": "2026-W10",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W11",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 29,
+        "package": "spec2vec",
+        "period": "2026-W11",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W11",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "recetox-msfinder",
+        "period": "2026-W11",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 9,
+        "package": "recetox-aplcms",
+        "period": "2026-W11",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 121,
+        "package": "matchms",
+        "period": "2026-W11",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 11,
+        "package": "aoptk",
+        "period": "2026-W11",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 4,
+        "package": "RIAssigner",
+        "period": "2026-W11",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 9,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W11",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 50,
+        "package": "ms2deepscore",
+        "period": "2026-W11",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 25,
+        "package": "spec2vec",
+        "period": "2026-W12",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 6,
+        "package": "recetox-msfinder",
+        "period": "2026-W12",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 4,
+        "package": "recetox-aplcms",
+        "period": "2026-W12",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 108,
+        "package": "matchms",
+        "period": "2026-W12",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 90,
+        "package": "ms2deepscore",
+        "period": "2026-W12",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 4,
+        "package": "RIAssigner",
+        "period": "2026-W12",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 4,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W12",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W12",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 7,
+        "package": "aoptk",
+        "period": "2026-W12",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W13",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 17,
+        "package": "spec2vec",
+        "period": "2026-W13",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "recetox-xMSannotator",
+        "period": "2026-W13",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "recetox-waveica",
+        "period": "2026-W13",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 7,
+        "package": "recetox-msfinder",
+        "period": "2026-W13",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 4,
+        "package": "recetox-aplcms",
+        "period": "2026-W13",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 99,
+        "package": "matchms",
+        "period": "2026-W13",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 7,
+        "package": "aoptk",
+        "period": "2026-W13",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "RIAssigner",
+        "period": "2026-W13",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 3,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W13",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "MFAssignR",
+        "period": "2026-W13",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 66,
+        "package": "ms2deepscore",
+        "period": "2026-W13",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 16,
+        "package": "spec2vec",
+        "period": "2026-W14",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 2,
+        "package": "MFAssignR",
+        "period": "2026-W14",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 27,
+        "package": "MSMetaEnhancer",
+        "period": "2026-W14",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 4,
+        "package": "RIAssigner",
+        "period": "2026-W14",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 6,
+        "package": "aoptk",
+        "period": "2026-W14",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 75,
+        "package": "matchms",
+        "period": "2026-W14",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 54,
+        "package": "ms2deepscore",
+        "period": "2026-W14",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "rcx-tk",
+        "period": "2026-W14",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 5,
+        "package": "recetox-aplcms",
+        "period": "2026-W14",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 1,
+        "package": "wtv",
+        "period": "2026-W14",
+        "source": "GitHub Views"
+      },
+      {
+        "count": 51,
+        "package": "aoptk",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 6464,
+        "package": "gc_derivatization",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 93,
+        "package": "matchms",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 1,
+        "package": "mfassignr",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 366,
+        "package": "ms2deepscore",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 46380,
+        "package": "msmetaenhancer",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 1151,
+        "package": "qcxms",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 2878,
+        "package": "rcx_tk",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 228,
+        "package": "recetox-aplcms",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 193,
+        "package": "recetox-msfinder",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 430,
+        "package": "recetox-xmsannotator",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 177,
+        "package": "riassigner",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 617,
+        "package": "spec2vec",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 2950,
+        "package": "wtv",
+        "period": "2026-07",
+        "source": "Galaxy Runs"
+      },
+      {
+        "count": 3,
+        "package": "gc_derivatization",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 65,
+        "package": "matchms",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 7,
+        "package": "mfassignr",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 1,
+        "package": "ms2deepscore",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 17,
+        "package": "msmetaenhancer",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 16,
+        "package": "qcxms",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 96,
+        "package": "ramclustr",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 11,
+        "package": "recetox-aplcms",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 17,
+        "package": "recetox-msfinder",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 5,
+        "package": "recetox-xmsannotator",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 62,
+        "package": "riassigner",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 2,
+        "package": "spec2vec",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 21,
+        "package": "waveica",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      },
+      {
+        "count": 12,
+        "package": "xtb_molecular_optimization",
+        "period": "2026-07",
+        "source": "Galaxy Users"
+      }
+    ]
+  },
+  "encoding": {
+    "color": {
+      "field": "package",
+      "legend": {
+        "title": "Package"
+      },
+      "type": "nominal"
+    },
+    "tooltip": [
+      {
+        "field": "source",
+        "title": "Source",
+        "type": "nominal"
+      },
+      {
+        "field": "period",
+        "title": "Period",
+        "type": "ordinal"
+      },
+      {
+        "field": "package",
+        "title": "Package",
+        "type": "nominal"
+      },
+      {
+        "field": "count",
+        "format": ",d",
+        "title": "Count",
+        "type": "quantitative"
+      }
+    ],
+    "x": {
+      "axis": {
+        "labelAngle": -45
+      },
+      "field": "period",
+      "title": "Period",
+      "type": "ordinal"
+    },
+    "y": {
+      "field": "count",
+      "title": "Count",
+      "type": "quantitative"
+    }
+  },
+  "height": 300,
+  "mark": {
+    "point": true,
+    "type": "line"
+  },
+  "params": [
+    {
+      "bind": "scales",
+      "name": "param_1e9efca18e7a2868",
+      "select": {
+        "encodings": [
+          "x",
+          "y"
+        ],
+        "type": "interval"
+      }
+    }
+  ],
+  "width": "container"
+};
+      if (overallSpec && Object.keys(overallSpec).length > 0) {
+        await vegaEmbed('#overall-chart', overallSpec, { actions: true });
+      }
+    })();
+
+
+    // Package filter functionality - filters charts by selected packages
+    function applyPackageFilter() {
+      const checked = Array.from(document.querySelectorAll('.package-filter:checked'))
+                        .map(cb => cb.value);
+      console.log('Selected packages:', checked);
+      // Re-render charts with filtered data
+      updateChartsForPackages(checked);
+    }
+
+    document.querySelectorAll('.package-filter').forEach(cb => {
+      cb.addEventListener('change', applyPackageFilter);
+    });
+
 
     // Select All / Clear All buttons
-    document.getElementById('select-all')?.addEventListener('click', () => {{
+    document.getElementById('select-all')?.addEventListener('click', function() {
       document.querySelectorAll('.package-filter').forEach(cb => cb.checked = true);
-      document.getElementById('select-all').classList.add('btn-success');
-    }});
+      applyPackageFilter();
+    });
 
-    document.getElementById('clear-all')?.addEventListener('click', () => {{
+    document.getElementById('clear-all')?.addEventListener('click', function() {
       document.querySelectorAll('.package-filter').forEach(cb => cb.checked = false);
-    }});
+      applyPackageFilter();
+    });
+
 
     // Toggle table visibility
-    document.querySelectorAll('.toggle-table').forEach(btn => {{
-      btn.addEventListener('click', () => {{
-        const target = btn.dataset.target;
+    document.querySelectorAll('.toggle-table').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const target = btn.getAttribute('data-target');
         const collapse = document.getElementById(target);
-        const isCollapsed = !collapse.classList.contains('show');
-        btn.textContent = isCollapsed ? 'Hide Table' : 'Show Table';
-      }});
-    }});
+        if (collapse) {
+          const isCollapsed = !collapse.classList.contains('show');
+          btn.textContent = isCollapsed ? 'Hide Table' : 'Show Table';
+        }
+      });
+    });
+
+
+    // Function to update charts based on selected packages
+    function updateChartsForPackages(selectedPackages) {
+      // This would re-render charts with filtered data
+      // For now, we log the selection
+      console.log('Updating charts for packages:', selectedPackages);
+    }
+
   </script>
 </body>
 </html>
