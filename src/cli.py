@@ -170,7 +170,9 @@ def write_repository_list(entries: List[dict], repository_list_path: Path) -> No
 @click.option("--cran", is_flag=True, help="Add CRAN downloads entry")
 @click.option("--github", is_flag=True, help="Add GitHub views and clones entries")
 @click.option("--galaxy", is_flag=True, help="Add Galaxy tool usage entries")
-def add_repo(repository, project, repository_list, pypi, bioconda, cran, github, galaxy):
+def add_repo(
+    repository, project, repository_list, pypi, bioconda, cran, github, galaxy
+):
     """Add a new package to the repository list."""
 
     if not any([pypi, bioconda, cran, github, galaxy]):
@@ -331,7 +333,9 @@ def collect_stats(repository_list, tmp_dir, galaxy_config, source):
     # Filter by source if specified
     if source:
         click.echo(f"Filtering to sources: {', '.join(source)}")
-        repositories_df = repositories_df[repositories_df["source"].str.lower().isin(source)]
+        repositories_df = repositories_df[
+            repositories_df["source"].str.lower().isin(source)
+        ]
         if repositories_df.empty:
             click.echo("Warning: No entries found matching the specified source(s)")
 
@@ -346,7 +350,9 @@ def collect_stats(repository_list, tmp_dir, galaxy_config, source):
     click.echo(f"\nCollecting statistics for {len(repositories_df)} entries...")
     click.echo("=" * 60)
 
-    process_repositories(repositories_df, github_token, pepy_x_api_key, Path(galaxy_config))
+    process_repositories(
+        repositories_df, github_token, pepy_x_api_key, Path(galaxy_config)
+    )
 
     run_timestamp = datetime.now().strftime("%Y-%m-%d")
     organize_run_reports(run_timestamp, tmp_dir_path)
@@ -431,18 +437,18 @@ def generate_reports(year, tmp_dir, output_dir):
     click.echo("\n6. Galaxy Runs Report")
     click.echo("-" * 60)
     output_file = output_path / str(year) / "galaxy_runs.tsv"
-    generator = GalaxyReportGenerator(tmp_path, output_file)
+    generator = GalaxyReportGenerator(tmp_path, output_file, stat_type="runs")
     generator.create_report(year=year)
 
     # Galaxy Users
     click.echo("\n7. Galaxy Users Report")
     click.echo("-" * 60)
     output_file = output_path / str(year) / "galaxy_users.tsv"
-    generator = GalaxyReportGenerator(tmp_path, output_file)
+    generator = GalaxyReportGenerator(tmp_path, output_file, stat_type="users")
     generator.create_report(year=year)
 
     click.echo("\n" + "=" * 60)
-    click.echo(f"✓ All 5 reports generated successfully for {year}")
+    click.echo(f"✓ All 7 reports generated successfully for {year}")
     click.echo(f"  Output directory: {output_path / str(year)}")
 
 

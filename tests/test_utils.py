@@ -1,8 +1,7 @@
 import logging
 import unittest
-from unittest.mock import MagicMock, mock_open, patch
+from unittest.mock import MagicMock, patch
 
-import orjson
 
 from src.utils import (
     get_config_var,

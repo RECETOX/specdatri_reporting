@@ -108,7 +108,9 @@ class ReportGenerator(ABC):
         }
 
         # Get all periods and filter (include existing periods to prevent data loss)
-        all_periods = {p for data in entity_data.values() for p in data.keys()} | set(existing_data.keys())
+        all_periods = {p for data in entity_data.values() for p in data.keys()} | set(
+            existing_data.keys()
+        )
         periods = self.filter_periods(all_periods, year)
 
         if not periods:

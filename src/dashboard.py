@@ -87,10 +87,9 @@ def load_all_data(reports_dir: Path) -> dict:
             merged = pd.concat(frames, ignore_index=True)
             # De-duplicate: if the same period+package appears in multiple
             # yearly files, keep the maximum (most complete) value.
-            merged = (
-                merged.groupby(["period", "package"], as_index=False)["count"]
-                .max()
-            )
+            merged = merged.groupby(["period", "package"], as_index=False)[
+                "count"
+            ].max()
             merged = merged.sort_values("period").reset_index(drop=True)
             result[label] = merged
 
@@ -303,4 +302,3 @@ def generate_dashboard(reports_dir: Path, output_file: Path) -> None:
 
     output_file.write_text(html, encoding="utf-8")
     logger.info("Dashboard written to %s", output_file)
-

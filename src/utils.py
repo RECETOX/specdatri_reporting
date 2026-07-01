@@ -246,10 +246,26 @@ def read_galaxy_instances(config_path: Path) -> List[Dict[str, Any]]:
     _logger = setup_logger()
 
     default_instances = [
-        {"instance_name": "usegalaxy.eu", "key_pattern": "_(usegalaxy.eu)", "enabled": True},
-        {"instance_name": "usegalaxy.org", "key_pattern": "_(usegalaxy.org)", "enabled": True},
-        {"instance_name": "usegalaxy.org.au", "key_pattern": "_(usegalaxy.org.au)", "enabled": True},
-        {"instance_name": "usegalaxy.fr", "key_pattern": "_(usegalaxy.fr)", "enabled": True},
+        {
+            "instance_name": "usegalaxy.eu",
+            "key_pattern": "_(usegalaxy.eu)",
+            "enabled": True,
+        },
+        {
+            "instance_name": "usegalaxy.org",
+            "key_pattern": "_(usegalaxy.org)",
+            "enabled": True,
+        },
+        {
+            "instance_name": "usegalaxy.org.au",
+            "key_pattern": "_(usegalaxy.org.au)",
+            "enabled": True,
+        },
+        {
+            "instance_name": "usegalaxy.fr",
+            "key_pattern": "_(usegalaxy.fr)",
+            "enabled": True,
+        },
     ]
 
     if not config_path.exists():
@@ -262,14 +278,20 @@ def read_galaxy_instances(config_path: Path) -> List[Dict[str, Any]]:
             reader = csv.DictReader(f, delimiter="\t")
             for row in reader:
                 # Validate required columns
-                if "instance_name" not in row or "key_pattern" not in row or "enabled" not in row:
+                if (
+                    "instance_name" not in row
+                    or "key_pattern" not in row
+                    or "enabled" not in row
+                ):
                     _logger.warning(f"Skipping invalid row in galaxy config: {row}")
                     continue
-                instances.append({
-                    "instance_name": row["instance_name"].strip(),
-                    "key_pattern": row["key_pattern"].strip(),
-                    "enabled": row["enabled"].strip().lower() == "true",
-                })
+                instances.append(
+                    {
+                        "instance_name": row["instance_name"].strip(),
+                        "key_pattern": row["key_pattern"].strip(),
+                        "enabled": row["enabled"].strip().lower() == "true",
+                    }
+                )
     except Exception as e:
         _logger.error(f"Failed to read galaxy instances config: {e}")
         return default_instances

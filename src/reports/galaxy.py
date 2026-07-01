@@ -1,7 +1,6 @@
 """Galaxy report generator for tool usage statistics."""
 
 import json
-from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Tuple
@@ -16,12 +15,21 @@ class GalaxyReportGenerator(ReportGenerator):
     from collected JSON data files.
     """
 
-    def __init__(self, tmp_dir: Path, output_path: Path):
+    def __init__(self, tmp_dir: Path, output_path: Path, stat_type: str = "runs"):
+        """
+        Initialize Galaxy report generator.
+
+        Args:
+            tmp_dir: Directory containing collected JSON files
+            output_path: Path for the output TSV file
+            stat_type: Either 'runs' or 'users' to specify which metric to report
+        """
         super().__init__(tmp_dir, output_path)
+        self.stat_type = stat_type
 
     def get_file_pattern(self) -> str:
-        """Return glob pattern for finding Galaxy JSON files."""
-        return "*__Galaxy__*.json"
+        """Return glob pattern for finding Galaxy JSON files of the specified type."""
+        return f"*__Galaxy__{self.stat_type}.json"
 
     def should_include_file(self, parsed: Tuple) -> bool:
         """Include files from the current year."""
@@ -81,6 +89,10 @@ class GalaxyReportGenerator(ReportGenerator):
         files = {}
 
         for file in self.tmp_dir.rglob(self.get_file_pattern()):
+            # Metadata snapshots are sidecar files and should not be aggregated.
+            if "metadata" in file.name.lower():
+                continue
+
             parsed = self.parse_filename(file.name)
             if not parsed:
                 continue
@@ -92,7 +104,7 @@ class GalaxyReportGenerator(ReportGenerator):
                 continue
 
             # Use entity + action as the key (e.g., "abricate_runs")
-            key = f"{entity}_{action}"
+            key = f"{entity}"
 
             if key not in files or timestamp > files[key][0]:
                 files[key] = (timestamp, file)

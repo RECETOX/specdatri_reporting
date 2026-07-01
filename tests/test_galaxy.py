@@ -4,7 +4,7 @@ import json
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from unittest.mock import MagicMock, mock_open, patch
+from unittest.mock import MagicMock, patch
 
 import requests
 
@@ -222,19 +222,30 @@ class TestGalaxyReportGenerator(unittest.TestCase):
         """Clean up temporary directory."""
         self.tmp_dir.cleanup()
 
-    def test_get_file_pattern(self):
-        """Test that get_file_pattern returns correct pattern."""
+    def test_get_file_pattern_runs(self):
+        """Test that get_file_pattern returns correct pattern for runs."""
         generator = GalaxyReportGenerator(
             tmp_dir=Path(self.tmp_dir.name),
             output_path=self.output_path,
+            stat_type="runs",
         )
-        self.assertEqual(generator.get_file_pattern(), "*__Galaxy__*.json")
+        self.assertEqual(generator.get_file_pattern(), "*__Galaxy__runs.json")
+
+    def test_get_file_pattern_users(self):
+        """Test that get_file_pattern returns correct pattern for users."""
+        generator = GalaxyReportGenerator(
+            tmp_dir=Path(self.tmp_dir.name),
+            output_path=self.output_path,
+            stat_type="users",
+        )
+        self.assertEqual(generator.get_file_pattern(), "*__Galaxy__users.json")
 
     def test_get_period_key(self):
         """Test period key generation."""
         generator = GalaxyReportGenerator(
             tmp_dir=Path(self.tmp_dir.name),
             output_path=self.output_path,
+            stat_type="runs",
         )
 
         from datetime import datetime
@@ -247,6 +258,7 @@ class TestGalaxyReportGenerator(unittest.TestCase):
         generator = GalaxyReportGenerator(
             tmp_dir=Path(self.tmp_dir.name),
             output_path=self.output_path,
+            stat_type="runs",
         )
         self.assertEqual(generator.get_period_label(), "month")
 
@@ -254,6 +266,7 @@ class TestGalaxyReportGenerator(unittest.TestCase):
         """Test aggregation of Galaxy statistics."""
         generator = GalaxyReportGenerator(
             tmp_dir=Path(self.tmp_dir.name),
+            stat_type="runs",
             output_path=self.output_path,
         )
 
@@ -270,7 +283,10 @@ class TestGalaxyReportGenerator(unittest.TestCase):
             },
         }
 
-        test_file = Path(self.tmp_dir.name) / "2025-01-15_12-00-00__test_project__abricate__Galaxy__runs.json"
+        test_file = (
+            Path(self.tmp_dir.name)
+            / "2025-01-15_12-00-00__test_project__abricate__Galaxy__runs.json"
+        )
         test_file.write_text(json.dumps(test_data))
 
         result = generator.aggregate_data(test_file)
@@ -284,6 +300,7 @@ class TestGalaxyReportGenerator(unittest.TestCase):
         """Test aggregation with no instances."""
         generator = GalaxyReportGenerator(
             tmp_dir=Path(self.tmp_dir.name),
+            stat_type="runs",
             output_path=self.output_path,
         )
 
@@ -295,7 +312,10 @@ class TestGalaxyReportGenerator(unittest.TestCase):
             "instances": {},
         }
 
-        test_file = Path(self.tmp_dir.name) / "2025-01-15_12-00-00__test_project__empty_tool__Galaxy__runs.json"
+        test_file = (
+            Path(self.tmp_dir.name)
+            / "2025-01-15_12-00-00__test_project__empty_tool__Galaxy__runs.json"
+        )
         test_file.write_text(json.dumps(test_data))
 
         result = generator.aggregate_data(test_file)
@@ -306,6 +326,7 @@ class TestGalaxyReportGenerator(unittest.TestCase):
         """Test finding latest files per project/package."""
         generator = GalaxyReportGenerator(
             tmp_dir=Path(self.tmp_dir.name),
+            stat_type="runs",
             output_path=self.output_path,
         )
 
@@ -319,11 +340,17 @@ class TestGalaxyReportGenerator(unittest.TestCase):
         }
 
         # Older file
-        old_file = Path(self.tmp_dir.name) / "2025-01-01_12-00-00__test_project__abricate__Galaxy__runs.json"
+        old_file = (
+            Path(self.tmp_dir.name)
+            / "2025-01-01_12-00-00__test_project__abricate__Galaxy__runs.json"
+        )
         old_file.write_text(json.dumps(test_data))
 
         # Newer file
-        new_file = Path(self.tmp_dir.name) / "2025-02-01_12-00-00__test_project__abricate__Galaxy__runs.json"
+        new_file = (
+            Path(self.tmp_dir.name)
+            / "2025-02-01_12-00-00__test_project__abricate__Galaxy__runs.json"
+        )
         new_file.write_text(json.dumps(test_data))
 
         latest = generator.get_latest_files()
@@ -331,6 +358,39 @@ class TestGalaxyReportGenerator(unittest.TestCase):
 
         self.assertIn(key, latest)
         self.assertEqual(latest[key].name, new_file.name)
+
+    def test_get_latest_files_excludes_metadata(self):
+        """Test that metadata sidecar files are excluded."""
+        generator = GalaxyReportGenerator(
+            tmp_dir=Path(self.tmp_dir.name),
+            output_path=self.output_path,
+        )
+
+        test_data = {
+            "package": "abricate",
+            "project": "test_project",
+            "source": "Galaxy",
+            "action": "runs",
+            "instances": {"usegalaxy.eu": {"runs": 100}},
+        }
+
+        data_file = (
+            Path(self.tmp_dir.name)
+            / "2025-02-01_12-00-00__test_project__abricate__Galaxy__runs.json"
+        )
+        data_file.write_text(json.dumps(test_data))
+
+        metadata_file = (
+            Path(self.tmp_dir.name)
+            / "2025-03-01_12-00-00__test_project__abricate__Galaxy__runs.metadata.json"
+        )
+        metadata_file.write_text(json.dumps({"status": "ok"}))
+
+        latest = generator.get_latest_files()
+
+        self.assertIn("abricate_runs", latest)
+        self.assertEqual(latest["abricate_runs"].name, data_file.name)
+        self.assertNotIn("abricate_runs.metadata", latest)
 
 
 class TestGalaxyIntegration(unittest.TestCase):

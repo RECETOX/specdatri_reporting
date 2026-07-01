@@ -2,9 +2,15 @@
 
 import requests
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict
+import json as stdlib_json
 
-from src.utils import log_function, make_api_request, setup_logger, read_galaxy_instances
+from src.utils import (
+    log_function,
+    make_api_request,
+    setup_logger,
+    read_galaxy_instances,
+)
 from .base import DataSource
 
 logger = setup_logger()
@@ -17,9 +23,7 @@ class GalaxyDataSource(DataSource):
     GitHub repository for multiple Galaxy instances configured in galaxy_instances.tsv.
     """
 
-    GALAXY_CONTENT_BASE_URL = (
-        "https://raw.githubusercontent.com/research-software-ecosystem/content/master/imports/galaxy"
-    )
+    GALAXY_CONTENT_BASE_URL = "https://raw.githubusercontent.com/research-software-ecosystem/content/master/imports/galaxy"
 
     def __init__(
         self,
@@ -71,7 +75,9 @@ class GalaxyDataSource(DataSource):
         response = make_api_request(http_method="GET", url=url, headers=headers)
 
         if response.status_code != 200:
-            logger.error(f"Failed to fetch Galaxy data for {self.package}: {response.status_code}")
+            logger.error(
+                f"Failed to fetch Galaxy data for {self.package}: {response.status_code}"
+            )
             return response
 
         # Parse the JSON and extract statistics for each instance
@@ -81,14 +87,18 @@ class GalaxyDataSource(DataSource):
             # Create a new response with the extracted data
             extracted_response = requests.Response()
             extracted_response.status_code = 200
-            import json as stdlib_json
-            extracted_response._content = stdlib_json.dumps(extracted_data).encode("utf-8")
+
+            extracted_response._content = stdlib_json.dumps(extracted_data).encode(
+                "utf-8"
+            )
             return extracted_response
         except Exception as e:
             logger.error(f"Failed to parse Galaxy JSON for {self.package}: {e}")
             return response
 
-    def _extract_instance_stats(self, data: Dict[str, Any], action: str) -> Dict[str, Any]:
+    def _extract_instance_stats(
+        self, data: Dict[str, Any], action: str
+    ) -> Dict[str, Any]:
         """
         Extract statistics for each configured Galaxy instance from the raw JSON data.
 

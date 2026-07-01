@@ -50,9 +50,11 @@ class TestGitHubDataSource(unittest.TestCase):
         result = self.github_ds.fetch(action="clones")
         self.assertEqual(result.status_code, 200)
         self.assertEqual(result.json(), success_response)
-        
+
         # Verify the correct URL was called
-        expected_url = f"https://api.github.com/repos/{self.owner}/{self.repo}/traffic/clones"
+        expected_url = (
+            f"https://api.github.com/repos/{self.owner}/{self.repo}/traffic/clones"
+        )
         mock_make_api_request.assert_called_once()
         call_kwargs = mock_make_api_request.call_args[1]
         self.assertEqual(call_kwargs["url"], expected_url)
@@ -70,9 +72,11 @@ class TestGitHubDataSource(unittest.TestCase):
         result = self.github_ds.fetch(action="views")
         self.assertEqual(result.status_code, 200)
         self.assertEqual(result.json(), success_response)
-        
+
         # Verify the correct URL was called
-        expected_url = f"https://api.github.com/repos/{self.owner}/{self.repo}/traffic/views"
+        expected_url = (
+            f"https://api.github.com/repos/{self.owner}/{self.repo}/traffic/views"
+        )
         mock_make_api_request.assert_called_once()
         call_kwargs = mock_make_api_request.call_args[1]
         self.assertEqual(call_kwargs["url"], expected_url)

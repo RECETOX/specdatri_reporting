@@ -74,7 +74,9 @@ class TestReportPreservesExistingPeriods(unittest.TestCase):
 
         # New API file (dated 2026-03-02): coverage window is Feb 16 – Mar 02.
         # W07 (Feb 9-15) has fallen outside the window; only W08 and W09 data present.
-        filename = f"2026-03-02_00-00-00__myproject__{package}__github__{stat_type}.json"
+        filename = (
+            f"2026-03-02_00-00-00__myproject__{package}__github__{stat_type}.json"
+        )
         self._write_github_json(
             filename,
             stat_type,
@@ -107,7 +109,9 @@ class TestReportPreservesExistingPeriods(unittest.TestCase):
 
         self._write_existing_report({"2026-W07": {package: 42}})
 
-        filename = f"2026-03-02_00-00-00__myproject__{package}__github__{stat_type}.json"
+        filename = (
+            f"2026-03-02_00-00-00__myproject__{package}__github__{stat_type}.json"
+        )
         self._write_github_json(
             filename,
             stat_type,
