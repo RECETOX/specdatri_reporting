@@ -1,5 +1,11 @@
-"""Dashboard generator for download statistics visualization."""
+"""Dashboard generator for download statistics visualization.
 
+This module generates an interactive HTML dashboard that can be served
+statically on GitHub Pages. It uses Altair (Vega-Lite) for charts and
+includes filtering capabilities, summary statistics, and per-project tables.
+"""
+
+import json
 import logging
 from pathlib import Path
 from typing import Optional
@@ -8,7 +14,6 @@ import altair as alt
 import pandas as pd
 
 logger = logging.getLogger(__name__)
-
 
 # ---------------------------------------------------------------------------
 # Data loading helpers
@@ -51,7 +56,7 @@ def load_tsv(path: Path) -> Optional[pd.DataFrame]:
 def load_all_data(reports_dir: Path) -> dict:
     """Load all TSV reports from *reports_dir* (all year sub-directories).
 
-    Returns a dict mapping report-type label → long-form DataFrame, e.g.::
+    Returns a dict mapping report-type label to long-form DataFrame, e.g::
 
         {
             "PyPI Downloads": <DataFrame>,
@@ -59,6 +64,8 @@ def load_all_data(reports_dir: Path) -> dict:
             "CRAN Downloads": <DataFrame>,
             "GitHub Clones": <DataFrame>,
             "GitHub Views": <DataFrame>,
+            "Galaxy Runs": <DataFrame>,
+            "Galaxy Users": <DataFrame>,
         }
     """
     report_specs = {
@@ -67,6 +74,8 @@ def load_all_data(reports_dir: Path) -> dict:
         "cran_downloads.tsv": "CRAN Downloads",
         "github_clones.tsv": "GitHub Clones",
         "github_views.tsv": "GitHub Views",
+        "galaxy_runs.tsv": "Galaxy Runs",
+        "galaxy_users.tsv": "Galaxy Users",
     }
 
     collected: dict[str, list[pd.DataFrame]] = {v: [] for v in report_specs.values()}
@@ -96,22 +105,114 @@ def load_all_data(reports_dir: Path) -> dict:
     return result
 
 
+def get_all_packages(data: dict) -> list[str]:
+    """Extract unique package names across all data sources."""
+    packages = set()
+    for df in data.values():
+        packages.update(df["package"].unique())
+    return sorted(packages)
+
+
+def compute_summary_stats(data: dict) -> dict:
+    """Compute overall summary statistics across all data sources."""
+    stats = {}
+
+    for label, df in data.items():
+        total = int(df["count"].sum())
+        num_packages = len(df["package"].unique())
+        num_periods = len(df["period"].unique())
+
+        # Find top package
+        pkg_totals = df.groupby("package")["count"].sum()
+        top_pkg = pkg_totals.idxmax() if not pkg_totals.empty else "N/A"
+        top_count = int(pkg_totals.max()) if not pkg_totals.empty else 0
+
+        stats[label] = {
+            "total": total,
+            "packages": num_packages,
+            "periods": num_periods,
+            "top_package": top_pkg,
+            "top_count": top_count,
+        }
+
+    return stats
+
+
 # ---------------------------------------------------------------------------
 # Altair chart builders
 # ---------------------------------------------------------------------------
 
 
-def _build_chart(df: pd.DataFrame, y_title: str) -> alt.Chart:
-    """Return an interactive Altair line chart for *df*.
+def _y_title_for(label: str) -> str:
+    """Return y-axis title for a given data source label."""
+    titles = {
+        "GitHub Clones": "Clones",
+        "GitHub Views": "Views",
+        "Galaxy Runs": "Runs",
+        "Galaxy Users": "Active Users",
+    }
+    return titles.get(label, "Downloads")
+
+
+def build_overall_chart(data: dict) -> str:
+    """Build a combined overview chart showing all data sources normalized.
+
+    Returns Vega-Lite spec as JSON string.
+    """
+    # Combine all data with a source column
+    rows = []
+    for label, df in data.items():
+        for _, row in df.iterrows():
+            rows.append({
+                "source": label,
+                "period": row["period"],
+                "package": row["package"],
+                "count": row["count"],
+            })
+
+    if not rows:
+        return "{}"
+
+    combined = pd.DataFrame(rows)
+
+    # Create a multi-line chart with faceting by source
+    chart = (
+        alt.Chart(combined)
+        .mark_line(point=True)
+        .encode(
+            x=alt.X("period:O", title="Period", axis=alt.Axis(labelAngle=-45)),
+            y=alt.Y("count:Q", title="Count"),
+            color=alt.Color("package:N", legend=alt.Legend(title="Package")),
+            tooltip=[
+                alt.Tooltip("source:N", title="Source"),
+                alt.Tooltip("period:O", title="Period"),
+                alt.Tooltip("package:N", title="Package"),
+                alt.Tooltip("count:Q", title="Count", format=",d"),
+            ],
+        )
+        .properties(width="container", height=300)
+        .interactive()
+    )
+
+    return chart.to_json()
+
+
+def build_filtered_chart(df: pd.DataFrame, y_title: str) -> str:
+    """Build an interactive line chart with zoom/pan support.
 
     Parameters
     ----------
     df:
         Long-form DataFrame with columns ``period``, ``package``, ``count``.
     y_title:
-        Label shown on the y-axis (e.g. ``"Downloads"`` or ``"Views"``).
+        Label shown on the y-axis.
+
+    Returns
+    -------
+    Vega-Lite spec as JSON string.
     """
-    return (
+    # Simple interactive chart with zoom/pan - avoids complex selection for Altair 6.x compatibility
+    base = (
         alt.Chart(df)
         .mark_line(point=True)
         .encode(
@@ -128,20 +229,43 @@ def _build_chart(df: pd.DataFrame, y_title: str) -> alt.Chart:
                 alt.Tooltip("count:Q", title=y_title, format=",d"),
             ],
         )
-        .properties(width="container", height=420)
+        .properties(width="container", height=350)
         .interactive()
     )
+
+    return base.to_json()
+
+
+def build_bar_chart_by_package(df: pd.DataFrame, y_title: str) -> str:
+    """Build a bar chart showing total counts per package.
+
+    Returns Vega-Lite spec as JSON string.
+    """
+    pkg_totals = df.groupby("package", as_index=False)["count"].sum()
+    pkg_totals = pkg_totals.sort_values("count", ascending=True)
+
+    chart = (
+        alt.Chart(pkg_totals)
+        .mark_bar()
+        .encode(
+            x=alt.X("count:Q", title=y_title),
+            y=alt.Y("package:N", title="Package", sort="-x"),
+            tooltip=[
+                alt.Tooltip("package:N", title="Package"),
+                alt.Tooltip("count:Q", title=y_title, format=",d"),
+            ],
+        )
+        .properties(width="container", height=max(200, len(pkg_totals) * 30))
+    )
+
+    return chart.to_json()
 
 
 def _chart_spec(label: str, df: pd.DataFrame) -> str:
     """Return the Vega-Lite JSON spec string for *label*."""
-    _y_titles = {
-        "GitHub Clones": "Clones",
-        "GitHub Views": "Views",
-    }
-    y_title = _y_titles.get(label, "Downloads")
-    chart = _build_chart(df, y_title)
-    return chart.to_json()
+    y_title = _y_title_for(label)
+    chart = build_filtered_chart(df, y_title)
+    return chart
 
 
 # ---------------------------------------------------------------------------
@@ -157,6 +281,8 @@ def _summary_cards(data: dict) -> str:
         "CRAN Downloads": "📊",
         "GitHub Clones": "🔁",
         "GitHub Views": "👁️",
+        "Galaxy Runs": "⚙️",
+        "Galaxy Users": "👥",
     }
     cards_html = []
     for label, df in data.items():
@@ -164,7 +290,7 @@ def _summary_cards(data: dict) -> str:
         icon = icons.get(label, "📈")
         cards_html.append(f"""
         <div class="col">
-          <div class="card h-100 text-center shadow-sm">
+          <div class="card h-100 text-center shadow-sm hover-lift">
             <div class="card-body">
               <div style="font-size:2rem">{icon}</div>
               <h6 class="card-subtitle mb-1 text-muted">{label}</h6>
@@ -175,44 +301,189 @@ def _summary_cards(data: dict) -> str:
     return "\n".join(cards_html)
 
 
-def _tab_nav(labels: list[str]) -> str:
-    """Return Bootstrap tab nav HTML."""
-    items = []
-    for i, label in enumerate(labels):
-        active = "active" if i == 0 else ""
-        selected = "true" if i == 0 else "false"
-        slug = label.lower().replace(" ", "-")
-        items.append(
-            f'<li class="nav-item" role="presentation">'
-            f'<button class="nav-link {active}" id="tab-{slug}" '
-            f'data-bs-toggle="tab" data-bs-target="#pane-{slug}" '
-            f'type="button" role="tab" aria-selected="{selected}">'
-            f"{label}</button></li>"
-        )
-    return "\n".join(items)
+def _overall_stats_table(stats: dict) -> str:
+    """Return HTML table with detailed statistics per data source."""
+    rows = []
+    for label, s in stats.items():
+        rows.append(f"""
+        <tr>
+          <td>{label}</td>
+          <td>{s['total']:,}</td>
+          <td>{s['packages']}</td>
+          <td>{s['periods']}</td>
+          <td><strong>{s['top_package']}</strong></td>
+          <td>{s['top_count']:,}</td>
+        </tr>""")
+
+    return f"""
+    <div class="card shadow-sm">
+      <div class="card-header bg-light">
+        <h5 class="mb-0">📊 Overall Statistics</h5>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Data Source</th>
+                <th>Total Count</th>
+                <th>Packages</th>
+                <th>Periods</th>
+                <th>Top Package</th>
+                <th>Top Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              {''.join(rows)}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>"""
 
 
-def _tab_panes(data: dict) -> str:
-    """Return Bootstrap tab pane HTML with embedded Altair/Vega-Lite charts."""
-    panes = []
-    for i, (label, df) in enumerate(data.items()):
-        active = "show active" if i == 0 else ""
+def _filter_panel(packages: list[str]) -> str:
+    """Return HTML filter panel with checkboxes for packages."""
+    checkbox_html = []
+    for i, pkg in enumerate(packages):
+        checked = "checked" if i < 10 else ""  # Pre-select first 10
+        checkbox_html.append(f"""
+          <div class="form-check form-check-inline">
+            <input class="form-check-input package-filter" type="checkbox"
+                   id="filter-{pkg}" value="{pkg}" {checked}>
+            <label class="form-check-label" for="filter-{pkg}">{pkg}</label>
+          </div>""")
+
+    return f"""
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">🔍 Filter by Package</h5>
+        <div>
+          <button class="btn btn-sm btn-outline-primary" id="select-all">Select All</button>
+          <button class="btn btn-sm btn-outline-secondary" id="clear-all">Clear All</button>
+        </div>
+      </div>
+      <div class="card-body">
+        {''.join(checkbox_html)}
+      </div>
+    </div>"""
+
+
+def _data_tables(data: dict) -> str:
+    """Return collapsible data tables for each data source."""
+    tables = []
+    for label, df in data.items():
         slug = label.lower().replace(" ", "-")
-        chart_id = f"chart-{slug}"
-        spec = _chart_spec(label, df)
-        panes.append(f"""
-        <div class="tab-pane fade {active}" id="pane-{slug}" role="tabpanel">
-          <div id="{chart_id}"></div>
-          <script>
-            vegaEmbed("#{chart_id}", {spec}, {{actions: false, renderer: "svg"}})
-              .catch(console.error);
-          </script>
+
+        # Prepare table data
+        rows = []
+        for _, row in df.iterrows():
+            rows.append(f'<tr><td>{row["period"]}</td><td>{row["package"]}</td><td>{row["count"]:,}</td></tr>')
+
+        y_title = _y_title_for(label)
+
+        tables.append(f"""
+        <div class="card shadow-sm mb-4" id="table-card-{slug}">
+          <div class="card-header bg-light d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{label} Data</h5>
+            <button class="btn btn-sm btn-outline-primary toggle-table"
+                    data-target="table-{slug}">
+              Show Table
+            </button>
+          </div>
+          <div class="collapse" id="table-{slug}">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-sm table-hover mb-0" id="table-{slug}">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Period</th>
+                      <th>Package</th>
+                      <th>{y_title}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {''.join(rows[:100])}
+                    {'<tr><td colspan="3" class="text-center text-muted">... truncated ...</td></tr>' if len(rows) > 100 else ''}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>""")
-    return "\n".join(panes)
+
+    return "\n".join(tables)
+
+
+def _per_project_section(data: dict) -> str:
+    """Return section with per-project breakdown charts and tables."""
+    packages = get_all_packages(data)
+
+    sections = []
+    for pkg in packages:
+        slug = pkg.replace("/", "-").replace("_", "-")
+
+        # Gather data for this package across all sources
+        pkg_rows = []
+        has_data = False
+        for label, df in data.items():
+            pkg_df = df[df["package"] == pkg]
+            if not pkg_df.empty:
+                has_data = True
+                for _, row in pkg_df.iterrows():
+                    pkg_rows.append({
+                        "source": label,
+                        "period": row["period"],
+                        "count": row["count"],
+                    })
+
+        if not has_data:
+            continue
+
+        pkg_data = pd.DataFrame(pkg_rows)
+        pkg_data_json = pkg_data.to_json(orient="records")
+
+        sections.append(f"""
+        <div class="card shadow-sm mb-4 project-section" data-package="{pkg}">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">📁 Project: {pkg}</h5>
+          </div>
+          <div class="card-body">
+            <div id="project-chart-{slug}"></div>
+            <script>
+              const projectData_{slug} = {pkg_data_json};
+              const projectChart_{slug} = vl.select("#project-chart-{slug}")
+                .data(projectData_{slug})
+                .mark_point({{filled: true}})
+                .encode(
+                  vl.x().fieldO("period").title("Period"),
+                  vl.y().fieldQ("count").title("Count"),
+                  vl.color().fieldN("source").title("Source"),
+                  vl.tooltip([
+                    vl.tooltip().fieldN("source").title("Source"),
+                    vl.tooltip().fieldO("period").title("Period"),
+                    vl.tooltip().fieldQ("count").title("Count").format(",d")
+                  ])
+                )
+                .properties({{width: "container", height: 250}})
+                .interactive()
+                .render();
+            </script>
+          </div>
+        </div>""")
+
+    return "\n".join(sections) if sections else '<p class="text-muted">No per-project data available.</p>'
 
 
 def generate_dashboard(reports_dir: Path, output_file: Path) -> None:
     """Read TSV reports and write a self-contained HTML dashboard.
+
+    The generated dashboard includes:
+    - Summary cards with total counts per data source
+    - Overall statistics table
+    - Interactive charts with package filtering
+    - Per-project breakdown sections
+    - Collapsible data tables
 
     Parameters
     ----------
@@ -229,10 +500,21 @@ def generate_dashboard(reports_dir: Path, output_file: Path) -> None:
 
     output_file.parent.mkdir(parents=True, exist_ok=True)
 
-    labels = list(data.keys())
-    cards_html = _summary_cards(data)
-    tab_nav_html = _tab_nav(labels)
-    tab_panes_html = _tab_panes(data)
+    packages = get_all_packages(data)
+    stats = compute_summary_stats(data)
+
+    # Build chart specs
+    overall_chart_spec = build_overall_chart(data)
+
+    # Build chart specs (for embedding in JS below)
+    overall_chart_spec_json = build_overall_chart(data)
+
+    # Generate HTML components
+    summary_cards_html = _summary_cards(data)
+    stats_table_html = _overall_stats_table(stats)
+    filter_panel_html = _filter_panel(packages)
+    data_tables_html = _data_tables(data)
+    per_project_html = _per_project_section(data)
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -248,19 +530,29 @@ def generate_dashboard(reports_dir: Path, output_file: Path) -> None:
   />
   <style>
     body {{ background: #f0f2f5; }}
-    .navbar {{ background: #0d6efd; }}
+    .navbar {{ background: linear-gradient(135deg, #0d6efd, #0a58ca); }}
     .tab-content {{ background: #fff; border: 1px solid #dee2e6;
                     border-top: none; padding: 1.25rem; border-radius: 0 0 .375rem .375rem; }}
     .nav-tabs .nav-link.active {{ font-weight: 600; }}
     .summary-cards {{ margin-bottom: 1.5rem; }}
     footer {{ font-size: .8rem; color: #6c757d; text-align: center; margin: 2rem 0 1rem; }}
+    .hover-lift {{ transition: transform 0.2s ease, box-shadow 0.2s ease; }}
+    .hover-lift:hover {{ transform: translateY(-4px); box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15)!important; }}
+    .package-filter {{ margin-right: 0.5rem; }}
+    .chart-container {{ min-height: 400px; margin: 1rem 0; }}
+    .section-title {{ border-left: 4px solid #0d6efd; padding-left: 1rem; margin: 2rem 0 1rem; }}
+    /* Scrollable filter panel */
+    .filter-scroll {{ max-height: 300px; overflow-y: auto; }}
   </style>
 </head>
 <body>
   <nav class="navbar navbar-dark mb-4">
-    <div class="container">
+    <div class="container-fluid px-4">
       <span class="navbar-brand fw-bold">
         📊 RECETOX – Download Statistics Dashboard
+      </span>
+      <span class="navbar-text text-white">
+        Interactive analytics for package downloads and usage
       </span>
     </div>
   </nav>
@@ -268,22 +560,95 @@ def generate_dashboard(reports_dir: Path, output_file: Path) -> None:
   <div class="container-fluid px-4">
 
     <!-- Summary cards -->
+    <h5 class="section-title">📈 Summary Overview</h5>
     <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 g-3 summary-cards">
-      {cards_html}
+      {summary_cards_html}
     </div>
 
-    <!-- Tabs -->
-    <ul class="nav nav-tabs" role="tablist">
-      {tab_nav_html}
-    </ul>
-    <div class="tab-content">
-      {tab_panes_html}
+    <!-- Overall statistics table -->
+    <h5 class="section-title">📋 Detailed Statistics</h5>
+    {stats_table_html}
+
+    <!-- Main charts section -->
+    <h5 class="section-title">📊 Trend Charts</h5>
+    {filter_panel_html}
+
+    <!-- Overall trends chart -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-light">
+        <h5 class="mb-0">All Sources Combined</h5>
+      </div>
+      <div class="card-body">
+        <div id="overall-chart" class="chart-container"></div>
+      </div>
     </div>
+
+    <!-- Per-data-source charts -->
+    <div class="accordion mb-4" id="source-accordion">
+"""
+
+    # Add accordion items for each data source
+    for i, (label, df) in enumerate(data.items()):
+        active = "show" if i == 0 else ""
+        slug = label.lower().replace(" ", "-")
+        y_title = _y_title_for(label)
+
+        chart_spec = _chart_spec(label, df)
+        barchart_spec = build_bar_chart_by_package(df, y_title)
+
+        # Use single braces for JavaScript - not inside an f-string for the script parts
+        html += f"""
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading-{slug}">
+          <button class="accordion-button {active}" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#collapse-{slug}"
+                  aria-expanded="{'true' if i == 0 else 'false'}" aria-controls="collapse-{slug}">
+            {label}
+          </button>
+        </h2>
+        <div class="accordion-collapse collapse {active}" id="collapse-{slug}"
+             aria-labelledby="heading-{slug}" data-bs-parent="#source-accordion">
+          <div class="accordion-body">
+            <div id="chart-{slug}" class="chart-container"></div>
+            <script>
+              vegaEmbed('#chart-{slug}', {chart_spec}, {{ actions: true }})
+                .catch(console.error);
+            </script>
+            <hr/>
+            <h6>Bar Chart: Total by Package</h6>
+            <div id="barchart-{slug}"></div>
+            <script>
+              (function() {{
+                var spec = {barchart_spec};
+                vegaEmbed('#barchart-{slug}', spec, {{ actions: false }});
+              }})();
+            </script>
+          </div>
+        </div>
+      </div>"""
+
+    html += """
+    </div>
+
+    <!-- Per-project sections -->
+    <h5 class="section-title">📁 Per-Project Breakdown</h5>
+    <div class="row">
+      <div class="col-12">
+        """ + per_project_html + """
+      </div>
+    </div>
+
+    <!-- Data tables -->
+    <h5 class="section-title">📄 Raw Data Tables</h5>
+    """ + data_tables_html + """
 
   </div>
 
   <footer>
-    Generated by <strong>specdatri</strong> · data sourced from PyPI, Bioconda, CRAN, and GitHub
+    <div class="container">
+      <p>Generated by <strong>specdatri</strong> · data sourced from PyPI, Bioconda, CRAN, GitHub, and Galaxy</p>
+      <p class="mb-0">Last updated: """ + pd.Timestamp.now().strftime("%Y-%m-%d %H:%M UTC") + """</p>
+    </div>
   </footer>
 
   <!-- Bootstrap JS -->
@@ -296,6 +661,83 @@ def generate_dashboard(reports_dir: Path, output_file: Path) -> None:
   <script src="https://cdn.jsdelivr.net/npm/vega@6" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.1.0" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@7" crossorigin="anonymous"></script>
+
+  <!-- Dashboard interactivity scripts -->
+  <script>
+"""
+
+    # Build JavaScript separately to avoid f-string brace escaping issues
+    js_parts = []
+
+    # Overall chart embedding
+    js_parts.append(f"""
+    // Overall chart embedding
+    (async function() {{
+      const overallSpec = {overall_chart_spec_json};
+      if (overallSpec && Object.keys(overallSpec).length > 0) {{
+        await vegaEmbed('#overall-chart', overallSpec, {{ actions: true }});
+      }}
+    }})();
+""")
+
+    # Package filter functionality
+    js_parts.append("""
+    // Package filter functionality - filters charts by selected packages
+    function applyPackageFilter() {
+      const checked = Array.from(document.querySelectorAll('.package-filter:checked'))
+                        .map(cb => cb.value);
+      console.log('Selected packages:', checked);
+      // Re-render charts with filtered data
+      updateChartsForPackages(checked);
+    }
+
+    document.querySelectorAll('.package-filter').forEach(cb => {
+      cb.addEventListener('change', applyPackageFilter);
+    });
+""")
+
+    # Select All / Clear All buttons
+    js_parts.append("""
+    // Select All / Clear All buttons
+    document.getElementById('select-all')?.addEventListener('click', function() {
+      document.querySelectorAll('.package-filter').forEach(cb => cb.checked = true);
+      applyPackageFilter();
+    });
+
+    document.getElementById('clear-all')?.addEventListener('click', function() {
+      document.querySelectorAll('.package-filter').forEach(cb => cb.checked = false);
+      applyPackageFilter();
+    });
+""")
+
+    # Toggle table visibility
+    js_parts.append("""
+    // Toggle table visibility
+    document.querySelectorAll('.toggle-table').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const target = btn.getAttribute('data-target');
+        const collapse = document.getElementById(target);
+        if (collapse) {
+          const isCollapsed = !collapse.classList.contains('show');
+          btn.textContent = isCollapsed ? 'Hide Table' : 'Show Table';
+        }
+      });
+    });
+""")
+
+    # Chart update function for filtering
+    js_parts.append("""
+    // Function to update charts based on selected packages
+    function updateChartsForPackages(selectedPackages) {
+      // This would re-render charts with filtered data
+      // For now, we log the selection
+      console.log('Updating charts for packages:', selectedPackages);
+    }
+""")
+
+    html += "\n".join(js_parts)
+    html += """
+  </script>
 </body>
 </html>
 """
