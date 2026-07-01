@@ -467,8 +467,8 @@ def generate_reports(year, tmp_dir, output_dir):
 @click.option(
     "--output",
     type=click.Path(),
-    default="docs/dashboard.html",
-    help="Output HTML file path (default: ./docs/dashboard.html for GitHub Pages)",
+    default="docs/index.html",
+    help="Output HTML file path (default: ./docs/index.html)",
 )
 def generate_dashboard_cmd(reports_dir, output):
     """Generate an interactive HTML dashboard from the collected reports.

@@ -10,7 +10,6 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-import altair as alt
 import pandas as pd
 
 logger = logging.getLogger(__name__)
@@ -157,8 +156,9 @@ def _y_title_for(label: str) -> str:
 def build_overall_chart(data: dict) -> str:
     """Build a combined overview chart showing all data sources normalized.
 
-    Returns Vega-Lite spec as JSON string.
+    Returns Vega-Lite spec as JSON string with inline data values.
     """
+
     # Combine all data with a source column
     rows = []
     for label, df in data.items():
@@ -171,30 +171,35 @@ def build_overall_chart(data: dict) -> str:
             })
 
     if not rows:
-        return "{}"
+        return json.dumps({})
 
-    combined = pd.DataFrame(rows)
+    # Build chart spec manually to ensure inline data works in browser
+    spec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+        "data": {"values": rows},
+        "mark": {"type": "line", "point": True},
+        "encoding": {
+            "x": {"field": "period", "type": "ordinal", "title": "Period",
+                  "axis": {"labelAngle": -45}},
+            "y": {"field": "count", "type": "quantitative", "title": "Count"},
+            "color": {"field": "package", "type": "nominal", "legend": {"title": "Package"}},
+            "tooltip": [
+                {"field": "source", "type": "nominal", "title": "Source"},
+                {"field": "period", "type": "ordinal", "title": "Period"},
+                {"field": "package", "type": "nominal", "title": "Package"},
+                {"field": "count", "type": "quantitative", "title": "Count", "format": ",d"}
+            ]
+        },
+        "height": 300,
+        "width": "container",
+        "params": [{
+            "name": "zoom",
+            "select": {"type": "interval", "encodings": ["x", "y"]},
+            "bind": "scales"
+        }]
+    }
 
-    # Create a multi-line chart with faceting by source
-    chart = (
-        alt.Chart(combined)
-        .mark_line(point=True)
-        .encode(
-            x=alt.X("period:O", title="Period", axis=alt.Axis(labelAngle=-45)),
-            y=alt.Y("count:Q", title="Count"),
-            color=alt.Color("package:N", legend=alt.Legend(title="Package")),
-            tooltip=[
-                alt.Tooltip("source:N", title="Source"),
-                alt.Tooltip("period:O", title="Period"),
-                alt.Tooltip("package:N", title="Package"),
-                alt.Tooltip("count:Q", title="Count", format=",d"),
-            ],
-        )
-        .properties(width="container", height=300)
-        .interactive()
-    )
-
-    return chart.to_json()
+    return json.dumps(spec)
 
 
 def build_filtered_chart(df: pd.DataFrame, y_title: str) -> str:
@@ -209,56 +214,67 @@ def build_filtered_chart(df: pd.DataFrame, y_title: str) -> str:
 
     Returns
     -------
-    Vega-Lite spec as JSON string.
+    Vega-Lite spec as JSON string with inline data values.
     """
-    # Simple interactive chart with zoom/pan - avoids complex selection for Altair 6.x compatibility
-    base = (
-        alt.Chart(df)
-        .mark_line(point=True)
-        .encode(
-            x=alt.X(
-                "period:O",
-                title="Period",
-                axis=alt.Axis(labelAngle=-45, labelOverlap=False),
-            ),
-            y=alt.Y("count:Q", title=y_title),
-            color=alt.Color("package:N", legend=alt.Legend(title="Package")),
-            tooltip=[
-                alt.Tooltip("period:O", title="Period"),
-                alt.Tooltip("package:N", title="Package"),
-                alt.Tooltip("count:Q", title=y_title, format=",d"),
-            ],
-        )
-        .properties(width="container", height=350)
-        .interactive()
-    )
 
-    return base.to_json()
+    # Build chart spec manually to ensure inline data works in browser
+    spec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+        "data": {"values": df.to_dict(orient="records")},
+        "mark": {"type": "line", "point": True},
+        "encoding": {
+            "x": {
+                "field": "period",
+                "type": "ordinal",
+                "title": "Period",
+                "axis": {"labelAngle": -45, "labelOverlap": False}
+            },
+            "y": {"field": "count", "type": "quantitative", "title": y_title},
+            "color": {"field": "package", "type": "nominal", "legend": {"title": "Package"}},
+            "tooltip": [
+                {"field": "period", "type": "ordinal", "title": "Period"},
+                {"field": "package", "type": "nominal", "title": "Package"},
+                {"field": "count", "type": "quantitative", "title": y_title, "format": ",d"}
+            ]
+        },
+        "height": 350,
+        "width": "container",
+        "params": [{
+            "name": "zoom",
+            "select": {"type": "interval", "encodings": ["x", "y"]},
+            "bind": "scales"
+        }]
+    }
+
+    return json.dumps(spec)
 
 
 def build_bar_chart_by_package(df: pd.DataFrame, y_title: str) -> str:
     """Build a bar chart showing total counts per package.
 
-    Returns Vega-Lite spec as JSON string.
+    Returns Vega-Lite spec as JSON string with inline data values.
     """
+
     pkg_totals = df.groupby("package", as_index=False)["count"].sum()
     pkg_totals = pkg_totals.sort_values("count", ascending=True)
 
-    chart = (
-        alt.Chart(pkg_totals)
-        .mark_bar()
-        .encode(
-            x=alt.X("count:Q", title=y_title),
-            y=alt.Y("package:N", title="Package", sort="-x"),
-            tooltip=[
-                alt.Tooltip("package:N", title="Package"),
-                alt.Tooltip("count:Q", title=y_title, format=",d"),
-            ],
-        )
-        .properties(width="container", height=max(200, len(pkg_totals) * 30))
-    )
+    spec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+        "data": {"values": pkg_totals.to_dict(orient="records")},
+        "mark": "bar",
+        "encoding": {
+            "x": {"field": "count", "type": "quantitative", "title": y_title},
+            "y": {"field": "package", "type": "nominal", "title": "Package", "sort": "-x"},
+            "tooltip": [
+                {"field": "package", "type": "nominal", "title": "Package"},
+                {"field": "count", "type": "quantitative", "title": y_title, "format": ",d"}
+            ]
+        },
+        "height": max(200, len(pkg_totals) * 30),
+        "width": "container"
+    }
 
-    return chart.to_json()
+    return json.dumps(spec)
 
 
 def _chart_spec(label: str, df: pd.DataFrame) -> str:
@@ -443,6 +459,26 @@ def _per_project_section(data: dict) -> str:
         pkg_data = pd.DataFrame(pkg_rows)
         pkg_data_json = pkg_data.to_json(orient="records")
 
+        # Build a proper Vega-Lite spec for this package's data
+        pkg_chart_spec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+            "data": {"values": json.loads(pkg_data_json)},
+            "mark": {"type": "line", "point": True},
+            "encoding": {
+                "x": {"field": "period", "type": "ordinal", "title": "Period"},
+                "y": {"field": "count", "type": "quantitative", "title": "Count"},
+                "color": {"field": "source", "type": "nominal", "title": "Source"},
+                "tooltip": [
+                    {"field": "source", "type": "nominal", "title": "Source"},
+                    {"field": "period", "type": "ordinal", "title": "Period"},
+                    {"field": "count", "type": "quantitative", "title": "Count", "format": ",d"}
+                ]
+            },
+            "height": 250,
+            "width": "container"
+        }
+        pkg_chart_spec_json = json.dumps(pkg_chart_spec)
+
         sections.append(f"""
         <div class="card shadow-sm mb-4 project-section" data-package="{pkg}">
           <div class="card-header bg-light">
@@ -451,23 +487,11 @@ def _per_project_section(data: dict) -> str:
           <div class="card-body">
             <div id="project-chart-{slug}"></div>
             <script>
-              const projectData_{slug} = {pkg_data_json};
-              const projectChart_{slug} = vl.select("#project-chart-{slug}")
-                .data(projectData_{slug})
-                .mark_point({{filled: true}})
-                .encode(
-                  vl.x().fieldO("period").title("Period"),
-                  vl.y().fieldQ("count").title("Count"),
-                  vl.color().fieldN("source").title("Source"),
-                  vl.tooltip([
-                    vl.tooltip().fieldN("source").title("Source"),
-                    vl.tooltip().fieldO("period").title("Period"),
-                    vl.tooltip().fieldQ("count").title("Count").format(",d")
-                  ])
-                )
-                .properties({{width: "container", height: 250}})
-                .interactive()
-                .render();
+              (function() {{
+                const spec = {pkg_chart_spec_json};
+                vegaEmbed('#project-chart-{slug}', spec, {{ actions: false }})
+                  .catch(console.error);
+              }})();
             </script>
           </div>
         </div>""")
@@ -669,11 +693,11 @@ def generate_dashboard(reports_dir: Path, output_file: Path) -> None:
     # Build JavaScript separately to avoid f-string brace escaping issues
     js_parts = []
 
-    # Overall chart embedding
+    # Overall chart embedding - use JSON.stringify to properly embed the spec
     js_parts.append(f"""
     // Overall chart embedding
     (async function() {{
-      const overallSpec = {overall_chart_spec_json};
+      const overallSpec = JSON.parse({json.dumps(overall_chart_spec_json)});
       if (overallSpec && Object.keys(overallSpec).length > 0) {{
         await vegaEmbed('#overall-chart', overallSpec, {{ actions: true }});
       }}
@@ -682,13 +706,21 @@ def generate_dashboard(reports_dir: Path, output_file: Path) -> None:
 
     # Package filter functionality
     js_parts.append("""
-    // Package filter functionality - filters charts by selected packages
+    // Package filter functionality - filters per-project sections by selected packages
     function applyPackageFilter() {
       const checked = Array.from(document.querySelectorAll('.package-filter:checked'))
-                        .map(cb => cb.value);
+                        .map(cb => cb.value.toLowerCase());
       console.log('Selected packages:', checked);
-      // Re-render charts with filtered data
-      updateChartsForPackages(checked);
+
+      // Hide/show per-project sections based on selection
+      document.querySelectorAll('.project-section').forEach(section => {
+        const pkg = section.getAttribute('data-package').toLowerCase();
+        if (checked.includes(pkg)) {
+          section.style.display = 'block';
+        } else {
+          section.style.display = 'none';
+        }
+      });
     }
 
     document.querySelectorAll('.package-filter').forEach(cb => {
@@ -725,15 +757,6 @@ def generate_dashboard(reports_dir: Path, output_file: Path) -> None:
     });
 """)
 
-    # Chart update function for filtering
-    js_parts.append("""
-    // Function to update charts based on selected packages
-    function updateChartsForPackages(selectedPackages) {
-      // This would re-render charts with filtered data
-      // For now, we log the selection
-      console.log('Updating charts for packages:', selectedPackages);
-    }
-""")
 
     html += "\n".join(js_parts)
     html += """
