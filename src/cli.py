@@ -309,7 +309,14 @@ def organize_run_reports(run_timestamp: str, tmp_dir: Path) -> None:
     default="galaxy_instances.tsv",
     help="Path to galaxy_instances.tsv (default: ./galaxy_instances.tsv)",
 )
-def collect_stats(repository_list, tmp_dir, galaxy_config):
+@click.option(
+    "--source",
+    type=click.Choice(["pypi", "bioconda", "cran", "github", "galaxy"]),
+    default=None,
+    multiple=True,
+    help="Filter to only process this data source (can be specified multiple times). If not specified, all sources are processed.",
+)
+def collect_stats(repository_list, tmp_dir, galaxy_config, source):
     """Collect download statistics from all configured sources."""
 
     tmp_dir_path = Path(tmp_dir)
@@ -320,6 +327,13 @@ def collect_stats(repository_list, tmp_dir, galaxy_config):
 
     click.echo(f"Loading repositories from {repository_list}...")
     repositories_df = pd.read_csv(repository_list, sep="\t")
+
+    # Filter by source if specified
+    if source:
+        click.echo(f"Filtering to sources: {', '.join(source)}")
+        repositories_df = repositories_df[repositories_df["source"].str.lower().isin(source)]
+        if repositories_df.empty:
+            click.echo("Warning: No entries found matching the specified source(s)")
 
     github_token = get_env_var("github_token")
     pepy_x_api_key = get_env_var("pepy_x_api_key")

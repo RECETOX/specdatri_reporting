@@ -42,14 +42,6 @@ class GalaxyDataSource(DataSource):
         self.github_token = github_token
         self.instances = read_galaxy_instances(config_path)
 
-    def _get_headers(self) -> dict:
-        """Get GitHub API headers."""
-        return {
-            "Accept": "application/vnd.github.v3+json",
-            "X-GitHub-Api-Version": "2022-11-28",
-            "Authorization": f"Bearer {self.github_token}",
-        }
-
     @log_function(logger, obfuscate_keywords=["token", "key"])
     def fetch(self, action: str = "runs", **kwargs) -> requests.Response:
         """
@@ -71,8 +63,9 @@ class GalaxyDataSource(DataSource):
             raise ValueError(f"Invalid action: {action}. Must be 'runs' or 'users'")
 
         # Build URL for the Galaxy JSON file
+        # Raw GitHub content is publicly accessible, no auth needed
         url = f"{self.GALAXY_CONTENT_BASE_URL}/{self.package}.galaxy.json"
-        headers = self._get_headers()
+        headers = {"Accept": "application/json"}
 
         # Make the API request
         response = make_api_request(http_method="GET", url=url, headers=headers)
