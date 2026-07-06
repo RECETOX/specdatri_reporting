@@ -1,0 +1,20 @@
+{
+  "package": "ramclustr",
+  "project": "RAMClustR",
+  "source": "Galaxy",
+  "action": "users",
+  "instances": {
+    "usegalaxy.eu": {
+      "users": 36
+    },
+    "usegalaxy.org": {
+      "users": 15
+    },
+    "usegalaxy.org.au": {
+      "users": 3
+    },
+    "usegalaxy.fr": {
+      "users": 42
+    }
+  }
+}

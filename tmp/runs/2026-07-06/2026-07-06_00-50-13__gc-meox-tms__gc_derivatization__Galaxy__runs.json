@@ -1,0 +1,20 @@
+{
+  "package": "gc_derivatization",
+  "project": "gc-meox-tms",
+  "source": "Galaxy",
+  "action": "runs",
+  "instances": {
+    "usegalaxy.eu": {
+      "runs": 6
+    },
+    "usegalaxy.org": {
+      "runs": 0
+    },
+    "usegalaxy.org.au": {
+      "runs": 45
+    },
+    "usegalaxy.fr": {
+      "runs": 0
+    }
+  }
+}
