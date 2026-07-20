@@ -1,0 +1,20 @@
+{
+  "package": "recetox-msfinder",
+  "project": "recetox-msfinder",
+  "source": "Galaxy",
+  "action": "users",
+  "instances": {
+    "usegalaxy.eu": {
+      "users": 9
+    },
+    "usegalaxy.org": {
+      "users": 0
+    },
+    "usegalaxy.org.au": {
+      "users": 1
+    },
+    "usegalaxy.fr": {
+      "users": 7
+    }
+  }
+}
