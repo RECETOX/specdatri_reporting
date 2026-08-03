@@ -1,0 +1,20 @@
+{
+  "package": "qcxms",
+  "project": "qcxms",
+  "source": "Galaxy",
+  "action": "runs",
+  "instances": {
+    "usegalaxy.eu": {
+      "runs": 45445
+    },
+    "usegalaxy.org": {
+      "runs": 155
+    },
+    "usegalaxy.org.au": {
+      "runs": 780
+    },
+    "usegalaxy.fr": {
+      "runs": 0
+    }
+  }
+}
