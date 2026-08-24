@@ -1,0 +1,20 @@
+{
+  "package": "waveica",
+  "project": "recetox-waveica",
+  "source": "Galaxy",
+  "action": "runs",
+  "instances": {
+    "usegalaxy.eu": {
+      "runs": 58
+    },
+    "usegalaxy.org": {
+      "runs": 8
+    },
+    "usegalaxy.org.au": {
+      "runs": 538
+    },
+    "usegalaxy.fr": {
+      "runs": 13
+    }
+  }
+}
