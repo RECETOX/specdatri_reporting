@@ -11,31 +11,47 @@
     crossorigin="anonymous"
   />
   <style>
-    body { background: #f0f2f5; }
-    .navbar { background: linear-gradient(135deg, #0d6efd, #0a58ca); }
+    /* Every colour the page uses is declared here. Change these six values to
+       re-brand the dashboard; nothing below hard-codes a colour. */
+    :root {
+      --sd-bg: #f2f3f5;
+      --sd-accent: #3d5468;
+      --sd-accent-strong: #2b3d4d;
+      --sd-accent-soft: #eaeff4;
+      --sd-muted: #576270;
+      --sd-border: #d9dde1;
+    }
+    body { background: var(--sd-bg); }
+    .navbar { background: linear-gradient(135deg, var(--sd-accent), var(--sd-accent-strong)); }
     .summary-cards { margin-bottom: 1.5rem; }
-    footer { font-size: .8rem; color: #6c757d; text-align: center; margin: 2rem 0 1rem; }
+    footer { font-size: .8rem; color: var(--sd-muted); text-align: center; margin: 2rem 0 1rem; }
     .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer; }
     .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15)!important; }
-    .section-title { border-left: 4px solid #0d6efd; padding-left: 1rem; margin: 2rem 0 1rem; }
-    .chart-placeholder {
-      background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
-      border: 2px dashed #adb5bd;
-      border-radius: 8px;
+    .hover-lift:focus-visible { outline: 3px solid var(--sd-accent); outline-offset: 2px; }
+    .section-title { border-left: 4px solid var(--sd-accent); padding-left: 1rem; margin: 2rem 0 1rem; }
+    #trend-chart { width: 100%; min-height: 400px; }
+    .chart-message {
       min-height: 400px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #6c757d;
-      font-size: 1.2rem;
+      text-align: center;
+      padding: 1rem;
+      color: var(--sd-muted);
+      border: 1px solid var(--sd-border);
+      border-radius: 8px;
     }
     .table-responsive { max-height: 600px; overflow-y: auto; }
     .card.selected {
-      border: 3px solid #0d6efd;
-      transform: scale(1.02);
+      border-color: var(--sd-accent);
+      box-shadow: 0 0 0 2px var(--sd-accent)!important;
     }
     .card.selected .card-body {
-      background-color: #e7f3ff;
+      background-color: var(--sd-accent-soft);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hover-lift { transition: none; }
+      .hover-lift:hover { transform: none; }
     }
   </style>
 </head>
@@ -59,7 +75,8 @@
       {% for label, data in summary_cards.items() %}
       <div class="col">
         <div class="card h-100 text-center shadow-sm hover-lift {% if loop.first %}selected{% endif %}"
-             data-source="{{ label }}" onclick="selectSource('{{ label }}')">
+             data-source="{{ label }}" onclick="selectSource('{{ label }}')"
+             role="button" tabindex="0">
           <div class="card-body">
             <div style="font-size:2rem">{{ icons[label] }}</div>
             <h6 class="card-subtitle mb-1 text-muted">{{ label }}</h6>
@@ -70,13 +87,12 @@
       {% endfor %}
     </div>
 
-    <!-- Trend Chart Placeholder -->
+    <!-- Trend Chart -->
     <h5 class="section-title">📊 Trend Chart</h5>
     <div class="card shadow-sm mb-4">
       <div class="card-body">
-        <div id="trend-chart" class="chart-placeholder">
-          📈 Chart placeholder - Vega-Lite chart will be rendered here
-        </div>
+        <div id="trend-chart" role="img" aria-label="Trend chart"></div>
+        <p id="chart-message" class="chart-message" hidden></p>
       </div>
     </div>
 
@@ -125,9 +141,79 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
+  <!-- Vega-Lite, for the trend chart. Loaded in this order: vega-embed's UMD
+       factory takes vega and vegaLite as arguments. -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@6.4.0/build/vega.min.js"
+          integrity="sha384-VKdcJr3ZaBIJMbVcopTAI/JEuUkSY6qnwVu9iLuw0DnQ9gQ1JjsfZJhXFQAgNi43"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.3/build/vega-lite.min.js"
+          integrity="sha384-9/70gNCfOu6G7xXvkdreMfuqAEsoaGJVXV2BN/JLRXkSmcGvnMqtsRx8HZtUWAvI"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.1.0/build/vega-embed.min.js"
+          integrity="sha384-giTAWqsEDsWuWzWKi6NCvjgwi160SClnTYYXWPLuy/DnaQTqmk4soinrpxcCS4dx"
+          crossorigin="anonymous"></script>
+
   <!-- Dashboard interactivity -->
   <script>
     let currentFilter = null;
+    let chartView = null;
+    const chartSpecs = {{ chart_specs|tojson }};
+
+    // The chart takes its colours from the CSS custom properties above, so a
+    // re-brand needs no change here.
+    function chartConfig() {
+      const styles = getComputedStyle(document.documentElement);
+      const ink = styles.getPropertyValue('--sd-muted').trim();
+      return {
+        axis: { labelColor: ink, titleColor: ink, domainColor: ink, tickColor: ink },
+        legend: { labelColor: ink, titleColor: ink },
+        view: { stroke: 'transparent' }
+      };
+    }
+
+    function showChartMessage(text) {
+      const message = document.getElementById('chart-message');
+      const container = document.getElementById('trend-chart');
+      if (chartView) {
+        chartView.finalize();
+        chartView = null;
+      }
+      container.innerHTML = '';
+      container.hidden = true;
+      message.textContent = text;
+      message.hidden = false;
+    }
+
+    function renderChart(source) {
+      const container = document.getElementById('trend-chart');
+      const message = document.getElementById('chart-message');
+
+      if (typeof vegaEmbed === 'undefined') {
+        showChartMessage('The charting library could not be loaded. The table below shows the same figures.');
+        return;
+      }
+
+      const spec = source ? chartSpecs[source] : null;
+      if (!spec) {
+        showChartMessage(source
+          ? 'No chart data available for ' + source + '.'
+          : 'Select a data source above to see how it changed over time.');
+        return;
+      }
+
+      message.hidden = true;
+      container.hidden = false;
+      container.setAttribute('aria-label', source + ' over time, by package');
+      if (chartView) {
+        chartView.finalize();
+        chartView = null;
+      }
+      vegaEmbed(container, spec, { actions: false, config: chartConfig() })
+        .then(function (result) { chartView = result.view; })
+        .catch(function () {
+          showChartMessage('The chart could not be rendered. The table below shows the same figures.');
+        });
+    }
 
     function selectSource(source) {
       // Update selected card styling
@@ -155,6 +241,8 @@
       currentFilter = source;
       document.getElementById('current-source').textContent = source;
       document.getElementById('table-title').textContent = source + ' Records (' + visibleCount + ')';
+
+      renderChart(source);
     }
 
     function showAllSources() {
@@ -173,7 +261,23 @@
       currentFilter = null;
       document.getElementById('current-source').textContent = 'All Sources';
       document.getElementById('table-title').textContent = 'All Records (' + rows.length + ')';
+
+      // No combined chart: downloads, page views and tool runs are different
+      // units, and one axis over all of them would not mean anything.
+      renderChart(null);
     }
+
+    // Cards are operated by click; make them work from the keyboard too.
+    document.addEventListener('keydown', function(event) {
+      if (event.key !== 'Enter' && event.key !== ' ') {
+        return;
+      }
+      const card = event.target.closest('.hover-lift[data-source]');
+      if (card) {
+        event.preventDefault();
+        selectSource(card.dataset.source);
+      }
+    });
 
     // Auto-select first card on load
     document.addEventListener('DOMContentLoaded', function() {
