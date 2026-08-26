@@ -1,11 +1,18 @@
 """Tests for the dashboard generator module."""
 
+import json
 import shutil
 import tempfile
 import unittest
 from pathlib import Path
 
-from src.dashboard import generate_dashboard, load_all_data, load_tsv
+from src.dashboard import (
+    MAX_CHART_SERIES,
+    build_chart_specs,
+    generate_dashboard,
+    load_all_data,
+    load_tsv,
+)
 
 
 class TestLoadTsv(unittest.TestCase):
@@ -158,6 +165,33 @@ class TestGenerateDashboard(unittest.TestCase):
         generate_dashboard(self.reports_dir, nested_output)
         self.assertTrue(nested_output.exists())
 
+    def test_output_embeds_chart_specs(self):
+        generate_dashboard(self.reports_dir, self.output_file)
+        content = self.output_file.read_text(encoding="utf-8")
+
+        self.assertIn("chartSpecs", content)
+        self.assertIn("vega-lite", content)
+
+    def test_output_no_longer_shows_a_placeholder(self):
+        generate_dashboard(self.reports_dir, self.output_file)
+        content = self.output_file.read_text(encoding="utf-8")
+
+        self.assertNotIn("Chart placeholder", content)
+
+    def test_output_loads_vega_with_integrity_hashes(self):
+        generate_dashboard(self.reports_dir, self.output_file)
+        content = self.output_file.read_text(encoding="utf-8")
+
+        self.assertIn("vega-embed@", content)
+        self.assertIn('integrity="sha384-', content)
+
+    def test_output_takes_its_colours_from_custom_properties(self):
+        generate_dashboard(self.reports_dir, self.output_file)
+        content = self.output_file.read_text(encoding="utf-8")
+
+        self.assertIn("--sd-accent", content)
+        self.assertNotIn("#0d6efd", content)
+
     def test_raises_when_no_data_found(self):
         empty_reports = Path(tempfile.mkdtemp())
         try:
@@ -165,6 +199,110 @@ class TestGenerateDashboard(unittest.TestCase):
                 generate_dashboard(empty_reports, self.output_file)
         finally:
             shutil.rmtree(empty_reports)
+
+
+class TestBuildChartSpecs(unittest.TestCase):
+    """Unit tests for build_chart_specs."""
+
+    def _records(self, source, rows):
+        return [
+            {"source": source, "period": period, "package": package, "count": count}
+            for period, package, count in rows
+        ]
+
+    def test_one_spec_per_source(self):
+        records = self._records("PyPI Downloads", [("2026-01", "pkg_a", 5)])
+        records += self._records("GitHub Views", [("2026-W01", "pkg_a", 3)])
+
+        specs = build_chart_specs(records)
+
+        self.assertEqual(set(specs), {"PyPI Downloads", "GitHub Views"})
+
+    def test_spec_declares_vega_lite_schema(self):
+        records = self._records("PyPI Downloads", [("2026-01", "pkg_a", 5)])
+
+        spec = build_chart_specs(records)["PyPI Downloads"]
+
+        self.assertIn("vega-lite", spec["$schema"])
+
+    def test_months_sort_chronologically(self):
+        records = self._records("PyPI Downloads", [
+            ("2026-02", "pkg_a", 1),
+            ("2025-11", "pkg_a", 2),
+            ("2026-01", "pkg_a", 3),
+        ])
+
+        spec = build_chart_specs(records)["PyPI Downloads"]
+
+        self.assertEqual(spec["encoding"]["x"]["sort"], ["2025-11", "2026-01", "2026-02"])
+
+    def test_iso_weeks_sort_numerically_not_lexically(self):
+        records = self._records("GitHub Views", [
+            ("2026-W10", "pkg_a", 1),
+            ("2026-W2", "pkg_a", 2),
+        ])
+
+        spec = build_chart_specs(records)["GitHub Views"]
+
+        self.assertEqual(spec["encoding"]["x"]["sort"], ["2026-W2", "2026-W10"])
+
+    def test_unrecognised_period_sorts_last(self):
+        records = self._records("PyPI Downloads", [
+            ("nonsense", "pkg_a", 1),
+            ("2026-01", "pkg_a", 2),
+        ])
+
+        spec = build_chart_specs(records)["PyPI Downloads"]
+
+        self.assertEqual(spec["encoding"]["x"]["sort"][-1], "nonsense")
+
+    def test_axis_titles_follow_the_source(self):
+        monthly = self._records("PyPI Downloads", [("2026-01", "pkg_a", 1)])
+        weekly = self._records("GitHub Views", [("2026-W01", "pkg_a", 1)])
+
+        specs = build_chart_specs(monthly + weekly)
+
+        self.assertEqual(specs["PyPI Downloads"]["encoding"]["x"]["title"], "Month")
+        self.assertEqual(specs["PyPI Downloads"]["encoding"]["y"]["title"], "Downloads")
+        self.assertEqual(specs["GitHub Views"]["encoding"]["x"]["title"], "Week")
+        self.assertEqual(specs["GitHub Views"]["encoding"]["y"]["title"], "Views")
+
+    def test_extra_packages_are_bucketed_without_losing_any_count(self):
+        rows = [("2026-01", "pkg_%02d" % i, i + 1) for i in range(MAX_CHART_SERIES + 4)]
+        records = self._records("PyPI Downloads", rows)
+
+        spec = build_chart_specs(records)["PyPI Downloads"]
+        domain = spec["encoding"]["color"]["scale"]["domain"]
+
+        self.assertEqual(len(domain), MAX_CHART_SERIES + 1)
+        self.assertEqual(domain[-1], "Other")
+        self.assertEqual(
+            sum(value["count"] for value in spec["data"]["values"]),
+            sum(count for _, _, count in rows),
+        )
+
+    def test_every_series_has_a_colour(self):
+        rows = [("2026-01", "pkg_%02d" % i, i + 1) for i in range(MAX_CHART_SERIES + 4)]
+
+        spec = build_chart_specs(self._records("PyPI Downloads", rows))["PyPI Downloads"]
+        scale = spec["encoding"]["color"]["scale"]
+
+        self.assertEqual(len(scale["domain"]), len(scale["range"]))
+
+    def test_spec_is_json_serialisable(self):
+        records = self._records("PyPI Downloads", [("2026-01", "pkg_a", 5)])
+
+        json.dumps(build_chart_specs(records))
+
+    def test_spec_carries_no_config_block(self):
+        records = self._records("PyPI Downloads", [("2026-01", "pkg_a", 5)])
+
+        spec = build_chart_specs(records)["PyPI Downloads"]
+
+        self.assertNotIn("config", spec)
+
+    def test_no_records_means_no_specs(self):
+        self.assertEqual(build_chart_specs([]), {})
 
 
 if __name__ == "__main__":
