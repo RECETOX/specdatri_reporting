@@ -22,7 +22,11 @@
       --sd-border: #d9dde1;
     }
     body { background: var(--sd-bg); }
-    .navbar { background: linear-gradient(135deg, var(--sd-accent), var(--sd-accent-strong)); }
+    /* The MUNI RECETOX wordmark is blue on an opaque white ground, so the banner
+       is light. On a dark banner it measures 1.4:1 and cannot be read. */
+    .navbar { background: #ffffff; border-bottom: 1px solid var(--sd-border); }
+    .navbar-brand img { height: 34px; width: auto; display: block; }
+    .navbar .navbar-text { color: var(--sd-muted); }
     .summary-cards { margin-bottom: 1.5rem; }
     footer { font-size: .8rem; color: var(--sd-muted); text-align: center; margin: 2rem 0 1rem; }
     .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer; }
@@ -56,13 +60,13 @@
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-dark mb-4">
-    <div class="container-fluid px-4">
-      <span class="navbar-brand fw-bold">
-        📊 RECETOX – Download Statistics Dashboard
+  <nav class="navbar mb-4">
+    <div class="container-fluid px-4 d-flex align-items-center gap-3">
+      <span class="navbar-brand p-0 m-0">
+        <img src="recetox-logo.webp" alt="MUNI RECETOX" width="1000" height="175">
       </span>
-      <span class="navbar-text text-white">
-        Package download analytics
+      <span class="navbar-text fw-bold ms-auto">
+        Download Statistics Dashboard
       </span>
     </div>
   </nav>
