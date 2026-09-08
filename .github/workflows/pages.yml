@@ -1,5 +1,12 @@
 name: Deploy dashboard to GitHub Pages
 on:
+  # The reporting workflow commits docs/index.html with GITHUB_TOKEN, and a push
+  # made with that token does not trigger another workflow, so the push trigger
+  # below never fires for the weekly run. Keying off the run itself does.
+  workflow_run:
+    workflows: ["specdatri reporting"]
+    types:
+      - completed
   push:
     branches:
       - main
@@ -15,6 +22,11 @@ concurrency:
   cancel-in-progress: false
 jobs:
   deploy:
+    # Skip when the reporting run itself failed; deploying its half-finished
+    # output would replace good numbers with worse ones.
+    if: >-
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
