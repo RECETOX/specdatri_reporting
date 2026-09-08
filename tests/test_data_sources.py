@@ -105,6 +105,36 @@ class TestDataSource(unittest.TestCase):
         self.assertEqual(call_args[1], "test_file.json")
 
     @patch("src.data_sources.base.write_json")
+    def test_write_stats_response_with_error_status(self, mock_write_json):
+        """An error response is recorded as a failure, not written as data."""
+        mock_response = requests.Response()
+        mock_response.status_code = 401
+        mock_response._content = b'{"message": "Bad credentials"}'
+
+        with patch.object(self.ds, "prep_filename", return_value="failed_file.json"):
+            with patch.object(self.ds, "write_prep_filename_metadata"):
+                self.ds.write_stats_response(mock_response, "views")
+
+        mock_write_json.assert_called_once()
+        written = mock_write_json.call_args[0][0]
+        self.assertEqual(mock_write_json.call_args[0][1], "failed_file.json")
+        self.assertNotEqual(written, {"message": "Bad credentials"})
+
+    @patch("src.data_sources.base.write_json")
+    def test_error_response_is_filed_under_failed(self, mock_write_json):
+        """The failure goes to the failed folder, not to tmp."""
+        mock_response = requests.Response()
+        mock_response.status_code = 500
+        mock_response._content = b'{"message": "boom"}'
+
+        with patch.object(self.ds, "prep_filename") as mock_prep:
+            mock_prep.return_value = "failed/x.json"
+            with patch.object(self.ds, "write_prep_filename_metadata"):
+                self.ds.write_stats_response(mock_response, "views")
+
+        self.assertEqual(mock_prep.call_args[0][0], "failed")
+
+    @patch("src.data_sources.base.write_json")
     def test_write_stats_response_with_pandas_series(self, mock_write_json):
         """Test write_stats_response with pandas Series object."""
         # Create a pandas Series
