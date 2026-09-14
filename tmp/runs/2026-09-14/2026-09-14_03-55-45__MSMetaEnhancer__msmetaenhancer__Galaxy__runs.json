@@ -1,0 +1,20 @@
+{
+  "package": "msmetaenhancer",
+  "project": "MSMetaEnhancer",
+  "source": "Galaxy",
+  "action": "runs",
+  "instances": {
+    "usegalaxy.eu": {
+      "runs": 241
+    },
+    "usegalaxy.org": {
+      "runs": 0
+    },
+    "usegalaxy.org.au": {
+      "runs": 112
+    },
+    "usegalaxy.fr": {
+      "runs": 13
+    }
+  }
+}
