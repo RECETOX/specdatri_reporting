@@ -4,8 +4,8 @@ This module generates a simple HTML dashboard that can be served
 statically on GitHub Pages. It displays summary cards and a data table.
 """
 
-import json
 import logging
+import re
 from pathlib import Path
 from typing import Optional
 
@@ -117,12 +117,165 @@ def _format_number(value: int) -> str:
     return f"{value:,}"
 
 
+# ---------------------------------------------------------------------------
+# Vega-Lite chart builders
+# ---------------------------------------------------------------------------
+
+# Series beyond this many packages are grouped into OTHER_LABEL. Six named
+# series cover 93-99% of the total in every current report, and a categorical
+# scale rotating over the 14-17 packages some sources carry would encode a
+# distinction the reader cannot resolve anyway.
+MAX_CHART_SERIES = 6
+OTHER_LABEL = "Other"
+
+# Okabe-Ito, which is colour-blind safe, minus yellow and black and with
+# orange and sky darkened. As bar fills these have to clear 3:1 against the
+# white card (WCAG 1.4.11); the published orange, sky and yellow do not.
+SERIES_COLORS = [
+    "#0072B2",  # blue
+    "#C38700",  # orange, darkened from #E69F00
+    "#009E73",  # bluish green
+    "#CC79A7",  # reddish purple
+    "#1E9BE2",  # sky blue, darkened from #56B4E9
+    "#D55E00",  # vermillion
+]
+OTHER_COLOR = "#939393"
+
+_WEEK_PERIOD = re.compile(r"^(\d{4})-W(\d{1,2})$")
+_MONTH_PERIOD = re.compile(r"^(\d{4})-(\d{1,2})$")
+
+
+def _period_sort_key(period: str) -> tuple:
+    """Return a chronological sort key for a report period label.
+
+    Handles both month keys (``2026-01``) and ISO week keys (``2026-W07``).
+    An unrecognised label sorts last rather than raising, so that one bad
+    row cannot reorder the rest of the series.
+    """
+    for pattern in (_MONTH_PERIOD, _WEEK_PERIOD):
+        match = pattern.match(period)
+        if match:
+            return (int(match.group(1)), int(match.group(2)))
+
+    logger.warning("Unrecognised period label: %s", period)
+    return (9999, 99)
+
+
+def _period_title(periods: list) -> str:
+    """Return the x-axis title for a set of period labels."""
+    return "Week" if any(_WEEK_PERIOD.match(p) for p in periods) else "Month"
+
+
+def _y_title_for(label: str) -> str:
+    """Return y-axis title for a given data source label."""
+    titles = {
+        "GitHub Clones": "Clones",
+        "GitHub Views": "Views",
+        "Galaxy Runs": "Runs",
+        "Galaxy Users": "Active Users",
+    }
+    return titles.get(label, "Downloads")
+
+
+def _top_packages(rows: list) -> list:
+    """Return the busiest package names, largest total first."""
+    totals = {}
+    for row in rows:
+        totals[row["package"]] = totals.get(row["package"], 0) + row["count"]
+
+    ranked = sorted(totals, key=lambda name: (-totals[name], name))
+    return ranked[:MAX_CHART_SERIES]
+
+
+def _build_chart_spec(label: str, rows: list) -> Optional[dict]:
+    """Build a stacked bar chart spec for one data source.
+
+    Returns a Vega-Lite specification with inline data values, or None when
+    the source has no rows to draw. No config block is emitted: vega-embed
+    merges its own config underneath the spec, which is what lets the page
+    theme the chart from its CSS custom properties.
+    """
+    if not rows:
+        return None
+
+    top = _top_packages(rows)
+    grouped = {}
+    for row in rows:
+        package = row["package"] if row["package"] in top else OTHER_LABEL
+        key = (row["period"], package)
+        grouped[key] = grouped.get(key, 0) + row["count"]
+
+    values = [
+        {"period": period, "package": package, "count": count}
+        for (period, package), count in grouped.items()
+    ]
+
+    periods = sorted({row["period"] for row in rows}, key=_period_sort_key)
+    domain = [name for name in top if any(v["package"] == name for v in values)]
+    colors = SERIES_COLORS[:len(domain)]
+    if any(v["package"] == OTHER_LABEL for v in values):
+        domain = domain + [OTHER_LABEL]
+        colors = colors + [OTHER_COLOR]
+
+    period_title = _period_title(periods)
+    y_title = _y_title_for(label)
+
+    return {
+        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+        "data": {"values": values},
+        # Bars, not lines: load_tsv drops zero rows, so a period with no data
+        # is absent rather than zero, and a line would interpolate straight
+        # through the gap and invent numbers that were never reported.
+        "mark": {"type": "bar", "stroke": "#ffffff", "strokeWidth": 1},
+        "height": 340,
+        "width": "container",
+        "background": "transparent",
+        "encoding": {
+            "x": {"field": "period", "type": "ordinal", "title": period_title,
+                  "sort": periods,
+                  "axis": {"labelAngle": -45, "labelOverlap": "greedy"}},
+            "y": {"field": "count", "type": "quantitative", "title": y_title,
+                  "stack": "zero"},
+            "color": {"field": "package", "type": "nominal",
+                      "legend": {"title": "Package"},
+                      "scale": {"domain": domain, "range": colors}},
+            "order": {"field": "package", "type": "nominal", "sort": domain},
+            "tooltip": [
+                {"field": "period", "type": "ordinal", "title": period_title},
+                {"field": "package", "type": "nominal", "title": "Package"},
+                {"field": "count", "type": "quantitative", "title": y_title,
+                 "format": ",d"}
+            ]
+        }
+    }
+
+
+def build_chart_specs(all_data: list) -> dict:
+    """Build one chart spec per data source.
+
+    Takes the same long-form records the table is rendered from. Sources
+    that yield no drawable rows are left out, so the page can say so rather
+    than drawing an empty axis.
+    """
+    by_source = {}
+    for row in all_data:
+        by_source.setdefault(row["source"], []).append(row)
+
+    specs = {}
+    for label, rows in by_source.items():
+        spec = _build_chart_spec(label, rows)
+        if spec is not None:
+            specs[label] = spec
+
+    return specs
+
+
 def generate_dashboard(reports_dir: Path, output_file: Path) -> None:
     """Read TSV reports and write a self-contained HTML dashboard.
 
     The generated dashboard includes:
     - Summary cards with total counts per data source
-    - A placeholder for trend charts
+    - An interactive trend chart per data source
     - A combined data table
 
     Parameters
@@ -170,11 +323,13 @@ def generate_dashboard(reports_dir: Path, output_file: Path) -> None:
     all_data.sort(key=lambda x: (x["source"], x["period"], x["package"]))
 
     # Render template
+    chart_specs = build_chart_specs(all_data)
     template = env.get_template("dashboard.html")
     html = template.render({
         "summary_cards": summary_cards,
         "icons": icons,
         "all_data": all_data,
+        "chart_specs": chart_specs,
         "last_updated": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M UTC"),
     })
 
