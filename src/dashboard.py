@@ -76,12 +76,26 @@ def load_all_data(reports_dir: Path) -> dict:
     return result
 
 
+# Galaxy reports all-time suite totals, so each monthly row repeats the running
+# total rather than counting that month. Adding those rows together counts the
+# same runs once per month collected. Everything else is a per-period count and
+# does sum.
+CUMULATIVE_SOURCES = {"Galaxy Runs", "Galaxy Users"}
+
+
 def compute_summary_stats(data: dict) -> dict:
     """Compute overall summary statistics across all data sources."""
     stats = {}
 
     for label, df in data.items():
-        total = int(df["count"].sum())
+        if label in CUMULATIVE_SOURCES:
+            # The latest figure per package, not the sum of every snapshot. Taken
+            # per package rather than from one period, so a tool that stops being
+            # reported keeps its last known total instead of vanishing.
+            latest = df.sort_values("period").groupby("package")["count"].last()
+            total = int(latest.sum())
+        else:
+            total = int(df["count"].sum())
         stats[label] = {"total": total}
 
     return stats

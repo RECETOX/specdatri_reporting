@@ -104,6 +104,20 @@ class DataSource(ABC):
         """
         try:
             if type(result) is requests.Response:
+                if not result.ok:
+                    # Without this the body of an error response is written to
+                    # tmp/ as though it were data. The report generator then
+                    # finds no usable rows, preserves the previous ones, and the
+                    # run reports success while nothing new was collected.
+                    logger.error(
+                        f"{self.source} returned HTTP {result.status_code} for "
+                        f"{self.project}/{self.package} {action}"
+                    )
+                    failed_response = get_failed_result_json(result)
+                    filename = self.prep_filename("failed", action)
+                    write_json(failed_response, filename)
+                    self.write_prep_filename_metadata(action, filename)
+                    return
                 data = result.json()
             elif type(result) is pd.Series:
                 data = result.to_dict()
