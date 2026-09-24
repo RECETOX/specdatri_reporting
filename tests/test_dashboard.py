@@ -5,7 +5,14 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from src.dashboard import generate_dashboard, load_all_data, load_tsv
+import pandas as pd
+
+from src.dashboard import (
+    compute_summary_stats,
+    generate_dashboard,
+    load_all_data,
+    load_tsv,
+)
 
 
 class TestLoadTsv(unittest.TestCase):
@@ -165,6 +172,47 @@ class TestGenerateDashboard(unittest.TestCase):
                 generate_dashboard(empty_reports, self.output_file)
         finally:
             shutil.rmtree(empty_reports)
+
+
+class TestComputeSummaryStats(unittest.TestCase):
+    """Unit tests for compute_summary_stats."""
+
+    def _frame(self, rows):
+        return pd.DataFrame(rows, columns=["period", "package", "count"])
+
+    def test_per_period_sources_are_summed(self):
+        data = {"PyPI Downloads": self._frame([
+            ("2026-01", "pkg_a", 100),
+            ("2026-02", "pkg_a", 150),
+        ])}
+
+        self.assertEqual(compute_summary_stats(data)["PyPI Downloads"]["total"], 250)
+
+    def test_cumulative_sources_take_the_latest_snapshot(self):
+        # Galaxy repeats the running total each month; summing counts it twice.
+        data = {"Galaxy Runs": self._frame([
+            ("2026-07", "pkg_a", 500),
+            ("2026-08", "pkg_a", 500),
+        ])}
+
+        self.assertEqual(compute_summary_stats(data)["Galaxy Runs"]["total"], 500)
+
+    def test_cumulative_total_follows_a_growing_counter(self):
+        data = {"Galaxy Runs": self._frame([
+            ("2026-07", "pkg_a", 500),
+            ("2026-08", "pkg_a", 700),
+        ])}
+
+        self.assertEqual(compute_summary_stats(data)["Galaxy Runs"]["total"], 700)
+
+    def test_a_package_missing_from_the_latest_snapshot_keeps_its_last_total(self):
+        data = {"Galaxy Runs": self._frame([
+            ("2026-07", "pkg_a", 500),
+            ("2026-07", "retired", 40),
+            ("2026-08", "pkg_a", 500),
+        ])}
+
+        self.assertEqual(compute_summary_stats(data)["Galaxy Runs"]["total"], 540)
 
 
 if __name__ == "__main__":
