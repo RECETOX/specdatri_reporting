@@ -1,0 +1,20 @@
+{
+  "package": "ramclustr",
+  "project": "RAMClustR",
+  "source": "Galaxy",
+  "action": "runs",
+  "instances": {
+    "usegalaxy.eu": {
+      "runs": 103
+    },
+    "usegalaxy.org": {
+      "runs": 37
+    },
+    "usegalaxy.org.au": {
+      "runs": 707
+    },
+    "usegalaxy.fr": {
+      "runs": 304
+    }
+  }
+}

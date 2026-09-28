@@ -1,0 +1,20 @@
+{
+  "package": "qcxms",
+  "project": "qcxms",
+  "source": "Galaxy",
+  "action": "users",
+  "instances": {
+    "usegalaxy.eu": {
+      "users": 12
+    },
+    "usegalaxy.org": {
+      "users": 2
+    },
+    "usegalaxy.org.au": {
+      "users": 2
+    },
+    "usegalaxy.fr": {
+      "users": 0
+    }
+  }
+}

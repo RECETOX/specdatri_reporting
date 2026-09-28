@@ -1,0 +1,20 @@
+{
+  "package": "recetox-aplcms",
+  "project": "recetox-aplcms",
+  "source": "Galaxy",
+  "action": "runs",
+  "instances": {
+    "usegalaxy.eu": {
+      "runs": 1540
+    },
+    "usegalaxy.org": {
+      "runs": 0
+    },
+    "usegalaxy.org.au": {
+      "runs": 410
+    },
+    "usegalaxy.fr": {
+      "runs": 928
+    }
+  }
+}

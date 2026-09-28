@@ -1,0 +1,20 @@
+{
+  "package": "matchms",
+  "project": "matchms",
+  "source": "Galaxy",
+  "action": "runs",
+  "instances": {
+    "usegalaxy.eu": {
+      "runs": 1904
+    },
+    "usegalaxy.org": {
+      "runs": 29
+    },
+    "usegalaxy.org.au": {
+      "runs": 4132
+    },
+    "usegalaxy.fr": {
+      "runs": 399
+    }
+  }
+}

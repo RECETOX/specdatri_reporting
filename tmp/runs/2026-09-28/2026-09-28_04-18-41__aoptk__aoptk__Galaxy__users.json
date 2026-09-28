@@ -1,0 +1,20 @@
+{
+  "package": "aoptk",
+  "project": "aoptk",
+  "source": "Galaxy",
+  "action": "users",
+  "instances": {
+    "usegalaxy.eu": {
+      "users": 0
+    },
+    "usegalaxy.org": {
+      "users": 0
+    },
+    "usegalaxy.org.au": {
+      "users": 0
+    },
+    "usegalaxy.fr": {
+      "users": 0
+    }
+  }
+}
