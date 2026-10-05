@@ -1,0 +1,20 @@
+{
+  "package": "riassigner",
+  "project": "RIAssigner",
+  "source": "Galaxy",
+  "action": "runs",
+  "instances": {
+    "usegalaxy.eu": {
+      "runs": 75
+    },
+    "usegalaxy.org": {
+      "runs": 16
+    },
+    "usegalaxy.org.au": {
+      "runs": 178
+    },
+    "usegalaxy.fr": {
+      "runs": 161
+    }
+  }
+}
