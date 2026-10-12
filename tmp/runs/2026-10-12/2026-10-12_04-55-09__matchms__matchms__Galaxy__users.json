@@ -1,0 +1,20 @@
+{
+  "package": "matchms",
+  "project": "matchms",
+  "source": "Galaxy",
+  "action": "users",
+  "instances": {
+    "usegalaxy.eu": {
+      "users": 28
+    },
+    "usegalaxy.org": {
+      "users": 5
+    },
+    "usegalaxy.org.au": {
+      "users": 5
+    },
+    "usegalaxy.fr": {
+      "users": 27
+    }
+  }
+}
