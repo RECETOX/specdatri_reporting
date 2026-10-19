@@ -1,0 +1,20 @@
+{
+  "package": "riassigner",
+  "project": "RIAssigner",
+  "source": "Galaxy",
+  "action": "users",
+  "instances": {
+    "usegalaxy.eu": {
+      "users": 29
+    },
+    "usegalaxy.org": {
+      "users": 5
+    },
+    "usegalaxy.org.au": {
+      "users": 1
+    },
+    "usegalaxy.fr": {
+      "users": 27
+    }
+  }
+}

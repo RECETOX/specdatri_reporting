@@ -1,0 +1,20 @@
+{
+  "package": "recetox-xmsannotator",
+  "project": "recetox-xMSannotator",
+  "source": "Galaxy",
+  "action": "users",
+  "instances": {
+    "usegalaxy.eu": {
+      "users": 2
+    },
+    "usegalaxy.org": {
+      "users": 0
+    },
+    "usegalaxy.org.au": {
+      "users": 3
+    },
+    "usegalaxy.fr": {
+      "users": 0
+    }
+  }
+}
