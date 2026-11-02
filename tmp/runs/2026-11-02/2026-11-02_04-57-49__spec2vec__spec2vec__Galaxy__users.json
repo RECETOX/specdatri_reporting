@@ -1,0 +1,20 @@
+{
+  "package": "spec2vec",
+  "project": "spec2vec",
+  "source": "Galaxy",
+  "action": "users",
+  "instances": {
+    "usegalaxy.eu": {
+      "users": 1
+    },
+    "usegalaxy.org": {
+      "users": 0
+    },
+    "usegalaxy.org.au": {
+      "users": 1
+    },
+    "usegalaxy.fr": {
+      "users": 0
+    }
+  }
+}

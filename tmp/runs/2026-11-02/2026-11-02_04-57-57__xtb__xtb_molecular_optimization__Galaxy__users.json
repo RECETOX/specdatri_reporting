@@ -1,0 +1,20 @@
+{
+  "package": "xtb_molecular_optimization",
+  "project": "xtb",
+  "source": "Galaxy",
+  "action": "users",
+  "instances": {
+    "usegalaxy.eu": {
+      "users": 10
+    },
+    "usegalaxy.org": {
+      "users": 0
+    },
+    "usegalaxy.org.au": {
+      "users": 2
+    },
+    "usegalaxy.fr": {
+      "users": 0
+    }
+  }
+}
