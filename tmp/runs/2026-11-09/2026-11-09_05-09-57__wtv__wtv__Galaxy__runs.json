@@ -1,0 +1,20 @@
+{
+  "package": "wtv",
+  "project": "wtv",
+  "source": "Galaxy",
+  "action": "runs",
+  "instances": {
+    "usegalaxy.eu": {
+      "runs": 0
+    },
+    "usegalaxy.org": {
+      "runs": 0
+    },
+    "usegalaxy.org.au": {
+      "runs": 0
+    },
+    "usegalaxy.fr": {
+      "runs": 0
+    }
+  }
+}
